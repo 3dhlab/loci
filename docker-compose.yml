@@ -59,8 +59,7 @@ services:
       args:
         VITE_API_BASE_URL: /api
         VITE_APP_SURFACE: public
-    volumes:
-      - ./scripts/demo/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        NGINX_CONFIG: nginx.demo.conf
     ports:
       - 127.0.0.1:8080:80
     depends_on:
