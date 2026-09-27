@@ -195,6 +195,9 @@ jobs:
           name: demo-browser-${{ github.sha }}
           path: apps/web/test-results/demo-journey
           if-no-files-found: warn
+      - name: Collect demo startup diagnostics
+        if: failure()
+        run: python3 scripts/ci/demo-diagnostics.py
       - name: Remove disposable demo services and volumes
         if: always()
         run: docker compose down --volumes
