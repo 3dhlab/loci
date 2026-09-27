@@ -161,6 +161,8 @@ jobs:
 
 
   demo:
+    env:
+      COMPOSE_FILE: docker-compose.yml:docker-compose.demo-ci.yml
     name: Clean demo install and real API browser journey
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -195,8 +197,8 @@ jobs:
           name: demo-browser-${{ github.sha }}
           path: apps/web/test-results/demo-journey
           if-no-files-found: warn
-      - name: Collect demo startup diagnostics
-        if: failure()
+      - name: Collect demo runtime diagnostics
+        if: always()
         run: python3 scripts/ci/demo-diagnostics.py
       - name: Remove disposable demo services and volumes
         if: always()
