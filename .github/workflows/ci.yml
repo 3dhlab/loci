@@ -1,0 +1,200 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: loci-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web unit, build, dependency gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Record exact candidate
+        run: ./scripts/ci/write-candidate-evidence.sh 'CI / Web unit, build, dependency gate'
+      - name: Install locked web dependencies
+        working-directory: apps/web
+        run: npm ci --ignore-scripts --no-audit
+      - name: Run web unit tests
+        working-directory: apps/web
+        run: npm test
+      - name: Build production web bundle
+        working-directory: apps/web
+        run: npm run build -- --outDir dist-ci
+      - name: Audit production dependency tree
+        working-directory: apps/web
+        run: npm audit --omit=dev --audit-level=moderate
+      - name: Audit dependencies and record the full report
+        if: always()
+        working-directory: apps/web
+        env:
+          CI_AUDIT_OUTPUT: ../../dependency-audit-full.json
+        run: node ../../scripts/ci/capture-npm-audit.mjs
+      - name: Upload build and dependency report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ci-web-${{ github.sha }}
+          path: |
+            apps/web/dist-ci
+            dependency-audit-full.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  api:
+    name: API PostgreSQL, Redis, migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: semantic_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d semantic_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      redis:
+        image: redis:7.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      CI_DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5432/semantic_ci
+      CI_MIGRATION_DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5432/semantic_ci_migration
+      CI_REDIS_URL: redis://127.0.0.1:6379/15
+      JWT_SECRET_KEY: ci-synthetic-jwt-secret-at-least-32-bytes
+      ENCRYPTION_MASTER_KEY: ci-synthetic-encryption-key-only
+      OPENAI_API_KEY: ''
+      EMBEDDING_WARMUP_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: apps/api/requirements.txt
+      - name: Record exact candidate
+        run: ./scripts/ci/write-candidate-evidence.sh 'CI / API PostgreSQL, Redis, migrations'
+      - name: Install API requirements and media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install -r apps/api/requirements.txt -c apps/api/constraints.txt
+      - name: Verify disposable service target guard
+        run: python -m unittest discover -s scripts/ci -p 'test_disposable_targets.py' -v
+      - name: Create isolated migration database
+        run: createdb --host=127.0.0.1 --username=postgres semantic_ci_migration
+        env:
+          PGPASSWORD: postgres
+      - name: Upgrade, downgrade, and re-upgrade clean migration database
+        run: ./scripts/ci/rehearse-migrations.sh
+      - name: Run API suite against disposable PostgreSQL and Redis
+        run: python scripts/ci/run-api-suite.py
+      - name: Upload API and migration evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ci-api-${{ github.sha }}
+          path: /tmp/loci-api-ci
+          if-no-files-found: error
+          retention-days: 14
+
+  browser:
+    name: Browser annotation, media, share regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Record exact candidate
+        run: ./scripts/ci/write-candidate-evidence.sh 'CI / Browser annotation, media, share regression'
+      - name: Install locked web dependencies
+        working-directory: apps/web
+        run: npm ci --ignore-scripts --no-audit
+      - name: Install Chromium for Playwright
+        run: npx --prefix apps/web playwright install --with-deps chromium
+      - name: Build production web bundle
+        working-directory: apps/web
+        run: npm run build -- --outDir dist-ci
+      - name: Run synthetic real-browser media journey
+        working-directory: apps/web
+        run: npm run test:browser
+        env:
+          CI: 'true'
+          GITHUB_SHA: ${{ github.sha }}
+      - name: Upload browser trace and diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ci-browser-${{ github.sha }}
+          path: apps/web/test-results/browser-regression
+          if-no-files-found: warn
+          retention-days: 14
+
+
+  demo:
+    name: Clean demo install and real API browser journey
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Initialize, build, migrate and seed
+        run: |
+          python3 scripts/demo/init-env.py
+          docker compose build
+          docker compose up -d --wait postgres redis
+          docker compose run --rm api alembic upgrade head
+          docker compose run --rm api python -m app.scripts.seed_demo
+          docker compose up -d --wait
+          python3 scripts/demo/verify.py
+      - name: Install browser dependencies
+        working-directory: apps/web
+        run: |
+          npm ci --ignore-scripts --no-audit
+          npx playwright install --with-deps chromium
+      - name: Exercise actual demo in Chromium
+        working-directory: apps/web
+        run: npm run test:demo
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: demo-browser-${{ github.sha }}
+          path: apps/web/test-results/demo-journey
+          if-no-files-found: warn
+      - name: Remove disposable demo services and volumes
+        if: always()
+        run: docker compose down --volumes

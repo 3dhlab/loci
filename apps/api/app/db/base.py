@@ -1,0 +1,37 @@
+# Import models here so Alembic sees all metadata.
+from app.db.session import Base
+from app.models.entities import (  # noqa: F401
+    AuditEvent,
+    Clip,
+    EvidenceCollection,
+    ModelProvider,
+    ModelRun,
+    Object,
+    ObjectModel,
+    ObjectModelAnnotation,
+    ObjectModelVariant,
+    PasswordResetToken,
+    PublicationManifest,
+    Project,
+    SearchQueryLog,
+    SearchResultFeedback,
+    Segment,
+    TitleCardObservation,
+    Transcript,
+    TranscriptWindow,
+    User,
+    Video,
+)
+from app.models.authoring_lane import (  # noqa: F401
+    ApprovalDecision,
+    EvidenceOverride,
+    ImportRun,
+    ImportRunCheck,
+    ObservationReview,
+    OcrBatch,
+    OcrBatchFrame,
+    ProjectRole,
+    ReadinessSnapshot,
+    SegmentSpellingFlag,
+    TitleCardSegment,
+)

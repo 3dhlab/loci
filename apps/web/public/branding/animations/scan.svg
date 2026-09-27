@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Loci — scanning axes">
+  <title>Loci scan</title>
+  <style>
+    .axis { opacity: 0.35; }
+    .z-axis { animation: flare 2.4s 0s ease-in-out infinite; }
+    .x-axis { animation: flare 2.4s 0.8s ease-in-out infinite; }
+    .y-axis { animation: flare 2.4s 1.6s ease-in-out infinite; }
+    @keyframes flare {
+      0%, 100% { opacity: 0.35; }
+      18%      { opacity: 1; }
+      40%      { opacity: 0.35; }
+    }
+    .locus { transform-origin: 32px 37px; animation: ping 2.4s ease-in-out infinite; }
+    @keyframes ping {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(0.88); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .axis { opacity: 1; animation: none; }
+      .locus { animation: none; }
+    }
+  </style>
+  <g stroke-linecap="round">
+    <g class="axis z-axis">
+      <line x1="32" y1="37" x2="32" y2="17" stroke="#2F4A6D" stroke-width="4"/>
+      <circle cx="32" cy="17" r="4.5" fill="#2F4A6D"/>
+    </g>
+    <g class="axis x-axis">
+      <line x1="32" y1="37" x2="49.32" y2="47" stroke="#B84A2B" stroke-width="4"/>
+      <circle cx="49.32" cy="47" r="4.5" fill="#B84A2B"/>
+    </g>
+    <g class="axis y-axis">
+      <line x1="32" y1="37" x2="14.68" y2="47" stroke="#5A7A3D" stroke-width="4"/>
+      <circle cx="14.68" cy="47" r="4.5" fill="#5A7A3D"/>
+    </g>
+  </g>
+  <circle class="locus" cx="32" cy="37" r="4.5" fill="#ca5f22"/>
+</svg>

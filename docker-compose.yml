@@ -1,0 +1,71 @@
+name: loci-demo
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: loci
+      POSTGRES_DB: loci
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/demo/init-env.py}
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U loci -d loci]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --save, '', --appendonly, 'no']
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ./apps/api
+    environment:
+      DATABASE_URL: postgresql+psycopg://loci:${POSTGRES_PASSWORD:?Run scripts/demo/init-env.py}@postgres:5432/loci
+      REDIS_URL: redis://redis:6379/0
+      SEMANTIC_ENV: development
+      MEDIA_ROOT: /var/lib/loci/media
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Run scripts/demo/init-env.py}
+      ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY:?Run scripts/demo/init-env.py}
+      AGENT_SHARED_TOKEN: ${AGENT_SHARED_TOKEN:?Run scripts/demo/init-env.py}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Run scripts/demo/init-env.py}
+      EMBEDDING_WARMUP_ENABLED: 'false'
+      EMBEDDING_ENABLED: 'false'
+      PUBLIC_OBJECT_PRIORITY_IDS: ${PUBLIC_OBJECT_PRIORITY_IDS:-}
+      CORS_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      SEMANTIC_EMBED_ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      SEMANTIC_EMBED_FRAME_ANCESTORS: http://localhost:8080 http://127.0.0.1:8080
+    volumes:
+      - media:/var/lib/loci/media
+    ports:
+      - 127.0.0.1:8000:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.public
+      args:
+        VITE_API_BASE_URL: /api
+        VITE_APP_SURFACE: public
+    volumes:
+      - ./scripts/demo/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 127.0.0.1:8080:80
+    depends_on:
+      api:
+        condition: service_healthy
+volumes:
+  database:
+  media:

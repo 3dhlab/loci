@@ -1,0 +1,134 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  html, body { margin: 0; background: #f5efe6; }
+  canvas { display: block; }
+</style>
+<canvas id="canvas"></canvas>
+<script type="importmap">
+{
+  "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
+
+const params = new URLSearchParams(location.search)
+const width = Number(params.get('width') || 800)
+const height = Number(params.get('height') || 800)
+const modelUrl = params.get('model')
+const suppliedCamera = params.get('camera') ? JSON.parse(params.get('camera')) : null
+const lighting = params.get('lighting') || 'standard'
+const canvas = document.getElementById('canvas')
+canvas.width = width
+canvas.height = height
+
+try {
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true })
+  renderer.setPixelRatio(1)
+  renderer.setSize(width, height, false)
+  renderer.outputColorSpace = THREE.SRGBColorSpace
+  const scene = new THREE.Scene()
+  scene.background = new THREE.Color('#f5efe6')
+  if (lighting === 'raking') {
+    scene.add(new THREE.AmbientLight(0xffffff, 0.35))
+    const rake = new THREE.DirectionalLight(0xffffff, 2.6)
+    rake.position.set(8, 1.4, 1)
+    scene.add(rake)
+  } else {
+    scene.add(new THREE.AmbientLight(0xffffff, 1.05))
+    scene.add(new THREE.HemisphereLight(0xfff6eb, 0xc8b49a, 0.95))
+    const key = new THREE.DirectionalLight(0xffffff, 1.35)
+    key.position.set(5, 6, 6)
+    scene.add(key)
+    const fill = new THREE.DirectionalLight(0xffffff, 0.55)
+    fill.position.set(-4, 3, -4)
+    scene.add(fill)
+  }
+
+  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
+  const loader = new GLTFLoader()
+  await MeshoptDecoder.ready
+  loader.setMeshoptDecoder(MeshoptDecoder)
+  const gltf = await loader.loadAsync(modelUrl)
+  const root = gltf.scene
+  root.traverse((node) => {
+    if (!node.isMesh) return
+    const materials = Array.isArray(node.material) ? node.material : [node.material]
+    for (const material of materials) {
+      if (material?.map) {
+        material.map.colorSpace = THREE.SRGBColorSpace
+        material.needsUpdate = true
+      }
+    }
+  })
+  root.updateWorldMatrix(true, true)
+  const bounds = new THREE.Box3().setFromObject(root)
+  const center = bounds.getCenter(new THREE.Vector3())
+  const size = bounds.getSize(new THREE.Vector3())
+  if (suppliedCamera) {
+    camera.position.fromArray(suppliedCamera.position)
+    camera.near = suppliedCamera.near
+    camera.far = suppliedCamera.far
+    camera.fov = suppliedCamera.fov
+    camera.aspect = suppliedCamera.aspect
+    camera.updateProjectionMatrix()
+    camera.lookAt(new THREE.Vector3().fromArray(suppliedCamera.target))
+  } else {
+    const radius = Math.max(size.x, size.y, size.z) * 0.5 || 1
+    const fitDistance = Math.max(radius / Math.tan((camera.fov * Math.PI / 180) / 2), radius * 1.8)
+    const direction = new THREE.Vector3(2.8, 2.2, 2.8).normalize()
+    camera.position.copy(center.clone().add(direction.multiplyScalar(fitDistance * 1.35)))
+    camera.near = Math.max(0.1, fitDistance / 100)
+    camera.far = Math.max(1000, fitDistance * 10)
+    camera.updateProjectionMatrix()
+    camera.lookAt(center)
+  }
+  scene.add(root)
+
+  let triangles = 0
+  let vertices = 0
+  let decodedBytes = 0
+  let maximumTexture = 0
+  const images = new Set()
+  root.traverse((node) => {
+    if (!node.isMesh) return
+    const position = node.geometry?.getAttribute('position')
+    if (position) vertices += position.count
+    triangles += node.geometry?.index ? node.geometry.index.count / 3 : (position ? position.count / 3 : 0)
+    const materials = Array.isArray(node.material) ? node.material : [node.material]
+    for (const material of materials) {
+      for (const value of Object.values(material || {})) {
+        const image = value?.isTexture ? value.image : null
+        if (!image || images.has(image)) continue
+        const imageWidth = image.width || image.naturalWidth || 0
+        const imageHeight = image.height || image.naturalHeight || 0
+        if (!imageWidth || !imageHeight) continue
+        images.add(image)
+        maximumTexture = Math.max(maximumTexture, imageWidth, imageHeight)
+        decodedBytes += Math.round(imageWidth * imageHeight * 4 * 1.3333)
+      }
+    }
+  })
+  for (let index = 0; index < 3; index += 1) renderer.render(scene, camera)
+  window.__lociQa = {
+    ready: true,
+    camera: {
+      position: camera.position.toArray(),
+      target: suppliedCamera?.target || center.toArray(),
+      near: camera.near,
+      far: camera.far,
+      fov: camera.fov,
+      aspect: camera.aspect,
+    },
+    metrics: { triangles: Math.round(triangles), vertices, decodedBytes, maximumTexture },
+  }
+} catch (error) {
+  window.__lociQa = { ready: true, error: String(error?.stack || error) }
+}
+</script>

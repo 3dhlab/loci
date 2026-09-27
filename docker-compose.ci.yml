@@ -1,0 +1,41 @@
+name: loci-validation
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: semantic_ci
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d semantic_ci]
+      interval: 3s
+      retries: 30
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --save, '', --appendonly, 'no']
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 3s
+      retries: 30
+  tests:
+    image: loci-demo-api
+    working_dir: /workspace
+    environment:
+      CI_DISPOSABLE_SERVICES: 'true'
+      CI_DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/semantic_ci
+      CI_MIGRATION_DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/semantic_ci_migration
+      CI_REDIS_URL: redis://redis:6379/15
+      JWT_SECRET_KEY: ci-synthetic-jwt-secret-at-least-32-bytes
+      ENCRYPTION_MASTER_KEY: ci-synthetic-encryption-key-only
+      OPENAI_API_KEY: ''
+      EMBEDDING_WARMUP_ENABLED: 'false'
+    volumes:
+      - .:/workspace:ro
+      - ./.ci-artifacts:/tmp/loci-api-ci
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy

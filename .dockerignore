@@ -1,0 +1,8 @@
+.git
+node_modules
+**/node_modules
+.env
+.media
+.backups
+**/__pycache__
+**/test-results

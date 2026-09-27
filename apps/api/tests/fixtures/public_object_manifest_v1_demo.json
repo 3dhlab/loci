@@ -1,0 +1,119 @@
+{
+  "manifestVersion": 1,
+  "id": "demo-vessel",
+  "title": "Demo Vessel",
+  "summary": "Published embed fixture for the Demo Vessel evidence entry.",
+  "posterSrc": "https://semantic.example.test/api/public/objects/demo-vessel/poster",
+  "embedUrl": "https://semantic.example.test/embed/object/demo-vessel",
+  "provider": "Semantic",
+  "initialView": {
+    "position": [
+      1.8,
+      0.9,
+      2.4
+    ],
+    "target": [
+      0.12,
+      0.43,
+      -0.21
+    ]
+  },
+  "modelSrc": "https://semantic.example.test/api/v1/public/objects/00000000-0000-0000-0000-000000000001/model/file?v=fixture",
+  "annotations": [
+    {
+      "id": "anno-demo-publication",
+      "label": "Demo Publication",
+      "title": "3D public research entry",
+      "body": "Shows how the object can hand users into a public-facing publication and related project context.",
+      "position": [
+        0.12,
+        0.43,
+        -0.21
+      ],
+      "normal": [
+        0.01,
+        0.98,
+        0.14
+      ],
+      "camera": {
+        "position": [
+          1.8,
+          0.9,
+          2.4
+        ],
+        "target": [
+          0.12,
+          0.43,
+          -0.21
+        ]
+      },
+      "order": 1,
+      "relatedClipId": "clip-surface-interpretation",
+      "relatedClipIds": [
+        "clip-surface-interpretation"
+      ],
+      "relatedPublicationIds": [
+        "demo-publication"
+      ],
+      "relatedProjectIds": [
+        "demo-project"
+      ],
+      "relatedLocationIds": [
+        "loc-demo-region",
+        "loc-demo-site"
+      ]
+    },
+    {
+      "id": "anno-demo-site",
+      "label": "Demo Site",
+      "title": "Site linkage",
+      "body": "Connects the object entry to the synthetic location and project records.",
+      "position": [
+        -0.32,
+        0.12,
+        0.28
+      ],
+      "normal": [
+        -0.1,
+        0.91,
+        0.2
+      ],
+      "camera": {
+        "position": [
+          1.2,
+          1.1,
+          2.1
+        ],
+        "target": [
+          -0.32,
+          0.12,
+          0.28
+        ]
+      },
+      "order": 2,
+      "relatedClipId": null,
+      "relatedClipIds": [],
+      "relatedPublicationIds": [
+        "demo-methods"
+      ],
+      "relatedProjectIds": [
+        "demo-project"
+      ],
+      "relatedLocationIds": [
+        "loc-demo-site"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "id": "clip-surface-interpretation",
+      "title": "Demo Vessel clip 00:00:00-00:00:02",
+      "src": "https://semantic.example.test/api/public/clips/clip-surface-interpretation/stream",
+      "poster": "https://semantic.example.test/api/public/clips/clip-surface-interpretation/poster",
+      "startTime": 0,
+      "endTime": 2,
+      "transcript": "public clip transcript excerpt",
+      "description": "clip-surface-interpretation citation"
+    }
+  ]
+}

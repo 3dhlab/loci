@@ -1,0 +1,18 @@
+$customer_name LOCI — Evidence, located.
+
+A new object is open for evidence review.
+
+$object_title
+
+  "$evidence_excerpt"
+
+Open the evidence page:
+$deep_link
+
+—
+
+You're receiving this because you subscribed to notifications from
+$customer_name on Loci. To stop receiving these emails, unsubscribe:
+$unsubscribe_url
+
+Operated by $customer_name · Loci

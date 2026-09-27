@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Loci — tumbling on origin in 3D">
+  <title>Loci pivot</title>
+  <style>
+    .gizmo {
+      transform-origin: 32px 37px;
+      transform-box: view-box;
+      transform-style: preserve-3d;
+      animation: tumble 7s linear infinite;
+    }
+    @keyframes tumble {
+      0%   { transform: perspective(220px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+      100% { transform: perspective(220px) rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gizmo { animation: none; transform: none; }
+    }
+  </style>
+  <g class="gizmo" stroke-linecap="round">
+    <line x1="32" y1="37" x2="32" y2="17" stroke="#2F4A6D" stroke-width="4"/>
+    <circle cx="32" cy="17" r="4.5" fill="#2F4A6D"/>
+    <line x1="32" y1="37" x2="49.32" y2="47" stroke="#B84A2B" stroke-width="4"/>
+    <circle cx="49.32" cy="47" r="4.5" fill="#B84A2B"/>
+    <line x1="32" y1="37" x2="14.68" y2="47" stroke="#5A7A3D" stroke-width="4"/>
+    <circle cx="14.68" cy="47" r="4.5" fill="#5A7A3D"/>
+    <circle cx="32" cy="37" r="4.5" fill="#ca5f22"/>
+  </g>
+</svg>

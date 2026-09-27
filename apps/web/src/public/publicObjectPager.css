@@ -1,0 +1,196 @@
+.public-library-section .public-library-section-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
+
+.public-object-pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  justify-self: end;
+  padding: 0.28rem;
+  border: 1px solid rgba(188, 174, 155, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 8px 24px rgba(49, 42, 32, 0.06);
+}
+
+.public-object-page-numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.16rem;
+}
+
+.public-object-page-ellipsis {
+  min-width: 1rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.public-object-page-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The browse surface uses Studio's cobalt/darkroom tokens. Keep the pager in
+   that palette even though the legacy public button rules remain available. */
+.studio-surface .public-object-pagination {
+  border-color: var(--studio-line);
+  background: var(--studio-surface-color, var(--studio-surface));
+  box-shadow: none;
+}
+
+.studio-surface .public-object-pagination button:not(.ghost) {
+  border: 0;
+  box-shadow: none;
+}
+
+.studio-surface .public-object-pagination .public-object-page-arrow,
+.studio-surface .public-object-pagination .public-object-page-number {
+  background: transparent;
+  color: var(--studio-ink-soft);
+}
+
+.studio-surface .public-object-pagination .public-object-page-number[aria-current='page'] {
+  background: var(--studio-moment);
+  color: #fff;
+}
+
+.studio-surface[data-studio-theme='darkroom'] .public-object-pagination .public-object-page-number[aria-current='page'] {
+  color: #0e1b2e;
+}
+
+.studio-surface .public-object-pagination .public-object-page-arrow:hover:not(:disabled),
+.studio-surface .public-object-pagination .public-object-page-number:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--studio-moment) 14%, var(--studio-surface-color, var(--studio-surface)));
+  color: var(--studio-ink);
+}
+
+.studio-surface .public-object-pagination .public-object-page-arrow:focus-visible,
+.studio-surface .public-object-pagination .public-object-page-number:focus-visible {
+  outline-color: var(--studio-moment);
+}
+
+.public-object-page-arrow,
+.public-object-page-number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.public-object-page-arrow {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.public-object-page-number[aria-current='page'] {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}
+
+.public-object-page-arrow:hover:not(:disabled),
+.public-object-page-number:hover:not(:disabled) {
+  background-color: rgba(202, 95, 34, 0.13);
+  color: var(--ink);
+}
+
+.public-object-page-arrow:focus-visible,
+.public-object-page-number:focus-visible {
+  outline: 3px solid rgba(var(--accent-rgb), 0.5);
+  outline-offset: 2px;
+}
+
+.public-object-page-arrow:disabled,
+.public-object-page-number:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.public-library-grid.public-object-page-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.public-object-page-grid > .public-library-card {
+  animation: public-object-page-enter 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.public-object-page-grid.from-backward > .public-library-card {
+  --pager-slide-x: -16px;
+}
+
+.public-object-page-grid.from-forward > .public-library-card {
+  --pager-slide-x: 16px;
+}
+
+@keyframes public-object-page-enter {
+  from { opacity: 0.45; transform: translateX(var(--pager-slide-x, 12px)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.public-object-page-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(177, 68, 42, 0.25);
+  border-radius: 14px;
+  background: rgba(255, 247, 242, 0.9);
+  color: var(--ink);
+}
+
+.public-object-page-error p,
+.public-object-page-loading {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.public-object-page-loading {
+  justify-self: center;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 699px) {
+  .public-library-section .public-library-section-header {
+    grid-template-columns: 1fr;
+  }
+
+  .public-object-pagination {
+    justify-self: start;
+  }
+
+  .public-library-grid.public-object-page-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .public-object-page-grid > .public-library-card {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-object-page-grid > .public-library-card,
+  .public-object-page-arrow,
+  .public-object-page-number {
+    animation: none;
+    transition: none;
+  }
+}

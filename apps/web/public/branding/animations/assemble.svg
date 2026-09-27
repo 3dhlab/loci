@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Loci — assembling">
+  <title>Loci assemble</title>
+  <style>
+    .arm {
+      stroke-dasharray: 24;
+      stroke-dashoffset: 24;
+    }
+    .tip, .locus {
+      transform-origin: center;
+      transform-box: fill-box;
+      transform: scale(0);
+    }
+
+    .z-arm { animation: z-arm 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .x-arm { animation: x-arm 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .y-arm { animation: y-arm 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .z-tip { animation: z-tip 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .x-tip { animation: x-tip 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .y-tip { animation: y-tip 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .locus { animation: locus 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+    @keyframes z-arm {
+      0%, 5%    { stroke-dashoffset: 24; }
+      18%, 88%  { stroke-dashoffset: 0; }
+      100%      { stroke-dashoffset: 24; }
+    }
+    @keyframes x-arm {
+      0%, 13%   { stroke-dashoffset: 24; }
+      26%, 88%  { stroke-dashoffset: 0; }
+      100%      { stroke-dashoffset: 24; }
+    }
+    @keyframes y-arm {
+      0%, 21%   { stroke-dashoffset: 24; }
+      34%, 88%  { stroke-dashoffset: 0; }
+      100%      { stroke-dashoffset: 24; }
+    }
+    @keyframes z-tip {
+      0%, 18%   { transform: scale(0); }
+      24%       { transform: scale(1.15); }
+      30%, 88%  { transform: scale(1); }
+      100%      { transform: scale(0); }
+    }
+    @keyframes x-tip {
+      0%, 26%   { transform: scale(0); }
+      32%       { transform: scale(1.15); }
+      38%, 88%  { transform: scale(1); }
+      100%      { transform: scale(0); }
+    }
+    @keyframes y-tip {
+      0%, 34%   { transform: scale(0); }
+      40%       { transform: scale(1.15); }
+      46%, 88%  { transform: scale(1); }
+      100%      { transform: scale(0); }
+    }
+    @keyframes locus {
+      0%, 46%   { transform: scale(0); }
+      54%       { transform: scale(1.25); }
+      60%, 88%  { transform: scale(1); }
+      100%      { transform: scale(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .arm { stroke-dashoffset: 0; animation: none; }
+      .tip, .locus { transform: scale(1); animation: none; }
+    }
+  </style>
+  <g stroke-linecap="round" fill="none">
+    <line class="arm z-arm" x1="32" y1="37" x2="32" y2="17" stroke="#2F4A6D" stroke-width="4"/>
+    <line class="arm x-arm" x1="32" y1="37" x2="49.32" y2="47" stroke="#B84A2B" stroke-width="4"/>
+    <line class="arm y-arm" x1="32" y1="37" x2="14.68" y2="47" stroke="#5A7A3D" stroke-width="4"/>
+  </g>
+  <circle class="tip z-tip" cx="32" cy="17" r="4.5" fill="#2F4A6D"/>
+  <circle class="tip x-tip" cx="49.32" cy="47" r="4.5" fill="#B84A2B"/>
+  <circle class="tip y-tip" cx="14.68" cy="47" r="4.5" fill="#5A7A3D"/>
+  <circle class="locus" cx="32" cy="37" r="4.5" fill="#ca5f22"/>
+</svg>

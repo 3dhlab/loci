@@ -1,0 +1,700 @@
+{
+  "scope": "Installed Python 3.12 Linux dependency environment of the candidate API image; excludes packaging tools.",
+  "packages": [
+    {
+      "name": "alembic",
+      "version": "1.16.5",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "alembic-1.16.5.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "annotated_doc-0.0.5.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "annotated_types-0.8.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "anyio-4.15.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "bcrypt",
+      "version": "4.0.1",
+      "licenseExpression": null,
+      "licenseMetadata": "Apache License, Version 2.0",
+      "licenseFiles": [
+        "bcrypt-4.0.1.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "licenseExpression": null,
+      "licenseMetadata": "MPL-2.0",
+      "licenseFiles": [
+        "certifi-2026.7.22.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "licenseExpression": "MIT-0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "cffi-2.1.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.1",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "charset_normalizer-3.5.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "click-8.5.0.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "croniter",
+      "version": "6.2.4",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "croniter-6.2.4.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.1",
+      "licenseExpression": "Apache-2.0 OR BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "cryptography-50.0.1.dist-info/licenses/LICENSE",
+        "cryptography-50.0.1.dist-info/licenses/LICENSE.APACHE",
+        "cryptography-50.0.1.dist-info/licenses/LICENSE.BSD"
+      ]
+    },
+    {
+      "name": "dnspython",
+      "version": "2.8.0",
+      "licenseExpression": null,
+      "licenseMetadata": "ISC",
+      "licenseFiles": [
+        "dnspython-2.8.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "email_validator",
+      "version": "2.2.0",
+      "licenseExpression": null,
+      "licenseMetadata": "Unlicense",
+      "licenseFiles": [
+        "email_validator-2.2.0.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "fastapi",
+      "version": "0.141.1",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "fastapi-0.141.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "fastembed",
+      "version": "0.8.0",
+      "licenseExpression": null,
+      "licenseMetadata": "Apache License",
+      "licenseFiles": [
+        "fastembed-0.8.0.dist-info/licenses/LICENSE",
+        "fastembed-0.8.0.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "name": "filelock",
+      "version": "4.0.4",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "filelock-4.0.4.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "licenseExpression": null,
+      "licenseMetadata": "Apache 2.0",
+      "licenseFiles": []
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "fsspec-2026.9.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "greenlet",
+      "version": "3.5.6",
+      "licenseExpression": "MIT AND PSF-2.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "greenlet-3.5.6.dist-info/licenses/LICENSE",
+        "greenlet-3.5.6.dist-info/licenses/LICENSE.PSF"
+      ]
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "h11-0.16.0.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "hf-xet",
+      "version": "1.6.0",
+      "licenseExpression": "Apache-2.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "hf_xet-1.6.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "httpcore-1.0.9.dist-info/licenses/LICENSE.md"
+      ]
+    },
+    {
+      "name": "httptools",
+      "version": "0.8.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "httptools-0.8.0.dist-info/licenses/LICENSE",
+        "httptools-0.8.0.dist-info/licenses/vendor/http-parser/LICENSE-MIT",
+        "httptools-0.8.0.dist-info/licenses/vendor/llhttp/LICENSE"
+      ]
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "licenseExpression": null,
+      "licenseMetadata": "BSD-3-Clause",
+      "licenseFiles": [
+        "httpx-0.28.1.dist-info/licenses/LICENSE.md"
+      ]
+    },
+    {
+      "name": "huggingface_hub",
+      "version": "1.33.0",
+      "licenseExpression": null,
+      "licenseMetadata": "Apache-2.0",
+      "licenseFiles": [
+        "huggingface_hub-1.33.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "idna-3.20.dist-info/licenses/LICENSE.md"
+      ]
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "iniconfig-2.3.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "jellyfish",
+      "version": "1.2.1",
+      "licenseExpression": null,
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "jellyfish-1.2.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "loguru",
+      "version": "0.7.3",
+      "licenseExpression": null,
+      "licenseMetadata": null,
+      "licenseFiles": []
+    },
+    {
+      "name": "Mako",
+      "version": "1.4.3",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "mako-1.4.3.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.3",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "markupsafe-3.0.3.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "mmh3",
+      "version": "5.3.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT License\n\nCopyright (c) 2011-2026 Hajime Senuma\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+      "licenseFiles": [
+        "mmh3-5.3.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "networkx-3.7.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "licenseExpression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+        "numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+        "numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+        "numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md"
+      ]
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.30.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT License",
+      "licenseFiles": []
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "licenseExpression": "Apache-2.0 OR BSD-2-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "packaging-26.3.dist-info/licenses/LICENSE",
+        "packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+        "packaging-26.3.dist-info/licenses/LICENSE.BSD"
+      ]
+    },
+    {
+      "name": "passlib",
+      "version": "1.7.4",
+      "licenseExpression": null,
+      "licenseMetadata": "BSD",
+      "licenseFiles": [
+        "passlib-1.7.4.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "pgvector",
+      "version": "0.4.1",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "pgvector-0.4.1.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0",
+      "licenseExpression": "MIT-CMU",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pillow-12.3.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "pluggy-1.6.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2",
+      "licenseExpression": null,
+      "licenseMetadata": "3-Clause BSD License",
+      "licenseFiles": [
+        "protobuf-7.36.2.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "psycopg",
+      "version": "3.2.10",
+      "licenseExpression": null,
+      "licenseMetadata": "GNU Lesser General Public License v3 (LGPLv3)",
+      "licenseFiles": [
+        "psycopg-3.2.10.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "psycopg-binary",
+      "version": "3.2.10",
+      "licenseExpression": null,
+      "licenseMetadata": "GNU Lesser General Public License v3 (LGPLv3)",
+      "licenseFiles": [
+        "psycopg_binary-3.2.10.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "py_rust_stemmers",
+      "version": "0.1.8",
+      "licenseExpression": null,
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "py_rust_stemmers-0.1.8.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pycparser",
+      "version": "3.0",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pycparser-3.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pydantic",
+      "version": "2.13.5",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pydantic-2.13.5.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.10.1",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pydantic_settings-2.10.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.46.5",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pydantic_core-2.46.5.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "licenseExpression": "BSD-2-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pygments-2.21.0.dist-info/licenses/AUTHORS",
+        "pygments-2.21.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "PyJWT",
+      "version": "2.13.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pyjwt-2.13.0.dist-info/licenses/AUTHORS.rst",
+        "pyjwt-2.13.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "pytest",
+      "version": "9.0.3",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "pytest-9.0.3.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "licenseExpression": null,
+      "licenseMetadata": "Dual License",
+      "licenseFiles": [
+        "python_dateutil-2.9.0.post0.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.2",
+      "licenseExpression": null,
+      "licenseMetadata": "BSD-3-Clause",
+      "licenseFiles": [
+        "python_dotenv-1.2.2.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.31",
+      "licenseExpression": "Apache-2.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "python_multipart-0.0.31.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "pyyaml-6.0.3.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "redis",
+      "version": "6.4.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "redis-6.4.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "regex",
+      "version": "2026.9.10",
+      "licenseExpression": "Apache-2.0 AND CNRI-Python",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "regex-2026.9.10.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "licenseExpression": null,
+      "licenseMetadata": "Apache-2.0",
+      "licenseFiles": [
+        "requests-2.34.2.dist-info/licenses/LICENSE",
+        "requests-2.34.2.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "name": "rq",
+      "version": "2.6.0",
+      "licenseExpression": "BSD-2-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "rq-2.6.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "segtok",
+      "version": "1.5.11",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "segtok-1.5.11.dist-info/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "sentry-sdk",
+      "version": "2.58.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "sentry_sdk-2.58.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "six-1.17.0.dist-info/LICENSE"
+      ]
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.43",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "sqlalchemy-2.0.43.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "starlette",
+      "version": "1.6.0",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "starlette-1.6.0.dist-info/licenses/LICENSE.md"
+      ]
+    },
+    {
+      "name": "tabulate",
+      "version": "0.10.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "tabulate-0.10.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.23.2",
+      "licenseExpression": null,
+      "licenseMetadata": null,
+      "licenseFiles": []
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1",
+      "licenseExpression": null,
+      "licenseMetadata": "MPL-2.0 AND MIT",
+      "licenseFiles": [
+        "tqdm-4.70.1.dist-info/licenses/LICENCE"
+      ]
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "typing_inspection-0.4.4.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "licenseExpression": "PSF-2.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "typing_extensions-4.16.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "licenseExpression": "MIT",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "urllib3-2.8.0.dist-info/licenses/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.35.0",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "uvicorn-0.35.0.dist-info/licenses/LICENSE.md"
+      ]
+    },
+    {
+      "name": "uvloop",
+      "version": "0.22.1",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT License",
+      "licenseFiles": [
+        "uvloop-0.22.1.dist-info/licenses/LICENSE-APACHE",
+        "uvloop-0.22.1.dist-info/licenses/LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "watchfiles",
+      "version": "1.3.0",
+      "licenseExpression": null,
+      "licenseMetadata": "MIT",
+      "licenseFiles": [
+        "watchfiles-1.3.0.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "websockets",
+      "version": "17.1",
+      "licenseExpression": "BSD-3-Clause",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "websockets-17.1.dist-info/licenses/LICENSE"
+      ]
+    },
+    {
+      "name": "yake",
+      "version": "0.4.8",
+      "licenseExpression": null,
+      "licenseMetadata": "LGPLv3",
+      "licenseFiles": [
+        "yake-0.4.8.dist-info/LICENSE"
+      ]
+    }
+  ]
+}

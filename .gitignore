@@ -1,0 +1,35 @@
+# Dependencies and generated builds
+node_modules/
+dist/
+dist-ci/
+.vite/
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# Local media, database exports, and test evidence
+.media/
+.backups/
+*.dump
+*.log
+*.pid
+apps/web/test-results/
+dependency-audit-full.json
+
+# Editor and operating system files
+.DS_Store
+.vscode/
+.idea/
+
+# Disposable container validation reports
+.ci-artifacts/

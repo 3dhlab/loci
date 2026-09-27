@@ -1,0 +1,68 @@
+{
+    "prompt_version": "2026-04-24-v1",
+    "model_provider": "fixture",
+    "model_name": "fixture-title-card-ocr",
+    "detail": "high",
+    "source_kind": "fixture_import",
+    "source_version": "structured-json-v1",
+    "observations": [
+        {
+            "timestamp_ms": 0,
+            "payload": {
+                "title_card_visible": true,
+                "object": {
+                    "name": "Demo Vessel",
+                    "accession_number": "DEMO-001",
+                    "holding_institution": "Example Collection",
+                    "city": "Example City",
+                    "region": "Example Region",
+                    "country": null
+                },
+                "presenter": {
+                    "name": "Synthetic Presenter Alpha",
+                    "age": 42,
+                    "city": "Example Village",
+                    "region": null,
+                    "country": "Example Country"
+                },
+                "session_date": "February 14, 2025",
+                "additional_text": "Synthetic geometric demonstration vessel",
+                "raw_text_observed": "Synthetic Presenter Alpha\n42\nExample Village\nFebruary 14, 2025",
+                "confidence": {
+                    "object": "high",
+                    "presenter": "high",
+                    "session_date": "high"
+                }
+            }
+        },
+        {
+            "timestamp_ms": 5000,
+            "payload": {
+                "title_card_visible": true,
+                "object": {
+                    "name": "Demo Vessel",
+                    "accession_number": "DEMO-001",
+                    "holding_institution": "Example Collection",
+                    "city": "Example City",
+                    "region": "Example Region",
+                    "country": null
+                },
+                "presenter": {
+                    "name": "Synthetic Presenter Beta",
+                    "age": null,
+                    "city": "Example Village",
+                    "region": null,
+                    "country": "Example Country"
+                },
+                "session_date": "early February 2025",
+                "additional_text": null,
+                "raw_text_observed": "Synthetic Presenter Beta\nExample Village\nearly February 2025",
+                "confidence": {
+                    "object": "high",
+                    "presenter": "medium",
+                    "session_date": "medium"
+                }
+            }
+        }
+    ]
+}
