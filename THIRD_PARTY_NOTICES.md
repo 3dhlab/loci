@@ -2,7 +2,7 @@
 
 These notices accompany the installed JavaScript dependencies. Dependency metadata records are in `docs/dependency-license-inventory.json`. First-party code and generated sample terms are recorded separately. Python notices are in PYTHON_THIRD_PARTY_NOTICES.md. Container runtime tools, including FFmpeg, retain their upstream licenses; source and licensing information are available at https://ffmpeg.org/legal.html and https://www.debian.org/legal/licenses/.
 
-## @babel/code-frame 7.29.7 — LICENSE
+## @babel/code-frame 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -29,7 +29,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/code-frame 7.29.7 — license
+## @babel/code-frame 7.29.7 | license
 
 ```text
 MIT License
@@ -56,7 +56,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/compat-data 7.29.7 — LICENSE
+## @babel/compat-data 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -83,7 +83,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/compat-data 7.29.7 — license
+## @babel/compat-data 7.29.7 | license
 
 ```text
 MIT License
@@ -110,7 +110,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/core 7.29.7 — LICENSE
+## @babel/core 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -137,7 +137,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/core 7.29.7 — license
+## @babel/core 7.29.7 | license
 
 ```text
 MIT License
@@ -164,7 +164,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/generator 7.29.8 — LICENSE
+## @babel/generator 7.29.8 | LICENSE
 
 ```text
 MIT License
@@ -191,7 +191,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/generator 7.29.8 — license
+## @babel/generator 7.29.8 | license
 
 ```text
 MIT License
@@ -218,7 +218,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-compilation-targets 7.29.7 — LICENSE
+## @babel/helper-compilation-targets 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -245,7 +245,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-compilation-targets 7.29.7 — license
+## @babel/helper-compilation-targets 7.29.7 | license
 
 ```text
 MIT License
@@ -272,7 +272,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-globals 7.29.7 — LICENSE
+## @babel/helper-globals 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -299,7 +299,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-globals 7.29.7 — license
+## @babel/helper-globals 7.29.7 | license
 
 ```text
 MIT License
@@ -326,7 +326,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-module-imports 7.29.7 — LICENSE
+## @babel/helper-module-imports 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -353,7 +353,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-module-imports 7.29.7 — license
+## @babel/helper-module-imports 7.29.7 | license
 
 ```text
 MIT License
@@ -380,7 +380,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-module-transforms 7.29.7 — LICENSE
+## @babel/helper-module-transforms 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -407,7 +407,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-module-transforms 7.29.7 — license
+## @babel/helper-module-transforms 7.29.7 | license
 
 ```text
 MIT License
@@ -434,7 +434,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-plugin-utils 7.28.6 — LICENSE
+## @babel/helper-plugin-utils 7.28.6 | LICENSE
 
 ```text
 MIT License
@@ -461,7 +461,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-plugin-utils 7.28.6 — license
+## @babel/helper-plugin-utils 7.28.6 | license
 
 ```text
 MIT License
@@ -488,7 +488,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-string-parser 7.29.7 — LICENSE
+## @babel/helper-string-parser 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -515,7 +515,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-string-parser 7.29.7 — license
+## @babel/helper-string-parser 7.29.7 | license
 
 ```text
 MIT License
@@ -542,7 +542,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-validator-identifier 7.29.7 — LICENSE
+## @babel/helper-validator-identifier 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -569,7 +569,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-validator-identifier 7.29.7 — license
+## @babel/helper-validator-identifier 7.29.7 | license
 
 ```text
 MIT License
@@ -596,7 +596,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-validator-option 7.29.7 — LICENSE
+## @babel/helper-validator-option 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -623,7 +623,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helper-validator-option 7.29.7 — license
+## @babel/helper-validator-option 7.29.7 | license
 
 ```text
 MIT License
@@ -650,35 +650,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/helpers 7.29.7 — LICENSE
-
-```text
-MIT License
-
-Copyright (c) 2014-present Sebastian McKenzie and other contributors
-Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
-
-## @babel/helpers 7.29.7 — license
+## @babel/helpers 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -706,7 +678,35 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/parser 7.29.8 — LICENSE
+## @babel/helpers 7.29.7 | license
+
+```text
+MIT License
+
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+## @babel/parser 7.29.8 | LICENSE
 
 ```text
 Copyright (C) 2012-2014 by various contributors (see AUTHORS)
@@ -730,7 +730,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## @babel/parser 7.29.8 — license
+## @babel/parser 7.29.8 | license
 
 ```text
 Copyright (C) 2012-2014 by various contributors (see AUTHORS)
@@ -754,7 +754,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## @babel/plugin-transform-react-jsx-self 7.27.1 — LICENSE
+## @babel/plugin-transform-react-jsx-self 7.27.1 | LICENSE
 
 ```text
 MIT License
@@ -781,7 +781,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/plugin-transform-react-jsx-self 7.27.1 — license
+## @babel/plugin-transform-react-jsx-self 7.27.1 | license
 
 ```text
 MIT License
@@ -808,7 +808,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/plugin-transform-react-jsx-source 7.27.1 — LICENSE
+## @babel/plugin-transform-react-jsx-source 7.27.1 | LICENSE
 
 ```text
 MIT License
@@ -835,7 +835,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/plugin-transform-react-jsx-source 7.27.1 — license
+## @babel/plugin-transform-react-jsx-source 7.27.1 | license
 
 ```text
 MIT License
@@ -862,7 +862,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/runtime 7.29.2 — LICENSE
+## @babel/runtime 7.29.2 | LICENSE
 
 ```text
 MIT License
@@ -889,7 +889,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/runtime 7.29.2 — license
+## @babel/runtime 7.29.2 | license
 
 ```text
 MIT License
@@ -916,7 +916,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/template 7.29.7 — LICENSE
+## @babel/template 7.29.7 | LICENSE
 
 ```text
 MIT License
@@ -943,7 +943,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/template 7.29.7 — license
+## @babel/template 7.29.7 | license
 
 ```text
 MIT License
@@ -970,7 +970,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/traverse 7.29.8 — LICENSE
+## @babel/traverse 7.29.8 | LICENSE
 
 ```text
 MIT License
@@ -997,7 +997,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/traverse 7.29.8 — license
+## @babel/traverse 7.29.8 | license
 
 ```text
 MIT License
@@ -1024,7 +1024,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/types 7.29.8 — LICENSE
+## @babel/types 7.29.8 | LICENSE
 
 ```text
 MIT License
@@ -1051,7 +1051,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @babel/types 7.29.8 — license
+## @babel/types 7.29.8 | license
 
 ```text
 MIT License
@@ -1078,7 +1078,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## @dimforge/rapier3d-compat 0.12.0 — LICENSE
+## @dimforge/rapier3d-compat 0.12.0 | LICENSE
 
 ```text
                                  Apache License
@@ -1284,7 +1284,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    limitations under the License.
 ```
 
-## @dimforge/rapier3d-compat 0.12.0 — license
+## @dimforge/rapier3d-compat 0.12.0 | license
 
 ```text
                                  Apache License
@@ -1490,7 +1490,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    limitations under the License.
 ```
 
-## @jridgewell/gen-mapping 0.3.13 — LICENSE
+## @jridgewell/gen-mapping 0.3.13 | LICENSE
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1514,7 +1514,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/gen-mapping 0.3.13 — license
+## @jridgewell/gen-mapping 0.3.13 | license
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1538,7 +1538,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/remapping 2.3.5 — LICENSE
+## @jridgewell/remapping 2.3.5 | LICENSE
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1562,7 +1562,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/remapping 2.3.5 — license
+## @jridgewell/remapping 2.3.5 | license
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1586,7 +1586,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/resolve-uri 3.1.2 — LICENSE
+## @jridgewell/resolve-uri 3.1.2 | LICENSE
 
 ```text
 Copyright 2019 Justin Ridgewell <jridgewell@google.com>
@@ -1610,7 +1610,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/resolve-uri 3.1.2 — license
+## @jridgewell/resolve-uri 3.1.2 | license
 
 ```text
 Copyright 2019 Justin Ridgewell <jridgewell@google.com>
@@ -1634,7 +1634,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/sourcemap-codec 1.5.5 — LICENSE
+## @jridgewell/sourcemap-codec 1.5.5 | LICENSE
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1658,7 +1658,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/sourcemap-codec 1.5.5 — license
+## @jridgewell/sourcemap-codec 1.5.5 | license
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1682,7 +1682,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/trace-mapping 0.3.31 — LICENSE
+## @jridgewell/trace-mapping 0.3.31 | LICENSE
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1706,7 +1706,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @jridgewell/trace-mapping 0.3.31 — license
+## @jridgewell/trace-mapping 0.3.31 | license
 
 ```text
 Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
@@ -1730,7 +1730,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @monogrid/gainmap-js 3.4.0 — LICENSE
+## @monogrid/gainmap-js 3.4.0 | LICENSE
 
 ```text
 MIT License
@@ -1756,7 +1756,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @monogrid/gainmap-js 3.4.0 — license
+## @monogrid/gainmap-js 3.4.0 | license
 
 ```text
 MIT License
@@ -1782,7 +1782,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/animated 9.7.5 — LICENSE
+## @react-spring/animated 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -1808,7 +1808,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/animated 9.7.5 — license
+## @react-spring/animated 9.7.5 | license
 
 ```text
 MIT License
@@ -1834,7 +1834,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/core 9.7.5 — LICENSE
+## @react-spring/core 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -1860,7 +1860,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/core 9.7.5 — license
+## @react-spring/core 9.7.5 | license
 
 ```text
 MIT License
@@ -1886,7 +1886,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/rafz 9.7.5 — LICENSE
+## @react-spring/rafz 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -1912,7 +1912,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/rafz 9.7.5 — license
+## @react-spring/rafz 9.7.5 | license
 
 ```text
 MIT License
@@ -1938,7 +1938,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/shared 9.7.5 — LICENSE
+## @react-spring/shared 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -1964,7 +1964,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/shared 9.7.5 — license
+## @react-spring/shared 9.7.5 | license
 
 ```text
 MIT License
@@ -1990,7 +1990,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/three 9.7.5 — LICENSE
+## @react-spring/three 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -2016,7 +2016,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/three 9.7.5 — license
+## @react-spring/three 9.7.5 | license
 
 ```text
 MIT License
@@ -2042,7 +2042,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/types 9.7.5 — LICENSE
+## @react-spring/types 9.7.5 | LICENSE
 
 ```text
 MIT License
@@ -2068,7 +2068,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-spring/types 9.7.5 — license
+## @react-spring/types 9.7.5 | license
 
 ```text
 MIT License
@@ -2094,7 +2094,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-three/drei 9.122.0 — LICENSE
+## @react-three/drei 9.122.0 | LICENSE
 
 ```text
 MIT License
@@ -2120,7 +2120,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @react-three/drei 9.122.0 — license
+## @react-three/drei 9.122.0 | license
 
 ```text
 MIT License
@@ -2146,7 +2146,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @rolldown/pluginutils 1.0.0-beta.27 — LICENSE
+## @rolldown/pluginutils 1.0.0-beta.27 | LICENSE
 
 ```text
 MIT License
@@ -2176,7 +2176,7 @@ end of terms and conditions
 The licenses of externally maintained libraries from which parts of the Software is derived are listed [here](https://github.com/rolldown/rolldown/blob/main/THIRD-PARTY-LICENSE).
 ```
 
-## @rolldown/pluginutils 1.0.0-beta.27 — license
+## @rolldown/pluginutils 1.0.0-beta.27 | license
 
 ```text
 MIT License
@@ -2206,7 +2206,7 @@ end of terms and conditions
 The licenses of externally maintained libraries from which parts of the Software is derived are listed [here](https://github.com/rolldown/rolldown/blob/main/THIRD-PARTY-LICENSE).
 ```
 
-## @sentry/babel-plugin-component-annotate 5.2.0 — LICENSE
+## @sentry/babel-plugin-component-annotate 5.2.0 | LICENSE
 
 ```text
 # MIT License
@@ -2240,7 +2240,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/babel-plugin-component-annotate 5.2.0 — license
+## @sentry/babel-plugin-component-annotate 5.2.0 | license
 
 ```text
 # MIT License
@@ -2274,7 +2274,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/browser 10.49.0 — LICENSE
+## @sentry/browser 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2300,7 +2300,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/browser 10.49.0 — license
+## @sentry/browser 10.49.0 | license
 
 ```text
 MIT License
@@ -2326,7 +2326,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/bundler-plugin-core 5.2.0 — LICENSE
+## @sentry/bundler-plugin-core 5.2.0 | LICENSE
 
 ```text
 # MIT License
@@ -2360,7 +2360,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/bundler-plugin-core 5.2.0 — license
+## @sentry/bundler-plugin-core 5.2.0 | license
 
 ```text
 # MIT License
@@ -2394,7 +2394,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/cli 2.58.5 — LICENSE
+## @sentry/cli 2.58.5 | LICENSE
 
 ```text
 # Functional Source License, Version 1.1, MIT Future License
@@ -2509,7 +2509,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/cli 2.58.5 — license
+## @sentry/cli 2.58.5 | license
 
 ```text
 # Functional Source License, Version 1.1, MIT Future License
@@ -2624,7 +2624,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/core 10.49.0 — LICENSE
+## @sentry/core 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2650,7 +2650,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/core 10.49.0 — license
+## @sentry/core 10.49.0 | license
 
 ```text
 MIT License
@@ -2676,7 +2676,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/react 10.49.0 — LICENSE
+## @sentry/react 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2702,7 +2702,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/react 10.49.0 — license
+## @sentry/react 10.49.0 | license
 
 ```text
 MIT License
@@ -2728,7 +2728,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry/rollup-plugin 5.2.0 — LICENSE
+## @sentry/rollup-plugin 5.2.0 | LICENSE
 
 ```text
 # MIT License
@@ -2762,7 +2762,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/rollup-plugin 5.2.0 — license
+## @sentry/rollup-plugin 5.2.0 | license
 
 ```text
 # MIT License
@@ -2796,7 +2796,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/vite-plugin 5.2.0 — LICENSE
+## @sentry/vite-plugin 5.2.0 | LICENSE
 
 ```text
 # MIT License
@@ -2830,7 +2830,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry/vite-plugin 5.2.0 — license
+## @sentry/vite-plugin 5.2.0 | license
 
 ```text
 # MIT License
@@ -2864,7 +2864,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @sentry-internal/browser-utils 10.49.0 — LICENSE
+## @sentry-internal/browser-utils 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2890,7 +2890,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/browser-utils 10.49.0 — license
+## @sentry-internal/browser-utils 10.49.0 | license
 
 ```text
 MIT License
@@ -2916,7 +2916,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/feedback 10.49.0 — LICENSE
+## @sentry-internal/feedback 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2942,7 +2942,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/feedback 10.49.0 — license
+## @sentry-internal/feedback 10.49.0 | license
 
 ```text
 MIT License
@@ -2968,7 +2968,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/replay 10.49.0 — LICENSE
+## @sentry-internal/replay 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -2994,7 +2994,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/replay 10.49.0 — license
+## @sentry-internal/replay 10.49.0 | license
 
 ```text
 MIT License
@@ -3020,7 +3020,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/replay-canvas 10.49.0 — LICENSE
+## @sentry-internal/replay-canvas 10.49.0 | LICENSE
 
 ```text
 MIT License
@@ -3046,7 +3046,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @sentry-internal/replay-canvas 10.49.0 — license
+## @sentry-internal/replay-canvas 10.49.0 | license
 
 ```text
 MIT License
@@ -3072,7 +3072,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @tweenjs/tween.js 23.1.3 — LICENSE
+## @tweenjs/tween.js 23.1.3 | LICENSE
 
 ```text
 The MIT License
@@ -3100,7 +3100,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## @tweenjs/tween.js 23.1.3 — license
+## @tweenjs/tween.js 23.1.3 | license
 
 ```text
 The MIT License
@@ -3128,7 +3128,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## @types/babel__core 7.20.5 — LICENSE
+## @types/babel__core 7.20.5 | LICENSE
 
 ```text
     MIT License
@@ -3154,7 +3154,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__core 7.20.5 — license
+## @types/babel__core 7.20.5 | license
 
 ```text
     MIT License
@@ -3180,7 +3180,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__generator 7.27.0 — LICENSE
+## @types/babel__generator 7.27.0 | LICENSE
 
 ```text
     MIT License
@@ -3206,7 +3206,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__generator 7.27.0 — license
+## @types/babel__generator 7.27.0 | license
 
 ```text
     MIT License
@@ -3232,7 +3232,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__template 7.4.4 — LICENSE
+## @types/babel__template 7.4.4 | LICENSE
 
 ```text
     MIT License
@@ -3258,7 +3258,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__template 7.4.4 — license
+## @types/babel__template 7.4.4 | license
 
 ```text
     MIT License
@@ -3284,7 +3284,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__traverse 7.28.0 — LICENSE
+## @types/babel__traverse 7.28.0 | LICENSE
 
 ```text
     MIT License
@@ -3310,7 +3310,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/babel__traverse 7.28.0 — license
+## @types/babel__traverse 7.28.0 | license
 
 ```text
     MIT License
@@ -3336,7 +3336,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/draco3d 1.4.10 — LICENSE
+## @types/draco3d 1.4.10 | LICENSE
 
 ```text
     MIT License
@@ -3362,7 +3362,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/draco3d 1.4.10 — license
+## @types/draco3d 1.4.10 | license
 
 ```text
     MIT License
@@ -3388,7 +3388,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/estree 1.0.8 — LICENSE
+## @types/estree 1.0.8 | LICENSE
 
 ```text
     MIT License
@@ -3414,7 +3414,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/estree 1.0.8 — license
+## @types/estree 1.0.8 | license
 
 ```text
     MIT License
@@ -3440,7 +3440,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/offscreencanvas 2019.7.3 — LICENSE
+## @types/offscreencanvas 2019.7.3 | LICENSE
 
 ```text
     MIT License
@@ -3466,7 +3466,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/offscreencanvas 2019.7.3 — license
+## @types/offscreencanvas 2019.7.3 | license
 
 ```text
     MIT License
@@ -3492,7 +3492,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/react 19.2.14 — LICENSE
+## @types/react 19.2.14 | LICENSE
 
 ```text
     MIT License
@@ -3518,7 +3518,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/react 19.2.14 — license
+## @types/react 19.2.14 | license
 
 ```text
     MIT License
@@ -3544,7 +3544,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/react-reconciler 0.26.7 — LICENSE
+## @types/react-reconciler 0.26.7 | LICENSE
 
 ```text
     MIT License
@@ -3570,7 +3570,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/react-reconciler 0.26.7 — license
+## @types/react-reconciler 0.26.7 | license
 
 ```text
     MIT License
@@ -3596,7 +3596,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/stats.js 0.17.4 — LICENSE
+## @types/stats.js 0.17.4 | LICENSE
 
 ```text
     MIT License
@@ -3622,7 +3622,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/stats.js 0.17.4 — license
+## @types/stats.js 0.17.4 | license
 
 ```text
     MIT License
@@ -3648,7 +3648,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/three 0.183.1 — LICENSE
+## @types/three 0.183.1 | LICENSE
 
 ```text
     MIT License
@@ -3674,7 +3674,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/three 0.183.1 — license
+## @types/three 0.183.1 | license
 
 ```text
     MIT License
@@ -3700,7 +3700,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/webxr 0.5.24 — LICENSE
+## @types/webxr 0.5.24 | LICENSE
 
 ```text
     MIT License
@@ -3726,7 +3726,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @types/webxr 0.5.24 — license
+## @types/webxr 0.5.24 | license
 
 ```text
     MIT License
@@ -3752,7 +3752,7 @@ THE SOFTWARE.
     SOFTWARE
 ```
 
-## @use-gesture/core 10.3.1 — LICENSE
+## @use-gesture/core 10.3.1 | LICENSE
 
 ```text
 Copyright (c) 2018-present Paul Henschel <drcmda@gmail.com>
@@ -3776,7 +3776,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @use-gesture/core 10.3.1 — license
+## @use-gesture/core 10.3.1 | license
 
 ```text
 Copyright (c) 2018-present Paul Henschel <drcmda@gmail.com>
@@ -3800,7 +3800,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @use-gesture/react 10.3.1 — LICENSE
+## @use-gesture/react 10.3.1 | LICENSE
 
 ```text
 Copyright (c) 2018-present Paul Henschel <drcmda@gmail.com>
@@ -3824,7 +3824,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @use-gesture/react 10.3.1 — license
+## @use-gesture/react 10.3.1 | license
 
 ```text
 Copyright (c) 2018-present Paul Henschel <drcmda@gmail.com>
@@ -3848,7 +3848,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @vitejs/plugin-react 4.7.0 — LICENSE
+## @vitejs/plugin-react 4.7.0 | LICENSE
 
 ```text
 MIT License
@@ -3874,7 +3874,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @vitejs/plugin-react 4.7.0 — license
+## @vitejs/plugin-react 4.7.0 | license
 
 ```text
 MIT License
@@ -3900,7 +3900,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @webgpu/types 0.1.69 — LICENSE
+## @webgpu/types 0.1.69 | LICENSE
 
 ```text
 Copyright 2022 WebGPU Developers
@@ -3931,7 +3931,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## @webgpu/types 0.1.69 — license
+## @webgpu/types 0.1.69 | license
 
 ```text
 Copyright 2022 WebGPU Developers
@@ -3962,7 +3962,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## balanced-match 4.0.4 — LICENSE.md
+## balanced-match 4.0.4 | LICENSE.md
 
 ```text
 (MIT)
@@ -3990,7 +3990,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## balanced-match 4.0.4 — license.md
+## balanced-match 4.0.4 | license.md
 
 ```text
 (MIT)
@@ -4018,7 +4018,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## base64-js 1.5.1 — LICENSE
+## base64-js 1.5.1 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -4044,7 +4044,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## base64-js 1.5.1 — license
+## base64-js 1.5.1 | license
 
 ```text
 The MIT License (MIT)
@@ -4070,7 +4070,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## baseline-browser-mapping 2.11.13 — LICENSE.txt
+## baseline-browser-mapping 2.11.13 | LICENSE.txt
 
 ```text
                                  Apache License
@@ -4276,7 +4276,7 @@ THE SOFTWARE.
    limitations under the License.
 ```
 
-## bidi-js 1.0.3 — LICENSE.txt
+## bidi-js 1.0.3 | LICENSE.txt
 
 ```text
 Copyright (c) 2021 Jason Johnston
@@ -4303,7 +4303,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## brace-expansion 5.0.9 — LICENSE
+## brace-expansion 5.0.9 | LICENSE
 
 ```text
 MIT License
@@ -4331,7 +4331,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## brace-expansion 5.0.9 — license
+## brace-expansion 5.0.9 | license
 
 ```text
 MIT License
@@ -4359,7 +4359,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## browserslist 4.28.8 — LICENSE
+## browserslist 4.28.8 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -4384,7 +4384,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## browserslist 4.28.8 — license
+## browserslist 4.28.8 | license
 
 ```text
 The MIT License (MIT)
@@ -4409,7 +4409,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## buffer 6.0.3 — LICENSE
+## buffer 6.0.3 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -4435,7 +4435,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## buffer 6.0.3 — license
+## buffer 6.0.3 | license
 
 ```text
 The MIT License (MIT)
@@ -4461,7 +4461,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## camera-controls 2.10.1 — LICENSE
+## camera-controls 2.10.1 | LICENSE
 
 ```text
 MIT License
@@ -4487,7 +4487,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## camera-controls 2.10.1 — license
+## camera-controls 2.10.1 | license
 
 ```text
 MIT License
@@ -4513,7 +4513,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## caniuse-lite 1.0.30001809 — LICENSE
+## caniuse-lite 1.0.30001809 | LICENSE
 
 ```text
 Attribution 4.0 International
@@ -4913,7 +4913,7 @@ public licenses.
 Creative Commons may be contacted at creativecommons.org.
 ```
 
-## caniuse-lite 1.0.30001809 — license
+## caniuse-lite 1.0.30001809 | license
 
 ```text
 Attribution 4.0 International
@@ -5313,7 +5313,7 @@ public licenses.
 Creative Commons may be contacted at creativecommons.org.
 ```
 
-## convert-source-map 2.0.0 — LICENSE
+## convert-source-map 2.0.0 | LICENSE
 
 ```text
 Copyright 2013 Thorsten Lorenz. 
@@ -5341,7 +5341,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## convert-source-map 2.0.0 — license
+## convert-source-map 2.0.0 | license
 
 ```text
 Copyright 2013 Thorsten Lorenz. 
@@ -5369,7 +5369,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## cross-env 7.0.3 — LICENSE
+## cross-env 7.0.3 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -5394,7 +5394,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## cross-env 7.0.3 — license
+## cross-env 7.0.3 | license
 
 ```text
 The MIT License (MIT)
@@ -5419,7 +5419,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## cross-spawn 7.0.6 — LICENSE
+## cross-spawn 7.0.6 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -5445,7 +5445,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## cross-spawn 7.0.6 — license
+## cross-spawn 7.0.6 | license
 
 ```text
 The MIT License (MIT)
@@ -5471,7 +5471,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## csstype 3.2.3 — LICENSE
+## csstype 3.2.3 | LICENSE
 
 ```text
 Copyright (c) 2017-2018 Fredrik Nicol
@@ -5495,7 +5495,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## csstype 3.2.3 — license
+## csstype 3.2.3 | license
 
 ```text
 Copyright (c) 2017-2018 Fredrik Nicol
@@ -5519,7 +5519,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## debug 4.4.3 — LICENSE
+## debug 4.4.3 | LICENSE
 
 ```text
 (The MIT License)
@@ -5543,7 +5543,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## debug 4.4.3 — license
+## debug 4.4.3 | license
 
 ```text
 (The MIT License)
@@ -5567,7 +5567,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## detect-gpu 5.0.70 — LICENSE
+## detect-gpu 5.0.70 | LICENSE
 
 ```text
 MIT License
@@ -5593,7 +5593,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## detect-gpu 5.0.70 — license
+## detect-gpu 5.0.70 | license
 
 ```text
 MIT License
@@ -5619,7 +5619,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## dotenv 16.6.1 — LICENSE
+## dotenv 16.6.1 | LICENSE
 
 ```text
 Copyright (c) 2015, Scott Motte
@@ -5647,7 +5647,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## dotenv 16.6.1 — license
+## dotenv 16.6.1 | license
 
 ```text
 Copyright (c) 2015, Scott Motte
@@ -5675,7 +5675,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## electron-to-chromium 1.5.405 — LICENSE
+## electron-to-chromium 1.5.405 | LICENSE
 
 ```text
 Copyright 2018 Kilian Valkhof
@@ -5685,7 +5685,7 @@ Permission to use, copy, modify, and/or distribute this software for any purpose
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## electron-to-chromium 1.5.405 — license
+## electron-to-chromium 1.5.405 | license
 
 ```text
 Copyright 2018 Kilian Valkhof
@@ -5695,7 +5695,7 @@ Permission to use, copy, modify, and/or distribute this software for any purpose
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## esbuild 0.25.12 — LICENSE.md
+## esbuild 0.25.12 | LICENSE.md
 
 ```text
 MIT License
@@ -5721,7 +5721,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## esbuild 0.25.12 — license.md
+## esbuild 0.25.12 | license.md
 
 ```text
 MIT License
@@ -5747,7 +5747,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## escalade 3.2.0 — LICENSE
+## escalade 3.2.0 | LICENSE
 
 ```text
 MIT License
@@ -5761,7 +5761,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## escalade 3.2.0 — license
+## escalade 3.2.0 | license
 
 ```text
 MIT License
@@ -5775,7 +5775,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## fdir 6.5.0 — LICENSE
+## fdir 6.5.0 | LICENSE
 
 ```text
 Copyright 2023 Abdullah Atta
@@ -5787,7 +5787,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## fdir 6.5.0 — license
+## fdir 6.5.0 | license
 
 ```text
 Copyright 2023 Abdullah Atta
@@ -5799,7 +5799,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## fflate 0.8.3 — LICENSE
+## fflate 0.8.3 | LICENSE
 
 ```text
 MIT License
@@ -5825,7 +5825,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## fflate 0.8.3 — license
+## fflate 0.8.3 | license
 
 ```text
 MIT License
@@ -5851,7 +5851,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## find-up 5.0.0 — LICENSE
+## find-up 5.0.0 | LICENSE
 
 ```text
 MIT License
@@ -5865,7 +5865,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## find-up 5.0.0 — license
+## find-up 5.0.0 | license
 
 ```text
 MIT License
@@ -5879,7 +5879,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## fsevents 2.3.3 — LICENSE
+## fsevents 2.3.3 | LICENSE
 
 ```text
 MIT License
@@ -5906,7 +5906,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## fsevents 2.3.3 — license
+## fsevents 2.3.3 | license
 
 ```text
 MIT License
@@ -5933,7 +5933,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## gensync 1.0.0-beta.2 — LICENSE
+## gensync 1.0.0-beta.2 | LICENSE
 
 ```text
 Copyright 2018 Logan Smyth <loganfsmyth@gmail.com>
@@ -5945,7 +5945,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## gensync 1.0.0-beta.2 — license
+## gensync 1.0.0-beta.2 | license
 
 ```text
 Copyright 2018 Logan Smyth <loganfsmyth@gmail.com>
@@ -5957,7 +5957,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## glob 13.0.6 — LICENSE.md
+## glob 13.0.6 | LICENSE.md
 
 ```text
 All packages under `src/` are licensed according to the terms in
@@ -6025,7 +6025,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## glob 13.0.6 — license.md
+## glob 13.0.6 | license.md
 
 ```text
 All packages under `src/` are licensed according to the terms in
@@ -6093,7 +6093,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## glsl-noise 0.0.0 — LICENSE
+## glsl-noise 0.0.0 | LICENSE
 
 ```text
 Copyright (C) 2011 by Ashima Arts (Simplex noise)
@@ -6118,7 +6118,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## glsl-noise 0.0.0 — license
+## glsl-noise 0.0.0 | license
 
 ```text
 Copyright (C) 2011 by Ashima Arts (Simplex noise)
@@ -6143,7 +6143,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## hls.js 1.6.15 — LICENSE
+## hls.js 1.6.15 | LICENSE
 
 ```text
 Copyright (c) 2017 Dailymotion (http://www.dailymotion.com)
@@ -6176,7 +6176,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## hls.js 1.6.15 — license
+## hls.js 1.6.15 | license
 
 ```text
 Copyright (c) 2017 Dailymotion (http://www.dailymotion.com)
@@ -6209,7 +6209,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## ieee754 1.2.1 — LICENSE
+## ieee754 1.2.1 | LICENSE
 
 ```text
 Copyright 2008 Fair Oaks Labs, Inc.
@@ -6225,7 +6225,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## ieee754 1.2.1 — license
+## ieee754 1.2.1 | license
 
 ```text
 Copyright 2008 Fair Oaks Labs, Inc.
@@ -6241,7 +6241,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## immediate 3.0.6 — LICENSE.txt
+## immediate 3.0.6 | LICENSE.txt
 
 ```text
 Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, Domenic Denicola, Brian Cavalier
@@ -6266,7 +6266,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## is-promise 2.2.2 — LICENSE
+## is-promise 2.2.2 | LICENSE
 
 ```text
 Copyright (c) 2014 Forbes Lindesay
@@ -6290,7 +6290,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## is-promise 2.2.2 — license
+## is-promise 2.2.2 | license
 
 ```text
 Copyright (c) 2014 Forbes Lindesay
@@ -6314,7 +6314,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## isexe 2.0.0 — LICENSE
+## isexe 2.0.0 | LICENSE
 
 ```text
 The ISC License
@@ -6334,7 +6334,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## isexe 2.0.0 — license
+## isexe 2.0.0 | license
 
 ```text
 The ISC License
@@ -6354,7 +6354,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## its-fine 1.2.5 — LICENSE
+## its-fine 1.2.5 | LICENSE
 
 ```text
 MIT License
@@ -6380,7 +6380,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## its-fine 1.2.5 — license
+## its-fine 1.2.5 | license
 
 ```text
 MIT License
@@ -6406,7 +6406,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## js-tokens 4.0.0 — LICENSE
+## js-tokens 4.0.0 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6432,7 +6432,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## js-tokens 4.0.0 — license
+## js-tokens 4.0.0 | license
 
 ```text
 The MIT License (MIT)
@@ -6458,7 +6458,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## json5 2.2.3 — LICENSE.md
+## json5 2.2.3 | LICENSE.md
 
 ```text
 MIT License
@@ -6486,7 +6486,7 @@ SOFTWARE.
 [others]: https://github.com/json5/json5/contributors
 ```
 
-## json5 2.2.3 — license.md
+## json5 2.2.3 | license.md
 
 ```text
 MIT License
@@ -6514,7 +6514,7 @@ SOFTWARE.
 [others]: https://github.com/json5/json5/contributors
 ```
 
-## lie 3.3.0 — LICENSE.md
+## lie 3.3.0 | LICENSE.md
 
 ```text
 #Copyright (c) 2014-2018 Calvin Metcalf, Jordan Harband
@@ -6526,7 +6526,7 @@ The above copyright notice and this permission notice shall be included in all c
 **THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
 ```
 
-## lie 3.3.0 — license.md
+## lie 3.3.0 | license.md
 
 ```text
 #Copyright (c) 2014-2018 Calvin Metcalf, Jordan Harband
@@ -6538,7 +6538,7 @@ The above copyright notice and this permission notice shall be included in all c
 **THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
 ```
 
-## locate-path 6.0.0 — LICENSE
+## locate-path 6.0.0 | LICENSE
 
 ```text
 MIT License
@@ -6552,7 +6552,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## locate-path 6.0.0 — license
+## locate-path 6.0.0 | license
 
 ```text
 MIT License
@@ -6566,7 +6566,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## loose-envify 1.4.0 — LICENSE
+## loose-envify 1.4.0 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6592,7 +6592,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## loose-envify 1.4.0 — license
+## loose-envify 1.4.0 | license
 
 ```text
 The MIT License (MIT)
@@ -6618,7 +6618,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## lru-cache 5.1.1 — LICENSE
+## lru-cache 5.1.1 | LICENSE
 
 ```text
 The ISC License
@@ -6638,7 +6638,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## lru-cache 5.1.1 — license
+## lru-cache 5.1.1 | license
 
 ```text
 The ISC License
@@ -6658,7 +6658,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## magic-string 0.30.21 — LICENSE
+## magic-string 0.30.21 | LICENSE
 
 ```text
 Copyright 2018 Rich Harris
@@ -6670,7 +6670,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## magic-string 0.30.21 — license
+## magic-string 0.30.21 | license
 
 ```text
 Copyright 2018 Rich Harris
@@ -6682,7 +6682,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## meshline 3.3.1 — LICENSE
+## meshline 3.3.1 | LICENSE
 
 ```text
 MIT License
@@ -6708,7 +6708,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## meshline 3.3.1 — license
+## meshline 3.3.1 | license
 
 ```text
 MIT License
@@ -6734,7 +6734,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## meshoptimizer 1.0.1 — LICENSE.md
+## meshoptimizer 1.0.1 | LICENSE.md
 
 ```text
 MIT License
@@ -6760,7 +6760,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## meshoptimizer 1.0.1 — license.md
+## meshoptimizer 1.0.1 | license.md
 
 ```text
 MIT License
@@ -6786,7 +6786,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## minimatch 10.2.5 — LICENSE.md
+## minimatch 10.2.5 | LICENSE.md
 
 ```text
 # Blue Oak Model License
@@ -6846,7 +6846,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim._**
 ```
 
-## minimatch 10.2.5 — license.md
+## minimatch 10.2.5 | license.md
 
 ```text
 # Blue Oak Model License
@@ -6906,7 +6906,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim._**
 ```
 
-## minipass 7.1.3 — LICENSE.md
+## minipass 7.1.3 | LICENSE.md
 
 ```text
 # Blue Oak Model License
@@ -6966,7 +6966,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## minipass 7.1.3 — license.md
+## minipass 7.1.3 | license.md
 
 ```text
 # Blue Oak Model License
@@ -7026,7 +7026,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## ms 2.1.3 — LICENSE.md
+## ms 2.1.3 | LICENSE.md
 
 ```text
 The MIT License (MIT)
@@ -7052,7 +7052,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## ms 2.1.3 — license.md
+## ms 2.1.3 | license.md
 
 ```text
 The MIT License (MIT)
@@ -7078,7 +7078,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## nanoid 3.3.18 — LICENSE
+## nanoid 3.3.18 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -7103,7 +7103,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## nanoid 3.3.18 — license
+## nanoid 3.3.18 | license
 
 ```text
 The MIT License (MIT)
@@ -7128,7 +7128,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## node-fetch 2.7.0 — LICENSE.md
+## node-fetch 2.7.0 | LICENSE.md
 
 ```text
 The MIT License (MIT)
@@ -7154,7 +7154,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## node-fetch 2.7.0 — license.md
+## node-fetch 2.7.0 | license.md
 
 ```text
 The MIT License (MIT)
@@ -7180,7 +7180,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## node-releases 2.0.53 — LICENSE
+## node-releases 2.0.53 | LICENSE
 
 ```text
 The MIT License
@@ -7206,7 +7206,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## node-releases 2.0.53 — license
+## node-releases 2.0.53 | license
 
 ```text
 The MIT License
@@ -7232,7 +7232,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## object-assign 4.1.1 — LICENSE
+## object-assign 4.1.1 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -7258,7 +7258,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## object-assign 4.1.1 — license
+## object-assign 4.1.1 | license
 
 ```text
 The MIT License (MIT)
@@ -7284,7 +7284,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## p-limit 3.1.0 — LICENSE
+## p-limit 3.1.0 | LICENSE
 
 ```text
 MIT License
@@ -7298,7 +7298,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## p-limit 3.1.0 — license
+## p-limit 3.1.0 | license
 
 ```text
 MIT License
@@ -7312,7 +7312,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## p-locate 5.0.0 — LICENSE
+## p-locate 5.0.0 | LICENSE
 
 ```text
 MIT License
@@ -7326,7 +7326,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## p-locate 5.0.0 — license
+## p-locate 5.0.0 | license
 
 ```text
 MIT License
@@ -7340,7 +7340,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## path-exists 4.0.0 — LICENSE
+## path-exists 4.0.0 | LICENSE
 
 ```text
 MIT License
@@ -7354,7 +7354,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## path-exists 4.0.0 — license
+## path-exists 4.0.0 | license
 
 ```text
 MIT License
@@ -7368,7 +7368,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## path-key 3.1.1 — LICENSE
+## path-key 3.1.1 | LICENSE
 
 ```text
 MIT License
@@ -7382,7 +7382,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## path-key 3.1.1 — license
+## path-key 3.1.1 | license
 
 ```text
 MIT License
@@ -7396,7 +7396,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## path-scurry 2.0.2 — LICENSE.md
+## path-scurry 2.0.2 | LICENSE.md
 
 ```text
 # Blue Oak Model License
@@ -7456,7 +7456,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## path-scurry 2.0.2 — license.md
+## path-scurry 2.0.2 | license.md
 
 ```text
 # Blue Oak Model License
@@ -7516,7 +7516,7 @@ will be liable to anyone for any damages related to this
 software or this license, under any kind of legal claim.***
 ```
 
-## picocolors 1.1.1 — LICENSE
+## picocolors 1.1.1 | LICENSE
 
 ```text
 ISC License
@@ -7536,7 +7536,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## picocolors 1.1.1 — license
+## picocolors 1.1.1 | license
 
 ```text
 ISC License
@@ -7556,7 +7556,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## picomatch 4.0.7 — LICENSE
+## picomatch 4.0.7 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -7582,7 +7582,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## picomatch 4.0.7 — license
+## picomatch 4.0.7 | license
 
 ```text
 The MIT License (MIT)
@@ -7608,7 +7608,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## playwright 1.58.2 — LICENSE
+## playwright 1.58.2 | LICENSE
 
 ```text
                                  Apache License
@@ -7815,7 +7815,7 @@ THE SOFTWARE.
    limitations under the License.
 ```
 
-## playwright 1.58.2 — license
+## playwright 1.58.2 | license
 
 ```text
                                  Apache License
@@ -8022,7 +8022,7 @@ THE SOFTWARE.
    limitations under the License.
 ```
 
-## playwright 1.58.2 — NOTICE
+## playwright 1.58.2 | NOTICE
 
 ```text
 Playwright
@@ -8032,7 +8032,7 @@ This software contains code derived from the Puppeteer project (https://github.c
 available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/blob/master/LICENSE).
 ```
 
-## playwright-core 1.58.2 — LICENSE
+## playwright-core 1.58.2 | LICENSE
 
 ```text
                                  Apache License
@@ -8239,7 +8239,7 @@ available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/b
    limitations under the License.
 ```
 
-## playwright-core 1.58.2 — license
+## playwright-core 1.58.2 | license
 
 ```text
                                  Apache License
@@ -8446,7 +8446,7 @@ available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/b
    limitations under the License.
 ```
 
-## playwright-core 1.58.2 — NOTICE
+## playwright-core 1.58.2 | NOTICE
 
 ```text
 Playwright
@@ -8456,7 +8456,7 @@ This software contains code derived from the Puppeteer project (https://github.c
 available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/blob/master/LICENSE).
 ```
 
-## postcss 8.5.26 — LICENSE
+## postcss 8.5.26 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -8481,7 +8481,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## postcss 8.5.26 — license
+## postcss 8.5.26 | license
 
 ```text
 The MIT License (MIT)
@@ -8506,7 +8506,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## potpack 1.0.2 — LICENSE
+## potpack 1.0.2 | LICENSE
 
 ```text
 ISC License
@@ -8526,7 +8526,7 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 ```
 
-## potpack 1.0.2 — license
+## potpack 1.0.2 | license
 
 ```text
 ISC License
@@ -8546,7 +8546,7 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 ```
 
-## progress 2.0.3 — LICENSE
+## progress 2.0.3 | LICENSE
 
 ```text
 (The MIT License)
@@ -8573,7 +8573,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## progress 2.0.3 — license
+## progress 2.0.3 | license
 
 ```text
 (The MIT License)
@@ -8600,7 +8600,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## promise-worker-transferable 1.0.4 — LICENSE
+## promise-worker-transferable 1.0.4 | LICENSE
 
 ```text
 
@@ -8807,7 +8807,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   limitations under the License.
 ```
 
-## promise-worker-transferable 1.0.4 — license
+## promise-worker-transferable 1.0.4 | license
 
 ```text
 
@@ -9014,7 +9014,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   limitations under the License.
 ```
 
-## prop-types 15.8.1 — LICENSE
+## prop-types 15.8.1 | LICENSE
 
 ```text
 MIT License
@@ -9040,7 +9040,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## prop-types 15.8.1 — license
+## prop-types 15.8.1 | license
 
 ```text
 MIT License
@@ -9066,7 +9066,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## proxy-from-env 1.1.0 — LICENSE
+## proxy-from-env 1.1.0 | LICENSE
 
 ```text
 The MIT License
@@ -9091,7 +9091,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## proxy-from-env 1.1.0 — license
+## proxy-from-env 1.1.0 | license
 
 ```text
 The MIT License
@@ -9116,7 +9116,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## react 18.3.1 — LICENSE
+## react 18.3.1 | LICENSE
 
 ```text
 MIT License
@@ -9142,7 +9142,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react 18.3.1 — license
+## react 18.3.1 | license
 
 ```text
 MIT License
@@ -9168,7 +9168,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-composer 5.0.3 — LICENSE
+## react-composer 5.0.3 | LICENSE
 
 ```text
 MIT License
@@ -9194,7 +9194,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-composer 5.0.3 — license
+## react-composer 5.0.3 | license
 
 ```text
 MIT License
@@ -9220,7 +9220,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-dom 18.3.1 — LICENSE
+## react-dom 18.3.1 | LICENSE
 
 ```text
 MIT License
@@ -9246,7 +9246,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-dom 18.3.1 — license
+## react-dom 18.3.1 | license
 
 ```text
 MIT License
@@ -9272,7 +9272,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-is 16.13.1 — LICENSE
+## react-is 16.13.1 | LICENSE
 
 ```text
 MIT License
@@ -9298,7 +9298,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-is 16.13.1 — license
+## react-is 16.13.1 | license
 
 ```text
 MIT License
@@ -9324,7 +9324,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-reconciler 0.27.0 — LICENSE
+## react-reconciler 0.27.0 | LICENSE
 
 ```text
 MIT License
@@ -9350,7 +9350,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-reconciler 0.27.0 — license
+## react-reconciler 0.27.0 | license
 
 ```text
 MIT License
@@ -9376,7 +9376,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-refresh 0.17.0 — LICENSE
+## react-refresh 0.17.0 | LICENSE
 
 ```text
 MIT License
@@ -9402,7 +9402,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-refresh 0.17.0 — license
+## react-refresh 0.17.0 | license
 
 ```text
 MIT License
@@ -9428,7 +9428,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-use-measure 2.1.7 — LICENSE
+## react-use-measure 2.1.7 | LICENSE
 
 ```text
 MIT License
@@ -9454,7 +9454,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## react-use-measure 2.1.7 — license
+## react-use-measure 2.1.7 | license
 
 ```text
 MIT License
@@ -9480,7 +9480,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## require-from-string 2.0.2 — LICENSE
+## require-from-string 2.0.2 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -9506,7 +9506,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## require-from-string 2.0.2 — license
+## require-from-string 2.0.2 | license
 
 ```text
 The MIT License (MIT)
@@ -9532,7 +9532,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## rollup 4.59.0 — LICENSE.md
+## rollup 4.59.0 | LICENSE.md
 
 ```text
 # Rollup core license
@@ -10216,7 +10216,7 @@ Repository: https://github.com/yargs/yargs-parser.git
 > ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## rollup 4.59.0 — license.md
+## rollup 4.59.0 | license.md
 
 ```text
 # Rollup core license
@@ -10900,7 +10900,7 @@ Repository: https://github.com/yargs/yargs-parser.git
 > ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## scheduler 0.23.2 — LICENSE
+## scheduler 0.23.2 | LICENSE
 
 ```text
 MIT License
@@ -10926,7 +10926,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## scheduler 0.23.2 — license
+## scheduler 0.23.2 | license
 
 ```text
 MIT License
@@ -10952,7 +10952,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## semver 6.3.1 — LICENSE
+## semver 6.3.1 | LICENSE
 
 ```text
 The ISC License
@@ -10972,7 +10972,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## semver 6.3.1 — license
+## semver 6.3.1 | license
 
 ```text
 The ISC License
@@ -10992,7 +10992,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## shebang-command 2.0.0 — LICENSE
+## shebang-command 2.0.0 | LICENSE
 
 ```text
 MIT License
@@ -11006,7 +11006,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## shebang-command 2.0.0 — license
+## shebang-command 2.0.0 | license
 
 ```text
 MIT License
@@ -11020,7 +11020,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## shebang-regex 3.0.0 — LICENSE
+## shebang-regex 3.0.0 | LICENSE
 
 ```text
 MIT License
@@ -11034,7 +11034,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## shebang-regex 3.0.0 — license
+## shebang-regex 3.0.0 | license
 
 ```text
 MIT License
@@ -11048,7 +11048,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## source-map-js 1.2.1 — LICENSE
+## source-map-js 1.2.1 | LICENSE
 
 ```text
 
@@ -11081,7 +11081,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## source-map-js 1.2.1 — license
+## source-map-js 1.2.1 | license
 
 ```text
 
@@ -11114,7 +11114,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## stats.js 0.17.0 — LICENSE
+## stats.js 0.17.0 | LICENSE
 
 ```text
 The MIT License
@@ -11140,7 +11140,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## stats.js 0.17.0 — license
+## stats.js 0.17.0 | license
 
 ```text
 The MIT License
@@ -11166,7 +11166,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## suspend-react 0.1.3 — LICENSE
+## suspend-react 0.1.3 | LICENSE
 
 ```text
 MIT License
@@ -11192,7 +11192,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## suspend-react 0.1.3 — license
+## suspend-react 0.1.3 | license
 
 ```text
 MIT License
@@ -11218,7 +11218,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## three 0.177.0 — LICENSE
+## three 0.177.0 | LICENSE
 
 ```text
 The MIT License
@@ -11244,7 +11244,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## three 0.177.0 — license
+## three 0.177.0 | license
 
 ```text
 The MIT License
@@ -11270,7 +11270,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## three-mesh-bvh 0.7.8 — LICENSE
+## three-mesh-bvh 0.7.8 | LICENSE
 
 ```text
 MIT License
@@ -11296,7 +11296,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## three-mesh-bvh 0.7.8 — license
+## three-mesh-bvh 0.7.8 | license
 
 ```text
 MIT License
@@ -11322,7 +11322,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## three-stdlib 2.36.1 — LICENSE
+## three-stdlib 2.36.1 | LICENSE
 
 ```text
 MIT License
@@ -11348,7 +11348,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## three-stdlib 2.36.1 — license
+## three-stdlib 2.36.1 | license
 
 ```text
 MIT License
@@ -11374,7 +11374,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## tinyglobby 0.2.17 — LICENSE
+## tinyglobby 0.2.17 | LICENSE
 
 ```text
 MIT License
@@ -11400,7 +11400,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## tinyglobby 0.2.17 — license
+## tinyglobby 0.2.17 | license
 
 ```text
 MIT License
@@ -11426,7 +11426,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-three-text 0.52.4 — LICENSE
+## troika-three-text 0.52.4 | LICENSE
 
 ```text
 MIT License
@@ -11453,7 +11453,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-three-text 0.52.4 — license
+## troika-three-text 0.52.4 | license
 
 ```text
 MIT License
@@ -11480,7 +11480,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-three-utils 0.52.4 — LICENSE
+## troika-three-utils 0.52.4 | LICENSE
 
 ```text
 MIT License
@@ -11507,7 +11507,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-three-utils 0.52.4 — license
+## troika-three-utils 0.52.4 | license
 
 ```text
 MIT License
@@ -11534,7 +11534,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-worker-utils 0.52.0 — LICENSE
+## troika-worker-utils 0.52.0 | LICENSE
 
 ```text
 MIT License
@@ -11561,7 +11561,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## troika-worker-utils 0.52.0 — license
+## troika-worker-utils 0.52.0 | license
 
 ```text
 MIT License
@@ -11588,7 +11588,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## tunnel-rat 0.1.2 — LICENSE
+## tunnel-rat 0.1.2 | LICENSE
 
 ```text
 MIT License
@@ -11614,7 +11614,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## tunnel-rat 0.1.2 — license
+## tunnel-rat 0.1.2 | license
 
 ```text
 MIT License
@@ -11640,7 +11640,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## update-browserslist-db 1.3.1 — LICENSE
+## update-browserslist-db 1.3.1 | LICENSE
 
 ```text
 The MIT License (MIT)
@@ -11665,7 +11665,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## update-browserslist-db 1.3.1 — license
+## update-browserslist-db 1.3.1 | license
 
 ```text
 The MIT License (MIT)
@@ -11690,7 +11690,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## use-sync-external-store 1.6.0 — LICENSE
+## use-sync-external-store 1.6.0 | LICENSE
 
 ```text
 MIT License
@@ -11716,7 +11716,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## use-sync-external-store 1.6.0 — license
+## use-sync-external-store 1.6.0 | license
 
 ```text
 MIT License
@@ -11742,7 +11742,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## utility-types 3.11.0 — LICENSE
+## utility-types 3.11.0 | LICENSE
 
 ```text
 MIT License
@@ -11768,7 +11768,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## utility-types 3.11.0 — license
+## utility-types 3.11.0 | license
 
 ```text
 MIT License
@@ -11794,7 +11794,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## vite 6.4.3 — LICENSE.md
+## vite 6.4.3 | LICENSE.md
 
 ```text
 # Vite core license
@@ -14205,7 +14205,7 @@ Repository: git+https://github.com/websockets/ws.git
 > CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## vite 6.4.3 — license.md
+## vite 6.4.3 | license.md
 
 ```text
 # Vite core license
@@ -16616,7 +16616,7 @@ Repository: git+https://github.com/websockets/ws.git
 > CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## webgl-constants 1.1.1 — LICENSE
+## webgl-constants 1.1.1 | LICENSE
 
 ```text
 MIT License
@@ -16642,7 +16642,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## webgl-constants 1.1.1 — license
+## webgl-constants 1.1.1 | license
 
 ```text
 MIT License
@@ -16668,7 +16668,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## webgl-sdf-generator 1.1.1 — LICENSE.txt
+## webgl-sdf-generator 1.1.1 | LICENSE.txt
 
 ```text
 Copyright (c) 2021 Jason Johnston
@@ -16695,7 +16695,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## webidl-conversions 3.0.1 — LICENSE.md
+## webidl-conversions 3.0.1 | LICENSE.md
 
 ```text
 # The BSD 2-Clause License
@@ -16712,7 +16712,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## webidl-conversions 3.0.1 — license.md
+## webidl-conversions 3.0.1 | license.md
 
 ```text
 # The BSD 2-Clause License
@@ -16729,7 +16729,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## whatwg-url 5.0.0 — LICENSE.txt
+## whatwg-url 5.0.0 | LICENSE.txt
 
 ```text
 The MIT License (MIT)
@@ -16755,7 +16755,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## which 2.0.2 — LICENSE
+## which 2.0.2 | LICENSE
 
 ```text
 The ISC License
@@ -16775,7 +16775,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## which 2.0.2 — license
+## which 2.0.2 | license
 
 ```text
 The ISC License
@@ -16795,7 +16795,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## yallist 3.1.1 — LICENSE
+## yallist 3.1.1 | LICENSE
 
 ```text
 The ISC License
@@ -16815,7 +16815,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## yallist 3.1.1 — license
+## yallist 3.1.1 | license
 
 ```text
 The ISC License
@@ -16835,7 +16835,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## yocto-queue 0.1.0 — LICENSE
+## yocto-queue 0.1.0 | LICENSE
 
 ```text
 MIT License
@@ -16849,7 +16849,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## yocto-queue 0.1.0 — license
+## yocto-queue 0.1.0 | license
 
 ```text
 MIT License
@@ -16863,7 +16863,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## zustand 5.0.12 — LICENSE
+## zustand 5.0.12 | LICENSE
 
 ```text
 MIT License
@@ -16889,7 +16889,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## zustand 5.0.12 — license
+## zustand 5.0.12 | license
 
 ```text
 MIT License

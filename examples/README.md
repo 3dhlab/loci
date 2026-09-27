@@ -2,8 +2,7 @@
 
 The demo generator constructs an eight-vertex cube from numerical coordinates,
 a twelve-second silent video with blue, amber and purple sections, a poster, three derived clip videos with posters,
-and a manually authored timed transcript. It imports no external imagery,
-recordings, collection data or transcripts. `apps/api/app/scripts/generate_demo_assets.py`
+and a manually authored timed transcript. All sample content is generated specifically for this demonstration. `apps/api/app/scripts/generate_demo_assets.py`
 contains the complete geometry and FFmpeg recipe. FFmpeg encoder versions can
 change output bytes; the seed calculates identities from the actual generated files.
 See the repository's sample notices for redistribution terms.
@@ -11,7 +10,7 @@ See the repository's sample notices for redistribution terms.
 The seeded object has three annotations. “Compare two sections” plays the blue
 section (0–4 seconds), followed by purple (8–12 seconds). Points use model-space
 coordinates and timing values use integer milliseconds. The cube spans −0.5 to
-0.5 on each axis. Camera JSON contains `position` and `target` vectors.
+0.5 on each axis. Camera settings contain `position` and `target` vectors.
 
 ## Start and inspect
 
@@ -23,7 +22,7 @@ docker compose build
 docker compose up -d postgres redis
 docker compose run --rm api alembic upgrade head
 docker compose run --rm api python -m app.scripts.seed_demo
-docker compose up -d
+docker compose up -d --wait
 python3 scripts/demo/verify.py
 ```
 
@@ -35,8 +34,7 @@ existing content. It refuses a populated, unrelated database and shared modes.
 Docker Engine with Compose v2 or Docker Desktop, Python 3 and internet access
 for container images/npm/Python downloads are required. Containers run Linux;
 macOS and Windows use Docker Desktop. The demo binds application ports to
-127.0.0.1, stores database/media in project-scoped named volumes, and starts no
-email, remote publication, transcription, embedding-download or worker service.
+127.0.0.1, stores database/media in project-scoped named volumes, Email, remote publishing, transcription and background processing have separate configuration requirements.
 Use a separate Compose project (`docker compose -p another-demo ...`) and adjust
 published ports before running concurrent copies.
 
@@ -68,7 +66,7 @@ The interactive `/docs` page gives exact schemas and upload forms.
 
 Video uploads and transcription require optional worker services and further
 configuration. The supported quickstart uses the generated, normalized video.
-The API verification script checks the seeded public projection, complete and
+The API verification script checks the published sample records, complete and
 ranged media responses, transcript timing, and an authenticated annotation
 creation/deletion round trip against the actual database.
 
@@ -98,15 +96,15 @@ before personalizing the installation, or in a separate disposable Compose proje
 
 For a replacement timed transcript, use `POST /api/v1/transcripts` with JSON:
 
-```json
-{
-  "video_id": "00000000-0000-4000-8000-000000000005",
-  "title": "Replacement transcript",
-  "format": "VTT",
-  "language": "en",
-  "raw_text": "WEBVTT\n\n00:00:00.000 --> 00:00:04.000\nDescribe the new recording here.\n"
-}
-```
+| Field | Value for the example |
+| --- | --- |
+| video_id | 00000000-0000-4000-8000-000000000005 |
+| title | Replacement transcript |
+| format | VTT |
+| language | en |
+| raw_text | A WEBVTT header followed by timed cues and the text for your recording. |
+
+Enter these fields in the interactive API documentation. The first sample window runs from 00:00:00.000 to 00:00:04.000.
 
 The returned `transcript.id` can be published with
 `PATCH /api/v1/transcripts/{transcript_id}` and `{"is_published": true}` after
@@ -122,12 +120,11 @@ through `PATCH /api/v1/objects/{object_id}/model` only after placement review.
 The public media endpoints return 404 for a withdrawn model or video.
 
 The Compose demo sets `EMBEDDING_ENABLED=false`. Public combined-search requests
-use lexical transcript matching and perform no embedding-provider initialization
-or model downloads. Optional semantic retrieval requires explicitly enabling
+use lexical transcript matching and work directly with the stored transcript text. Optional semantic retrieval requires explicitly enabling
 embeddings, selecting/configuring a provider, and running the indexing worker.
 `EMBEDDING_WARMUP_ENABLED` controls startup warmup separately. The verification
 script checks model replacement withdrawal, separate annotation republication,
-and a real lexical search in addition to the seed journey.
+and a real lexical search in addition to the demonstration.
 
 Video substitution regenerates the linked clip windows from the new recording.
 Their previous transcript excerpts, excerpt-file references and citation text

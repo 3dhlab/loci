@@ -1,7 +1,7 @@
 # Security
 
-Keep vulnerability reports private. Include the affected version, impact, synthetic reproduction and relevant redacted diagnostics. Never include live credentials or participant content.
+Send vulnerability reports to Craig Stevens at craig.stevens@austin.utexas.edu. Include the affected version, the potential impact, steps to reproduce the issue with sample content, and relevant logs with sensitive information removed. Keep passwords, access tokens and participant records private.
 
-Email Craig Stevens at craig.stevens@austin.utexas.edu for private vulnerability reports. The public Issues tracker is for ordinary bugs and support. GitHub private vulnerability reporting may be enabled as an additional channel after publication.
+Use GitHub Issues for ordinary bugs and support questions. GitHub's private vulnerability reporting may also be enabled after publication.
 
-The candidate's maintained security scope is the documented local demo. Internet deployment and additional integrations require a separately reviewed operating configuration. Dependency audits and tests are evidence at a specific revision; they do not guarantee future vulnerability absence. Maintainers will record fixes and supported release versions when public releases begin.
+Security testing currently covers the documented local demonstration. A hosted installation needs a review of its authentication, network access, secrets and operating procedures. Dependency audits describe the versions and advisories checked at a particular time; repeat them as the software changes. Maintainers will document security fixes and supported versions as releases become available.

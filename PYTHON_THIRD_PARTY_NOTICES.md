@@ -2,7 +2,7 @@
 
 Provided notices from the resolved runtime environment. Dependencies retain their respective terms. See docs/python-dependency-license-inventory.json.
 
-## alembic 1.16.5 — alembic-1.16.5.dist-info/licenses/LICENSE
+## alembic 1.16.5 | alembic-1.16.5.dist-info/licenses/LICENSE
 
 ```text
 Copyright 2009-2025 Michael Bayer.
@@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## annotated-doc 0.0.5 — annotated_doc-0.0.5.dist-info/licenses/LICENSE
+## annotated-doc 0.0.5 | annotated_doc-0.0.5.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -52,7 +52,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## annotated-types 0.8.0 — annotated_types-0.8.0.dist-info/licenses/LICENSE
+## annotated-types 0.8.0 | annotated_types-0.8.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -78,7 +78,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## anyio 4.15.1 — anyio-4.15.1.dist-info/licenses/LICENSE
+## anyio 4.15.1 | anyio-4.15.1.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -103,7 +103,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## bcrypt 4.0.1 — bcrypt-4.0.1.dist-info/LICENSE
+## bcrypt 4.0.1 | bcrypt-4.0.1.dist-info/LICENSE
 
 ```text
                               Apache License
@@ -309,7 +309,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-## certifi 2026.7.22 — certifi-2026.7.22.dist-info/licenses/LICENSE
+## certifi 2026.7.22 | certifi-2026.7.22.dist-info/licenses/LICENSE
 
 ```text
 This package contains a modified version of ca-bundle.crt:
@@ -334,7 +334,7 @@ one at http://mozilla.org/MPL/2.0/.
 @(#) $RCSfile: certdata.txt,v $ $Revision: 1.80 $ $Date: 2011/11/03 15:11:58 $
 ```
 
-## cffi 2.1.1 — cffi-2.1.1.dist-info/licenses/LICENSE
+## cffi 2.1.1 | cffi-2.1.1.dist-info/licenses/LICENSE
 
 ```text
 
@@ -361,7 +361,7 @@ documentation is licensed as follows:
     DEALINGS IN THE SOFTWARE.
 ```
 
-## charset-normalizer 3.5.1 — charset_normalizer-3.5.1.dist-info/licenses/LICENSE
+## charset-normalizer 3.5.1 | charset_normalizer-3.5.1.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -387,7 +387,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## click 8.5.0 — click-8.5.0.dist-info/licenses/LICENSE.txt
+## click 8.5.0 | click-8.5.0.dist-info/licenses/LICENSE.txt
 
 ```text
 Copyright 2014 Pallets
@@ -420,7 +420,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## croniter 6.2.4 — croniter-6.2.4.dist-info/licenses/LICENSE
+## croniter 6.2.4 | croniter-6.2.4.dist-info/licenses/LICENSE
 
 ```text
 Copyright (C) 2010-2012 Matsumoto Taichi
@@ -432,7 +432,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## cryptography 50.0.1 — cryptography-50.0.1.dist-info/licenses/LICENSE
+## cryptography 50.0.1 | cryptography-50.0.1.dist-info/licenses/LICENSE
 
 ```text
 This software is made available under the terms of *either* of the licenses
@@ -440,7 +440,7 @@ found in LICENSE.APACHE or LICENSE.BSD. Contributions to cryptography are made
 under the terms of *both* these licenses.
 ```
 
-## cryptography 50.0.1 — cryptography-50.0.1.dist-info/licenses/LICENSE.APACHE
+## cryptography 50.0.1 | cryptography-50.0.1.dist-info/licenses/LICENSE.APACHE
 
 ```text
 
@@ -647,7 +647,7 @@ under the terms of *both* these licenses.
    limitations under the License.
 ```
 
-## cryptography 50.0.1 — cryptography-50.0.1.dist-info/licenses/LICENSE.BSD
+## cryptography 50.0.1 | cryptography-50.0.1.dist-info/licenses/LICENSE.BSD
 
 ```text
 Copyright (c) Individual contributors.
@@ -679,7 +679,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## dnspython 2.8.0 — dnspython-2.8.0.dist-info/licenses/LICENSE
+## dnspython 2.8.0 | dnspython-2.8.0.dist-info/licenses/LICENSE
 
 ```text
 ISC License
@@ -719,7 +719,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
 OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## email_validator 2.2.0 — email_validator-2.2.0.dist-info/LICENSE
+## email_validator 2.2.0 | email_validator-2.2.0.dist-info/LICENSE
 
 ```text
 This is free and unencumbered software released into the public
@@ -751,7 +751,7 @@ THE SOFTWARE.
 For more information, please refer to <https://unlicense.org/>
 ```
 
-## fastapi 0.141.1 — fastapi-0.141.1.dist-info/licenses/LICENSE
+## fastapi 0.141.1 | fastapi-0.141.1.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -777,7 +777,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## fastembed 0.8.0 — fastembed-0.8.0.dist-info/licenses/LICENSE
+## fastembed 0.8.0 | fastembed-0.8.0.dist-info/licenses/LICENSE
 
 ```text
                                  Apache License
@@ -983,7 +983,7 @@ THE SOFTWARE.
    limitations under the License.
 ```
 
-## fastembed 0.8.0 — fastembed-0.8.0.dist-info/licenses/NOTICE
+## fastembed 0.8.0 | fastembed-0.8.0.dist-info/licenses/NOTICE
 
 ```text
 Copyright 2024 Qdrant
@@ -1010,7 +1010,7 @@ Additional Notes:
 This project also includes third-party libraries with their respective licenses. Please refer to the documentation of each library for details regarding its usage and licensing terms.
 ```
 
-## filelock 4.0.4 — filelock-4.0.4.dist-info/licenses/LICENSE
+## filelock 4.0.4 | filelock-4.0.4.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -1036,7 +1036,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## fsspec 2026.9.0 — fsspec-2026.9.0.dist-info/licenses/LICENSE
+## fsspec 2026.9.0 | fsspec-2026.9.0.dist-info/licenses/LICENSE
 
 ```text
 BSD 3-Clause License
@@ -1070,7 +1070,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## greenlet 3.5.6 — greenlet-3.5.6.dist-info/licenses/LICENSE
+## greenlet 3.5.6 | greenlet-3.5.6.dist-info/licenses/LICENSE
 
 ```text
 The following files are derived from Stackless Python and are subject to the
@@ -1105,7 +1105,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## greenlet 3.5.6 — greenlet-3.5.6.dist-info/licenses/LICENSE.PSF
+## greenlet 3.5.6 | greenlet-3.5.6.dist-info/licenses/LICENSE.PSF
 
 ```text
 PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
@@ -1157,7 +1157,7 @@ agrees to be bound by the terms and conditions of this License
 Agreement.
 ```
 
-## h11 0.16.0 — h11-0.16.0.dist-info/licenses/LICENSE.txt
+## h11 0.16.0 | h11-0.16.0.dist-info/licenses/LICENSE.txt
 
 ```text
 The MIT License (MIT)
@@ -1184,7 +1184,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## hf-xet 1.6.0 — hf_xet-1.6.0.dist-info/licenses/LICENSE
+## hf-xet 1.6.0 | hf_xet-1.6.0.dist-info/licenses/LICENSE
 
 ```text
                                  Apache License
@@ -1390,7 +1390,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    limitations under the License.
 ```
 
-## httpcore 1.0.9 — httpcore-1.0.9.dist-info/licenses/LICENSE.md
+## httpcore 1.0.9 | httpcore-1.0.9.dist-info/licenses/LICENSE.md
 
 ```text
 Copyright © 2020, [Encode OSS Ltd](https://www.encode.io/).
@@ -1422,7 +1422,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## httptools 0.8.0 — httptools-0.8.0.dist-info/licenses/LICENSE
+## httptools 0.8.0 | httptools-0.8.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License
@@ -1448,7 +1448,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## httptools 0.8.0 — httptools-0.8.0.dist-info/licenses/vendor/http-parser/LICENSE-MIT
+## httptools 0.8.0 | httptools-0.8.0.dist-info/licenses/vendor/http-parser/LICENSE-MIT
 
 ```text
 Copyright Joyent, Inc. and other Node contributors.
@@ -1472,7 +1472,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 ```
 
-## httptools 0.8.0 — httptools-0.8.0.dist-info/licenses/vendor/llhttp/LICENSE
+## httptools 0.8.0 | httptools-0.8.0.dist-info/licenses/vendor/llhttp/LICENSE
 
 ```text
 MIT License
@@ -1499,7 +1499,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## httpx 0.28.1 — httpx-0.28.1.dist-info/licenses/LICENSE.md
+## httpx 0.28.1 | httpx-0.28.1.dist-info/licenses/LICENSE.md
 
 ```text
 Copyright © 2019, [Encode OSS Ltd](https://www.encode.io/).
@@ -1516,7 +1516,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## huggingface_hub 1.33.0 — huggingface_hub-1.33.0.dist-info/licenses/LICENSE
+## huggingface_hub 1.33.0 | huggingface_hub-1.33.0.dist-info/licenses/LICENSE
 
 ```text
                                  Apache License
@@ -1722,7 +1722,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    limitations under the License.
 ```
 
-## idna 3.20 — idna-3.20.dist-info/licenses/LICENSE.md
+## idna 3.20 | idna-3.20.dist-info/licenses/LICENSE.md
 
 ```text
 BSD 3-Clause License
@@ -1758,7 +1758,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## iniconfig 2.3.0 — iniconfig-2.3.0.dist-info/licenses/LICENSE
+## iniconfig 2.3.0 | iniconfig-2.3.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -1784,7 +1784,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## jellyfish 1.2.1 — jellyfish-1.2.1.dist-info/licenses/LICENSE
+## jellyfish 1.2.1 | jellyfish-1.2.1.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -1810,7 +1810,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Mako 1.4.3 — mako-1.4.3.dist-info/licenses/LICENSE
+## Mako 1.4.3 | mako-1.4.3.dist-info/licenses/LICENSE
 
 ```text
 Copyright 2006-2026 the Mako authors and contributors <see AUTHORS file>.
@@ -1834,7 +1834,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## MarkupSafe 3.0.3 — markupsafe-3.0.3.dist-info/licenses/LICENSE.txt
+## MarkupSafe 3.0.3 | markupsafe-3.0.3.dist-info/licenses/LICENSE.txt
 
 ```text
 Copyright 2010 Pallets
@@ -1867,7 +1867,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## mmh3 5.3.0 — mmh3-5.3.0.dist-info/licenses/LICENSE
+## mmh3 5.3.0 | mmh3-5.3.0.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -1893,7 +1893,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## networkx 3.7 — networkx-3.7.dist-info/licenses/LICENSE.txt
+## networkx 3.7 | networkx-3.7.dist-info/licenses/LICENSE.txt
 
 ```text
 NetworkX is distributed with the 3-clause BSD license.
@@ -1935,7 +1935,7 @@ NetworkX is distributed with the 3-clause BSD license.
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/LICENSE.txt
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/LICENSE.txt
 
 ```text
 Copyright (c) 2005-2025, NumPy Developers.
@@ -2875,7 +2875,7 @@ License: LGPL-2.1-or-later
     https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt
 
 ```text
   zlib License
@@ -2901,7 +2901,7 @@ License: LGPL-2.1-or-later
   3. This notice may not be removed or altered from any source distribution.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING
 
 ```text
 BSD Zero Clause License
@@ -2920,7 +2920,7 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE
 
 ```text
 This project is primarily dual-licensed under your choice of either the Apache
@@ -3296,7 +3296,7 @@ express Statement of Purpose.
     this CC0 or use of the Work.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt
 
 ```text
 Copyright (c) 2014 Ryan Juckett
@@ -3328,7 +3328,7 @@ Ryan Juckett's original code was under the Zlib license; he gave numpy
 permission to include it under the MIT license instead.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md
 
 ```text
 BSD 3-Clause License
@@ -3361,7 +3361,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE
 
 ```text
 Copyright (c) 2005-2021, NumPy Developers.
@@ -3396,7 +3396,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md
 
 ```text
 Copyright (C) 2010-2018 Max-Planck-Society
@@ -3426,7 +3426,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt
 
 ```text
 Copyright (c) 1992-2013 The University of Tennessee and The University
@@ -3479,7 +3479,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE
 
 ```text
 * Copyright (c) 2006, University of Georgia and Pierre G.F. Gerard-Marchant
@@ -3508,7 +3508,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md
 
 ```text
 **This software is dual-licensed under the The University of Illinois/NCSA
@@ -3584,7 +3584,7 @@ often the algorithm's designer. Component licenses are located with
 the component code.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md
 
 ```text
 ## NumPy
@@ -3650,7 +3650,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md
 
 ```text
 # MT19937
@@ -3716,7 +3716,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md
 
 ```text
 # PCG64
@@ -3743,7 +3743,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md
 
 ```text
 # PHILOX
@@ -3779,7 +3779,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md
 
 ```text
 # SFC64
@@ -3811,7 +3811,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 ```
 
-## numpy 2.5.3 — numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md
+## numpy 2.5.3 | numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md
 
 ```text
 # SPLITMIX64
@@ -3825,7 +3825,7 @@ worldwide. This software is distributed without any warranty.
 See <http://creativecommons.org/publicdomain/zero/1.0/>.
 ```
 
-## packaging 26.3 — packaging-26.3.dist-info/licenses/LICENSE
+## packaging 26.3 | packaging-26.3.dist-info/licenses/LICENSE
 
 ```text
 This software is made available under the terms of *either* of the licenses
@@ -3833,7 +3833,7 @@ found in LICENSE.APACHE or LICENSE.BSD. Contributions to this software is made
 under the terms of *both* these licenses.
 ```
 
-## packaging 26.3 — packaging-26.3.dist-info/licenses/LICENSE.APACHE
+## packaging 26.3 | packaging-26.3.dist-info/licenses/LICENSE.APACHE
 
 ```text
 
@@ -4015,7 +4015,7 @@ under the terms of *both* these licenses.
    END OF TERMS AND CONDITIONS
 ```
 
-## packaging 26.3 — packaging-26.3.dist-info/licenses/LICENSE.BSD
+## packaging 26.3 | packaging-26.3.dist-info/licenses/LICENSE.BSD
 
 ```text
 Copyright (c) Donald Stufft and individual contributors.
@@ -4043,7 +4043,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## passlib 1.7.4 — passlib-1.7.4.dist-info/LICENSE
+## passlib 1.7.4 | passlib-1.7.4.dist-info/LICENSE
 
 ```text
 .. -*- restructuredtext -*-
@@ -4164,7 +4164,7 @@ They were downloaded from `<https://www.eff.org/deeplinks/2016/07/new-wordlists-
 and are released under the `Creative Commons License <https://www.eff.org/copyright>`_.
 ```
 
-## pgvector 0.4.1 — pgvector-0.4.1.dist-info/licenses/LICENSE.txt
+## pgvector 0.4.1 | pgvector-0.4.1.dist-info/licenses/LICENSE.txt
 
 ```text
 The MIT License (MIT)
@@ -4190,7 +4190,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## pillow 12.3.0 — pillow-12.3.0.dist-info/licenses/LICENSE
+## pillow 12.3.0 | pillow-12.3.0.dist-info/licenses/LICENSE
 
 ```text
 The Python Imaging Library (PIL) is
@@ -5769,7 +5769,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## pluggy 1.6.0 — pluggy-1.6.0.dist-info/licenses/LICENSE
+## pluggy 1.6.0 | pluggy-1.6.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -5795,7 +5795,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## protobuf 7.36.2 — protobuf-7.36.2.dist-info/LICENSE
+## protobuf 7.36.2 | protobuf-7.36.2.dist-info/LICENSE
 
 ```text
 Copyright 2008 Google Inc.  All rights reserved.
@@ -5832,7 +5832,7 @@ standalone and requires a support library to be linked with it.  This
 support library is itself covered by the above license.
 ```
 
-## psycopg 3.2.10 — psycopg-3.2.10.dist-info/licenses/LICENSE.txt
+## psycopg 3.2.10 | psycopg-3.2.10.dist-info/licenses/LICENSE.txt
 
 ```text
                    GNU LESSER GENERAL PUBLIC LICENSE
@@ -6002,7 +6002,7 @@ permanent authorization for you to choose that version for the
 Library.
 ```
 
-## psycopg-binary 3.2.10 — psycopg_binary-3.2.10.dist-info/licenses/LICENSE.txt
+## psycopg-binary 3.2.10 | psycopg_binary-3.2.10.dist-info/licenses/LICENSE.txt
 
 ```text
                    GNU LESSER GENERAL PUBLIC LICENSE
@@ -6172,7 +6172,7 @@ permanent authorization for you to choose that version for the
 Library.
 ```
 
-## py_rust_stemmers 0.1.8 — py_rust_stemmers-0.1.8.dist-info/licenses/LICENSE
+## py_rust_stemmers 0.1.8 | py_rust_stemmers-0.1.8.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -6198,7 +6198,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## pycparser 3.0 — pycparser-3.0.dist-info/licenses/LICENSE
+## pycparser 3.0 | pycparser-3.0.dist-info/licenses/LICENSE
 
 ```text
 pycparser -- A C parser in Python
@@ -6230,7 +6230,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## pydantic 2.13.5 — pydantic-2.13.5.dist-info/licenses/LICENSE
+## pydantic 2.13.5 | pydantic-2.13.5.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6256,7 +6256,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## pydantic-settings 2.10.1 — pydantic_settings-2.10.1.dist-info/licenses/LICENSE
+## pydantic-settings 2.10.1 | pydantic_settings-2.10.1.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6282,7 +6282,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## pydantic_core 2.46.5 — pydantic_core-2.46.5.dist-info/licenses/LICENSE
+## pydantic_core 2.46.5 | pydantic_core-2.46.5.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6308,7 +6308,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Pygments 2.21.0 — pygments-2.21.0.dist-info/licenses/AUTHORS
+## Pygments 2.21.0 | pygments-2.21.0.dist-info/licenses/AUTHORS
 
 ```text
 Pygments is written and maintained by Georg Brandl <georg@python.org>.
@@ -6609,7 +6609,7 @@ Other contributors, listed alphabetically, are:
 Many thanks for all contributions!
 ```
 
-## Pygments 2.21.0 — pygments-2.21.0.dist-info/licenses/LICENSE
+## Pygments 2.21.0 | pygments-2.21.0.dist-info/licenses/LICENSE
 
 ```text
 Copyright (c) 2006-2022 by the respective authors (see AUTHORS file).
@@ -6639,7 +6639,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## PyJWT 2.13.0 — pyjwt-2.13.0.dist-info/licenses/AUTHORS.rst
+## PyJWT 2.13.0 | pyjwt-2.13.0.dist-info/licenses/AUTHORS.rst
 
 ```text
 Authors
@@ -6651,7 +6651,7 @@ Originally written and maintained by `Jeff Lindsay <https://github.com/progrium>
 A full list of contributors can be found on GitHub’s `overview <https://github.com/jpadilla/pyjwt/graphs/contributors>`_.
 ```
 
-## PyJWT 2.13.0 — pyjwt-2.13.0.dist-info/licenses/LICENSE
+## PyJWT 2.13.0 | pyjwt-2.13.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6677,7 +6677,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## pytest 9.0.3 — pytest-9.0.3.dist-info/licenses/LICENSE
+## pytest 9.0.3 | pytest-9.0.3.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -6703,7 +6703,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## python-dateutil 2.9.0.post0 — python_dateutil-2.9.0.post0.dist-info/LICENSE
+## python-dateutil 2.9.0.post0 | python_dateutil-2.9.0.post0.dist-info/LICENSE
 
 ```text
 Copyright 2017- Paul Ganssle <paul@ganssle.io>
@@ -6762,7 +6762,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The above BSD License Applies to all code, even that also covered by Apache 2.0.
 ```
 
-## python-dotenv 1.2.2 — python_dotenv-1.2.2.dist-info/licenses/LICENSE
+## python-dotenv 1.2.2 | python_dotenv-1.2.2.dist-info/licenses/LICENSE
 
 ```text
 Copyright (c) 2014, Saurabh Kumar (python-dotenv), 2013, Ted Tieken (django-dotenv-rw), 2013, Jacob Kaplan-Moss (django-dotenv)
@@ -6794,7 +6794,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## python-multipart 0.0.31 — python_multipart-0.0.31.dist-info/licenses/LICENSE.txt
+## python-multipart 0.0.31 | python_multipart-0.0.31.dist-info/licenses/LICENSE.txt
 
 ```text
 
@@ -7001,7 +7001,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    limitations under the License.
 ```
 
-## PyYAML 6.0.3 — pyyaml-6.0.3.dist-info/licenses/LICENSE
+## PyYAML 6.0.3 | pyyaml-6.0.3.dist-info/licenses/LICENSE
 
 ```text
 Copyright (c) 2017-2021 Ingy döt Net
@@ -7026,7 +7026,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## redis 6.4.0 — redis-6.4.0.dist-info/licenses/LICENSE
+## redis 6.4.0 | redis-6.4.0.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -7052,7 +7052,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## regex 2026.9.10 — regex-2026.9.10.dist-info/licenses/LICENSE.txt
+## regex 2026.9.10 | regex-2026.9.10.dist-info/licenses/LICENSE.txt
 
 ```text
 This work was derived from the 're' module of CPython 2.6 and CPython 3.1,
@@ -7265,7 +7265,7 @@ All additions and alterations are licensed under the Apache 2.0 License.
    limitations under the License.
 ```
 
-## requests 2.34.2 — requests-2.34.2.dist-info/licenses/LICENSE
+## requests 2.34.2 | requests-2.34.2.dist-info/licenses/LICENSE
 
 ```text
 
@@ -7445,14 +7445,14 @@ All additions and alterations are licensed under the Apache 2.0 License.
       of your accepting any such warranty or additional liability.
 ```
 
-## requests 2.34.2 — requests-2.34.2.dist-info/licenses/NOTICE
+## requests 2.34.2 | requests-2.34.2.dist-info/licenses/NOTICE
 
 ```text
 Requests
 Copyright 2019 Kenneth Reitz
 ```
 
-## rq 2.6.0 — rq-2.6.0.dist-info/licenses/LICENSE
+## rq 2.6.0 | rq-2.6.0.dist-info/licenses/LICENSE
 
 ```text
 Copyright 2012 Vincent Driessen. All rights reserved.
@@ -7483,7 +7483,7 @@ of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of Vincent Driessen.
 ```
 
-## segtok 1.5.11 — segtok-1.5.11.dist-info/LICENSE.txt
+## segtok 1.5.11 | segtok-1.5.11.dist-info/LICENSE.txt
 
 ```text
 Copyright 2020 Florian Leitner
@@ -7495,7 +7495,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## sentry-sdk 2.58.0 — sentry_sdk-2.58.0.dist-info/licenses/LICENSE
+## sentry-sdk 2.58.0 | sentry_sdk-2.58.0.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -7521,7 +7521,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## six 1.17.0 — six-1.17.0.dist-info/LICENSE
+## six 1.17.0 | six-1.17.0.dist-info/LICENSE
 
 ```text
 Copyright (c) 2010-2024 Benjamin Peterson
@@ -7544,7 +7544,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## SQLAlchemy 2.0.43 — sqlalchemy-2.0.43.dist-info/licenses/LICENSE
+## SQLAlchemy 2.0.43 | sqlalchemy-2.0.43.dist-info/licenses/LICENSE
 
 ```text
 Copyright 2005-2025 SQLAlchemy authors and contributors <see AUTHORS file>.
@@ -7568,7 +7568,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## starlette 1.6.0 — starlette-1.6.0.dist-info/licenses/LICENSE.md
+## starlette 1.6.0 | starlette-1.6.0.dist-info/licenses/LICENSE.md
 
 ```text
 Copyright © 2018, [Encode OSS Ltd](https://www.encode.io/).
@@ -7600,7 +7600,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## tabulate 0.10.0 — tabulate-0.10.0.dist-info/licenses/LICENSE
+## tabulate 0.10.0 | tabulate-0.10.0.dist-info/licenses/LICENSE
 
 ```text
 Copyright (c) 2011-2020 Sergey Astanin and contributors
@@ -7625,7 +7625,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## tqdm 4.70.1 — tqdm-4.70.1.dist-info/licenses/LICENCE
+## tqdm 4.70.1 | tqdm-4.70.1.dist-info/licenses/LICENCE
 
 ```text
 `tqdm` is a product of collaborative work.
@@ -7679,7 +7679,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## typing-inspection 0.4.4 — typing_inspection-0.4.4.dist-info/licenses/LICENSE
+## typing-inspection 0.4.4 | typing_inspection-0.4.4.dist-info/licenses/LICENSE
 
 ```text
 MIT License
@@ -7705,7 +7705,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## typing_extensions 4.16.0 — typing_extensions-4.16.0.dist-info/licenses/LICENSE
+## typing_extensions 4.16.0 | typing_extensions-4.16.0.dist-info/licenses/LICENSE
 
 ```text
 A. HISTORY OF THE SOFTWARE
@@ -7989,7 +7989,7 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ```
 
-## urllib3 2.8.0 — urllib3-2.8.0.dist-info/licenses/LICENSE.txt
+## urllib3 2.8.0 | urllib3-2.8.0.dist-info/licenses/LICENSE.txt
 
 ```text
 MIT License
@@ -8015,7 +8015,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## uvicorn 0.35.0 — uvicorn-0.35.0.dist-info/licenses/LICENSE.md
+## uvicorn 0.35.0 | uvicorn-0.35.0.dist-info/licenses/LICENSE.md
 
 ```text
 Copyright © 2017-present, [Encode OSS Ltd](https://www.encode.io/).
@@ -8047,7 +8047,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## uvloop 0.22.1 — uvloop-0.22.1.dist-info/licenses/LICENSE-APACHE
+## uvloop 0.22.1 | uvloop-0.22.1.dist-info/licenses/LICENSE-APACHE
 
 ```text
 Copyright (C) 2016-present the uvloop authors and contributors.
@@ -8255,7 +8255,7 @@ Copyright (C) 2016-present the uvloop authors and contributors.
    limitations under the License.
 ```
 
-## uvloop 0.22.1 — uvloop-0.22.1.dist-info/licenses/LICENSE-MIT
+## uvloop 0.22.1 | uvloop-0.22.1.dist-info/licenses/LICENSE-MIT
 
 ```text
 The MIT License
@@ -8281,7 +8281,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## watchfiles 1.3.0 — watchfiles-1.3.0.dist-info/licenses/LICENSE
+## watchfiles 1.3.0 | watchfiles-1.3.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)
@@ -8307,7 +8307,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## websockets 17.1 — websockets-17.1.dist-info/licenses/LICENSE
+## websockets 17.1 | websockets-17.1.dist-info/licenses/LICENSE
 
 ```text
 Copyright (c) Aymeric Augustin and contributors
@@ -8336,7 +8336,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## yake 0.4.8 — yake-0.4.8.dist-info/LICENSE
+## yake 0.4.8 | yake-0.4.8.dist-info/LICENSE
 
 ```text
 YAKE! License Agreement

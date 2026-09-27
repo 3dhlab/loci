@@ -1,11 +1,12 @@
 # Changelog
 
-## v0.1 candidate
+## v0.1, prepared September 27, 2026
 
-- Local self-hosted example connecting GLB annotations to linked video, transcripts, citations and share links.
-- Synthetic object, timed transcript and three annotations, including an ordered multi-window example.
-- Loopback application ports, internal database/Redis services, isolated volumes and generated credentials.
-- Generic collection ordering and model-risk configuration, with operator-specific content removed from public schema setup and fixtures.
-- Unit, API/privacy, migration, browser and real demo verification paths.
+- Added a local example linking points on a 3D model to video, transcripts, citations and share links.
+- Included a generated cube, timed transcript and three annotations. One annotation plays two video sections in sequence.
+- Added generated credentials, local application access and separate database and media storage.
+- Made collection ordering and model-loading settings configurable.
+- Added checks for installation, publication privacy, media replacement, database migrations and browser behavior.
+- Documented setup, contribution, support, security and software citation.
 
-License, public repository release and final candidate acceptance remain pending. Large frontend component boundaries and progressive loading remain follow-up maintenance work.
+Local validation is complete. Software licensing, sample terms and GitHub publication remain pending. Further maintenance will focus on the larger frontend components and model-loading performance.

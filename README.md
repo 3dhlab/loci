@@ -1,8 +1,8 @@
 # Loci
 
-Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. It gives researchers and developers a self-hostable example of GLB → spatial annotation → linked video segment → shared evidence.
+Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
 
-This v0.1 candidate supports a local, single-operator demonstration. The sample model, video, transcript, and annotations are generated from numerical geometry and synthetic text. The repository's software license and sample redistribution terms are pending; see [license status](LICENSE_STATUS.md) before reuse.
+Version 0.1 includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. The repository's software license and sample redistribution terms are pending; see [license status](LICENSE_STATUS.md) before reuse.
 
 ## Quickstart
 
@@ -14,15 +14,15 @@ docker compose build
 docker compose up -d postgres redis
 docker compose run --rm api alembic upgrade head
 docker compose run --rm api python -m app.scripts.seed_demo
-docker compose up -d
+docker compose up -d --wait
 python3 scripts/demo/verify.py
 ```
 
 If your installation provides the standalone `docker-compose` command, substitute it for `docker compose` throughout.
 
-Open [the object browser](http://localhost:8080/public). Select **Demo cube**, then an annotation to play its linked video section. **Compare two sections** plays two ordered windows. Select a transcript line to seek, and copy a share link to return to the selected annotation or clip. Video-focused links include their playback timestamp. The API schemas and interactive authoring forms are at [localhost:8000/docs](http://localhost:8000/docs).
+Open [the object browser](http://localhost:8080/public). Select **Demo cube**, then an annotation to play its linked video section. **Compare two sections** plays two ordered windows. Select a transcript line to seek, and copy a share link to return to the selected annotation or clip. Video-focused links include their playback timestamp. Interactive API documentation and authoring forms are available at [localhost:8000/docs](http://localhost:8000/docs).
 
-The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from your local `.env`; keep that file private. The initializer refuses to overwrite existing credentials. PostgreSQL and Redis remain internal to the demo network, and public application ports bind to loopback. The demo starts no email, remote publication, transcription, or embedding-download service.
+The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from your local `.env`; keep that file private. The setup script preserves existing credentials. PostgreSQL and Redis communicate within the demo network. The website and API are accessible from your own computer. Email, remote publishing, automatic transcription and semantic indexing are optional integrations with separate setup requirements.
 
 `docker compose down` stops services and preserves data. `docker compose down --volumes` deletes the demo database and media for that Compose project. Keep `.env` for the lifetime of its database volume.
 
@@ -35,14 +35,14 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 - [Security reporting](SECURITY.md) and [support scope](SUPPORT.md)
 - [Release notes](CHANGELOG.md), [license status](LICENSE_STATUS.md), and [third-party notices](THIRD_PARTY_NOTICES.md)
 
-## Supported scope and limits
+## What you can do
 
-The viewer supports orbit/zoom, spatial annotations, ordered linked clips, timed transcript seeking, citations, posters, deep links, responsive controls, and recovery states. Mobile/constrained devices require an explicit model-load action to bound memory and transfer costs.
+You can rotate and zoom the model, select annotations, play linked clips, seek through transcript lines, and copy citations and share links. On mobile devices and devices with limited resources, selecting the model-load button starts the 3D view. This gives the reader control over a potentially large download.
 
-The local demo provides one authenticated authoring account and a public read-only projection. Remote publication, hosted multi-user authoring, consent workflows, automatic transcription, DOI registration, adaptive streaming and broad scale claims require additional configuration or future implementation. The backend retains modules for optional integrations; the quickstart configures only the documented local viewer path.
+The demonstration provides one account for creating and reviewing content. Readers see published records through the public viewer. Hosting multiple authors, managing participant consent, automatic transcription, DOI registration and adaptive streaming are areas for further development or integration. The quickstart covers the local demonstration described here.
 
-The frontend contains large legacy feature components and the 3D bundle exceeds Vite's default chunk-size advisory. Gradual feature extraction and delivery profiling remain maintenance priorities. Chromium synthetic checks provide automated coverage; supported device and browser claims should follow explicit release validation.
+Some frontend components remain large, and the 3D viewer produces a large JavaScript download. Improving those components and measuring loading performance are ongoing maintenance priorities. Automated browser checks use Chromium; broader browser and device coverage will require further testing.
 
-## Project
+## About the project
 
-The planned public repository is [3dhlab/loci](https://github.com/3dhlab/loci). Support and contribution routes become active when the reviewed candidate is published. Author: Craig Stevens. Private security/conduct reports: craig.stevens@austin.utexas.edu. Software citation metadata is in [CITATION.cff](CITATION.cff). Research collections and participant records require their own rights and governance; this package contains synthetic examples.
+The planned public repository is [3dhlab/loci](https://github.com/3dhlab/loci). Craig Stevens is the author and maintainer. Contact craig.stevens@austin.utexas.edu for private security or conduct reports. Use [CITATION.cff](CITATION.cff) when citing the software. Research collections and participant records need their own permissions and governance. The included examples are generated for testing and demonstration.

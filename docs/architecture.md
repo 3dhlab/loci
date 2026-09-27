@@ -1,35 +1,30 @@
 # Architecture
 
-The public demo has four services: a React/Vite frontend served by Nginx, a FastAPI API, PostgreSQL with pgvector, and Redis. Nginx proxies `/api/` to FastAPI. The API reads relational object/annotation/transcript records and serves media from a named local volume. PostgreSQL and Redis have no host-published ports in the demo composition.
+Loci's local demonstration runs four services. A React frontend is served by Nginx. A FastAPI application handles requests and media delivery. PostgreSQL stores objects, annotations and transcripts. Redis supports rate limiting and optional background jobs.
 
-```mermaid
-flowchart LR
-    Browser --> Web[Nginx and React]
-    Web --> API[FastAPI]
-    API --> DB[PostgreSQL]
-    API --> Media[Local media volume]
-    API --> Redis[Redis]
-```
+The browser sends API requests through Nginx to FastAPI. FastAPI reads the database and serves model and video files from a separate media volume. PostgreSQL and Redis are accessible within the Docker network. The website and API are available on the local computer.
 
-## Source responsibilities
+## Where the code lives
 
-- `apps/web/src/public`: public browse and Studio entry surfaces.
-- `apps/web/src/evidence`: object, annotation, transcript, video, citation and sharing presentation.
-- `apps/web/src/embed`: embedded object presentation.
-- `apps/web/src/components/ModelCanvas.jsx`: rendering, annotation placement, camera and resource recovery.
-- `apps/web/src/App.jsx`: authenticated console and legacy authoring workflows. Extract workflows incrementally while keeping route/API contracts stable.
-- `apps/web/src/lib`: reusable policy, media, navigation, search and citation helpers.
-- `apps/api/app/api`: HTTP routing and request/response contracts.
-- `apps/api/app/models` and `alembic`: relational records and schema migrations.
-- `apps/api/app/services`: publication projection, media, identity and optional processing services.
-- `apps/api/app/scripts`: explicit local seed/content tools.
+- `apps/web/src/public` contains the object browser and public viewer entry points.
+- `apps/web/src/evidence` displays objects, annotations, transcripts, video, citations and sharing controls.
+- `apps/web/src/embed` provides the embedded object viewer.
+- `apps/web/src/components/ModelCanvas.jsx` handles 3D rendering, annotation placement, camera movement and rendering recovery.
+- `apps/web/src/App.jsx` contains the signed-in console and existing authoring tools.
+- `apps/web/src/lib` contains shared media, navigation, search and citation helpers.
+- `apps/api/app/api` defines API routes and request and response formats.
+- `apps/api/app/models` defines database records. The API's `alembic` folder contains schema migrations.
+- `apps/api/app/services` handles published content, media delivery and optional processing.
+- `apps/api/app/scripts` contains tools for generating and preparing local content.
 
-## Boundaries
+## Content review and publication
 
-Authenticated authoring stores private records. Public endpoints serialize an allowlisted projection. A newly created annotation remains private until explicitly reviewed and published. Public privacy checks exercise the actual database-backed projection. Runtime serving and local content preparation are separate responsibilities.
+Authors sign in to create and edit records. Public endpoints return the fields approved for readers. A new annotation becomes visible after review and explicit publication. Database tests check that private authoring information stays within the authenticated tools.
 
-Remote promotion is optional and disabled in the demo. Its legacy process-local status implementation is unsuitable as a durable multi-process publication ledger. A future remote-publishing release should use an RQ worker plus database operation state, stage-specific idempotency and recovery.
+Remote publishing is an optional integration. Its existing status tracking is held within a running process. Supporting reliable publication across multiple processes will require persistent operation records, background jobs and recovery procedures.
 
-External monitoring, transcription and embedding services are optional. The demo configures no paid API key, no monitoring DSN and no eager embedding download. Installing dependencies still contacts package registries. Large model/video files should be evaluated against device memory, decode capacity and network constraints.
+Monitoring, transcription and semantic search are optional integrations with separate configuration. The local demonstration uses lexical transcript search. Installation downloads dependencies from package registries.
 
-The Compose quickstart is a loopback development demonstration. An internet deployment requires its own authentication, TLS, origin policies, secret management, database backups, capacity assessment and operating plan.
+## Hosting considerations
+
+The quickstart runs on the local computer. A hosted installation needs authentication review, HTTPS, browser origin policies, secret management, database backups and an operating plan. Evaluate larger models and videos against device memory, video decoding capacity and network conditions.

@@ -1,5 +1,7 @@
 # Support
 
-The v0.1 scope is a local single-operator viewer and synthetic example. Use the repository's GitHub Issues for installation or behavior questions after publication. Include version, OS, Docker/Compose version, browser and synthetic reproduction; redact credentials and personal content.
+Loci v0.1 supports a local demonstration with one authoring account and generated sample content. After publication, use GitHub Issues for installation questions, bug reports and suggestions.
 
-Maintainer availability is best-effort. There is no response-time or production-hosting service commitment. Optional transcription, remote publication and hosted multi-user operation need separate configuration and operational review. Third-party services maintain their own support and terms.
+Include your Loci version, operating system, Docker and Compose versions, browser, and the steps needed to reproduce the problem with the sample content. Remove passwords, access tokens and personal information from any logs you share.
+
+Support is provided as maintainer time allows. Hosting Loci for other users and connecting transcription or publishing services require additional setup and operational planning. Each external service has its own support arrangements and terms.

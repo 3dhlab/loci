@@ -1,7 +1,7 @@
 # License status
 
-This candidate is source available with first-party license selection pending. It is being prepared for review and eventual publication. A public listing alone does not grant a general right to use, modify or redistribute first-party code.
+Craig Stevens is the author and copyright holder of Loci. The software license and the terms for sharing its sample assets are awaiting a decision informed by UT Austin's Open Source Program Office and the relevant grant requirements.
 
-The owner is awaiting a choice informed by UT Austin OSPO advice and grant requirements. Code licensing and sample-asset licensing are separate decisions. The author/copyright holder is Craig Stevens. The selected code license, sample terms and accurate notices must be established before a licensed open source release.
+Before the public open source release, the repository needs a LICENSE file and clear terms for the sample model, video, transcript and artwork. Until those terms are established, permission for reuse should be obtained from the copyright holder.
 
-Third-party dependencies keep their own licenses and notices; see THIRD_PARTY_NOTICES.md and docs/dependency-license-inventory.json. Dependency metadata is an inventory aid, and unresolved terms need review.
+Third-party software retains its own licenses. The [dependency notices](THIRD_PARTY_NOTICES.md), [Python notices](PYTHON_THIRD_PARTY_NOTICES.md) and dependency inventories in the docs folder record the information collected for review.

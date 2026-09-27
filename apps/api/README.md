@@ -1,6 +1,6 @@
-# LOCI API
+# Loci API
 
-FastAPI provides authenticated authoring, public collection and evidence projections,
+FastAPI provides authenticated authoring, public collection and evidence views,
 media delivery, and optional background processing. PostgreSQL stores metadata;
 media files live under `MEDIA_ROOT`. Redis supports rate limits and optional jobs.
 
@@ -19,10 +19,8 @@ python -m app.scripts.seed_demo
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-Demo seeding is explicit and requires an empty development database. Schema
-migrations create no operator accounts or subscribers. Shared, staging and
-production service startup requires generated signing, encryption and agent
-secrets. The local demo generates its own credentials in an ignored `.env` file.
+Demo seeding is explicit and requires an empty development database. Schema migrations create the database structure. The separate seed command creates the demonstration account and content. Shared, staging and
+production installations require generated signing, encryption and service secrets. The local demo generates its own credentials in an ignored `.env` file.
 
 Run tests using the commands in [CONTRIBUTING](../../CONTRIBUTING.md). Database
 integration tests require a disposable PostgreSQL instance with pgvector.

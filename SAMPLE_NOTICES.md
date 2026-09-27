@@ -1,7 +1,7 @@
 # Sample assets and artwork
 
-The local demo generator creates numerical cube geometry, color-only video sections, a poster, synthetic transcript text and annotation records. The recipe is in apps/api/app/scripts/generate_demo_assets.py. The browser regression includes an existing generated cube, video and poster with checksum checks.
+The demonstration includes a cube built from numerical coordinates, a silent video with three colored sections, a poster, sample transcript text and annotations. The generation script is in `apps/api/app/scripts/generate_demo_assets.py`. Browser tests use generated model, video and poster files and check their content hashes.
 
-The public package replaces product artwork with simple generated text/vector marks. No lab affiliation logo or collection photograph is included. Styling uses system fallback fonts; no font binaries are distributed and the optional landing page makes no font-service request.
+Loci's artwork consists of simple text and vector shapes. The demonstration uses generated examples throughout. The interface uses system fonts, which are supplied by the reader's device.
 
-First-party sample redistribution terms and copyright attribution are pending the owner's licensing decision. See LICENSE_STATUS.md. Synthetic origin describes provenance; explicit terms still need to be selected. Third-party dependencies and runtime tools retain their own terms.
+Craig Stevens will establish the terms for sharing these first-party assets alongside the software license. See [license status](LICENSE_STATUS.md). Third-party libraries and runtime tools retain their own terms.
