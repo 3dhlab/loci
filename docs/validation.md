@@ -12,4 +12,4 @@ Run the commands in CONTRIBUTING.md and README.md to reproduce the checks. Keep 
 
 ## Hosted demonstration storage
 
-The hosted demo job uses a Linux-only Compose override with a 256 MiB in-memory media volume. The volume is shared by seeding and runtime containers and removed after the job. This gives the generated demonstration its own bounded storage area while keeping the application's 80% disk-health threshold. Local installation continues to use persistent media storage. CI captures credential-redacted service logs and health diagnostics before cleanup.
+The hosted demo job uses a Linux-only Compose override with a 256 MiB in-memory media volume. The API container starts before sample generation, and the seed command runs inside that container. This keeps the in-memory volume mounted throughout generation and validation. Cleanup removes its contents after the job. This gives the generated demonstration its own bounded storage area while keeping the application's 80% disk-health threshold. Local installation continues to use persistent media storage. CI captures credential-redacted service logs and health diagnostics before cleanup.
