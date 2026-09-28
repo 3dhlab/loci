@@ -2,7 +2,7 @@
 
 Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
 
-Version 0.1 includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
+The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
 
 ## Quickstart
 
@@ -45,4 +45,4 @@ Some frontend components remain large, and the 3D viewer produces a large JavaSc
 
 ## About the project
 
-The planned public repository is [3dhlab/loci](https://github.com/3dhlab/loci). Craig Stevens is the author and maintainer. Contact craig.stevens@austin.utexas.edu for private security or conduct reports. Use [CITATION.cff](CITATION.cff) when citing the software. Research collections and participant records need their own permissions and governance. The included examples are generated for testing and demonstration.
+The public source repository is [3dhlab/loci](https://github.com/3dhlab/loci), maintained by Craig Stevens. Use [GitHub Issues](https://github.com/3dhlab/loci/issues) for support and ordinary bug reports. Send private security or conduct reports to [craig.stevens@austin.utexas.edu](mailto:craig.stevens@austin.utexas.edu), or use [GitHub's private vulnerability reporting](https://github.com/3dhlab/loci/security/advisories/new) for security reports. Use [CITATION.cff](CITATION.cff) when citing the software. Research collections and participant records require their own permissions and governance. The included examples are generated for testing and demonstration.
