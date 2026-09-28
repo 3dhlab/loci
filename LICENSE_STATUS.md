@@ -1,7 +1,7 @@
-# License status
+# Licensing
 
-Craig Stevens is the author and copyright holder of Loci. The software license and the terms for sharing its sample assets are awaiting a decision informed by UT Austin's Open Source Program Office and the relevant grant requirements.
+Copyright 2026 Craig Stevens. Loci's first-party application code, documentation, original interface artwork and generated demonstration assets are licensed under the [Apache License, Version 2.0](LICENSE). The demonstration assets include the generated cube, colored video, posters, transcript, annotations and test media. The [notice file](NOTICE) records the copyright holder and scope.
 
-Before the public open source release, the repository needs a LICENSE file and clear terms for the sample model, video, transcript and artwork. Until those terms are established, permission for reuse should be obtained from the copyright holder.
+The demonstration uses original generated content. Research collections, participant records and any media you add require their own permissions. The Loci license does not grant rights to content supplied by others or to third-party software bundled as dependencies.
 
-Third-party software retains its own licenses. The [dependency notices](THIRD_PARTY_NOTICES.md), [Python notices](PYTHON_THIRD_PARTY_NOTICES.md) and dependency inventories in the docs folder record the information collected for review.
+Third-party components retain their own licenses and notices. See [JavaScript notices](THIRD_PARTY_NOTICES.md), [Python notices](PYTHON_THIRD_PARTY_NOTICES.md) and the dependency inventories in `docs/`.

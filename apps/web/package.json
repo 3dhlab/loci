@@ -35,5 +35,6 @@
   },
   "engines": {
     "node": ">=22 <23"
-  }
+  },
+  "license": "Apache-2.0"
 }

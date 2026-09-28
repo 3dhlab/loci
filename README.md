@@ -2,7 +2,7 @@
 
 Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
 
-Version 0.1 includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. The repository's software license and sample redistribution terms are pending; see [license status](LICENSE_STATUS.md) before reuse.
+Version 0.1 includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
 
 ## Quickstart
 
@@ -33,7 +33,7 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 - [Model, annotation, transcript and media contracts](docs/data-contract.md)
 - [Development and contribution checks](CONTRIBUTING.md)
 - [Security reporting](SECURITY.md) and [support scope](SUPPORT.md)
-- [Release notes](CHANGELOG.md), [license status](LICENSE_STATUS.md), and [third-party notices](THIRD_PARTY_NOTICES.md)
+- [Release notes](CHANGELOG.md), [licensing details](LICENSE_STATUS.md), and [third-party notices](THIRD_PARTY_NOTICES.md)
 
 ## What you can do
 
