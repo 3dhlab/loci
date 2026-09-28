@@ -4,6 +4,10 @@ Loci connects locations on a 3D model to video evidence, timed transcripts, cita
 
 The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
 
+## Hosted research instance
+
+[Explore the Loci research collection](https://loci.threedeezy.com/). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
+
 ## Quickstart
 
 Requirements: Docker Engine with Compose v2 or later, or Docker Desktop; Python 3; and internet access for dependencies and images. Containers run Linux. Application ports 8000 and 8080 must be free.
