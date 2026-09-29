@@ -12,15 +12,45 @@ const distRoot = resolve(webRoot, 'dist-ci')
 const mediaPath = resolve(here, '../fixtures/synthetic-12s.mp4')
 const modelPath = resolve(here, '../fixtures/synthetic-cube.glb')
 const posterPath = resolve(here, '../fixtures/synthetic-poster.png')
-const expectedSha256 = 'ad2409b6c2c734caceb0847f0d02215e285b5cf8a2cf76a57e6ec9e7c353f2e6'
 const expectedModelSha256 = 'ca427dd09cdabf6dec4779683a5525dba14a21047c4c8929451c5f90ebb0b17a'
-const expectedPosterSha256 = '5d33e5f3b13457707428c8dd083307ff283156b292f65548e7df802781d2bdaf'
-const actualSha256 = createHash('sha256').update(readFileSync(mediaPath)).digest('hex')
 const actualModelSha256 = createHash('sha256').update(readFileSync(modelPath)).digest('hex')
-const actualPosterSha256 = createHash('sha256').update(readFileSync(posterPath)).digest('hex')
-assert.equal(actualSha256, expectedSha256, 'synthetic browser media checksum changed')
 assert.equal(actualModelSha256, expectedModelSha256, 'synthetic browser model checksum changed')
-assert.equal(actualPosterSha256, expectedPosterSha256, 'synthetic browser poster checksum changed')
+const mediaBytes = readFileSync(mediaPath)
+const posterBytes = readFileSync(posterPath)
+
+function mp4TrackHandlers(bytes) {
+  const containers = new Set(['moov', 'trak', 'mdia', 'minf', 'stbl', 'edts', 'dinf'])
+  const handlers = []
+  const visit = (start, end) => {
+    for (let offset = start; offset + 8 <= end;) {
+      let size = bytes.readUInt32BE(offset)
+      const type = bytes.toString('ascii', offset + 4, offset + 8)
+      let headerSize = 8
+      if (size === 1) {
+        if (offset + 16 > end) throw new Error(`truncated extended MP4 box: ${type}`)
+        const largeSize = bytes.readBigUInt64BE(offset + 8)
+        if (largeSize > BigInt(Number.MAX_SAFE_INTEGER)) throw new Error(`MP4 box is too large: ${type}`)
+        size = Number(largeSize)
+        headerSize = 16
+      } else if (size === 0) {
+        size = end - offset
+      }
+      if (size < headerSize || offset + size > end) throw new Error(`invalid MP4 box size: ${type}`)
+      const payload = offset + headerSize
+      if (type === 'hdlr' && payload + 12 <= offset + size) {
+        handlers.push(bytes.toString('ascii', payload + 8, payload + 12))
+      } else if (containers.has(type)) {
+        visit(payload, offset + size)
+      }
+      offset += size
+    }
+  }
+  visit(0, bytes.length)
+  return handlers
+}
+
+assert.deepEqual(mp4TrackHandlers(mediaBytes), ['vide'], 'synthetic browser media must contain one video track and no audio')
+assert.equal(posterBytes.toString('ascii', 1, 4), 'PNG', 'synthetic browser poster must be PNG')
 assert.ok(existsSync(resolve(distRoot, 'index.html')), 'run the CI production build before the browser regression')
 
 const objectSlug = 'synthetic-object'
@@ -150,6 +180,56 @@ try {
     const node = document.querySelector('video.evidence-video-element')
     return node && node.readyState >= HTMLMediaElement.HAVE_METADATA && node.duration >= 11.9
   }, null, { timeout: 15000 })
+  const videoMetadata = await video.evaluate(node => ({ duration: node.duration, width: node.videoWidth, height: node.videoHeight }))
+  assert.ok(Math.abs(videoMetadata.duration - 12) < 0.15, `synthetic video should last 12 seconds: ${JSON.stringify(videoMetadata)}`)
+  assert.deepEqual([videoMetadata.width, videoMetadata.height], [640, 360], 'synthetic video dimensions changed')
+  const sampledColors = await video.evaluate(async node => {
+    node.pause()
+    const canvas = document.createElement('canvas')
+    canvas.width = node.videoWidth
+    canvas.height = node.videoHeight
+    const context = canvas.getContext('2d', { willReadFrequently: true })
+    const samples = []
+    for (const time of [0.5, 4.5, 8.5]) {
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`timed out seeking synthetic fixture to ${time}s`)), 5000)
+        node.addEventListener('seeked', () => { clearTimeout(timeout); resolve() }, { once: true })
+        node.currentTime = time
+      })
+      context.drawImage(node, 0, 0, canvas.width, canvas.height)
+      samples.push([...context.getImageData(320, 180, 1, 1).data].slice(0, 3))
+    }
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('timed out restoring synthetic fixture to the annotation start')), 5000)
+      node.addEventListener('seeked', () => { clearTimeout(timeout); resolve() }, { once: true })
+      node.currentTime = 2
+    })
+    return samples
+  })
+  const expectedColors = [[0x20, 0x8c, 0xb8], [0xe6, 0xa0, 0x3c], [0x70, 0x56, 0xa0]]
+  for (let sample = 0; sample < expectedColors.length; sample += 1) {
+    for (let channel = 0; channel < 3; channel += 1) {
+      assert.ok(Math.abs(sampledColors[sample][channel] - expectedColors[sample][channel]) <= 20,
+        `synthetic color section ${sample + 1} changed: ${JSON.stringify(sampledColors[sample])}`)
+    }
+  }
+  const posterData = posterBytes.toString('base64')
+  const posterSample = await page.evaluate(async data => {
+    const image = new Image()
+    image.src = `data:image/png;base64,${data}`
+    await image.decode()
+    const canvas = document.createElement('canvas')
+    canvas.width = image.naturalWidth
+    canvas.height = image.naturalHeight
+    const context = canvas.getContext('2d', { willReadFrequently: true })
+    context.drawImage(image, 0, 0)
+    return { width: image.naturalWidth, height: image.naturalHeight, rgb: [...context.getImageData(160, 90, 1, 1).data].slice(0, 3) }
+  }, posterData)
+  assert.deepEqual([posterSample.width, posterSample.height], [640, 360], 'synthetic poster dimensions changed')
+  for (let channel = 0; channel < 3; channel += 1) {
+    assert.ok(Math.abs(posterSample.rgb[channel] - expectedColors[0][channel]) <= 20,
+      `synthetic poster should match the first video section: ${JSON.stringify(posterSample.rgb)}`)
+  }
   const verifySeek = async (expectedMs, stage) => {
     await page.waitForFunction(expected => {
       const node = document.querySelector('video.evidence-video-element')
@@ -346,7 +426,7 @@ try {
   }
   assert.deepEqual(consoleMessages, [], `browser console errors: ${consoleMessages.join('\n')}`)
   passed = true
-  console.log(JSON.stringify({ result: 'PASS', candidate: process.env.GITHUB_SHA || 'local-working-tree', browser: 'Chromium with WebGL via SwiftShader', mediaSha256: actualSha256, modelSha256: actualModelSha256, posterSha256: actualPosterSha256, mediaBytes: readFileSync(mediaPath).length, apiMode: 'synthetic public contract route; real public API projection/privacy test required in API job', requests: apiDiagnostics.length, seekToleranceMs: 1000 }, null, 2))
+  console.log(JSON.stringify({ result: 'PASS', candidate: process.env.GITHUB_SHA || 'local-working-tree', browser: 'Chromium with WebGL via SwiftShader', modelSha256: actualModelSha256, mediaBytes: mediaBytes.length, durationSeconds: videoMetadata.duration, dimensions: `${videoMetadata.width}x${videoMetadata.height}`, trackHandlers: mp4TrackHandlers(mediaBytes), posterBytes: posterBytes.length, apiMode: 'synthetic public contract route; real public API projection/privacy test required in API job', requests: apiDiagnostics.length, seekToleranceMs: 1000 }, null, 2))
 } catch (error) {
   failures.push(error.stack || String(error))
   if (page) {

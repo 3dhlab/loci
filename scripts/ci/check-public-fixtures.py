@@ -1,7 +1,8 @@
-"""Check the repository's own synthetic fixtures before public CI runs.
+"""Check selected public-repository fixture boundaries before CI runs.
 
-The checks are scoped to Loci's test/demo assets. Adopters' runtime media and
-collection records are not inputs to this guard.
+This is a narrow regression guard for tracked runtime/private file paths,
+browser fixture additions and selected synthetic citation values. It does not
+scan arbitrary media content or replace a repository-wide privacy review.
 """
 
 from pathlib import Path
@@ -24,14 +25,15 @@ PUBLIC_DEMO_HOST = "loci.threedeezy.com"
 SELF = "scripts/ci/check-public-fixtures.py"
 
 
-def tracked_paths() -> list[str]:
-    output = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
+def tracked_paths(root: Path = ROOT) -> list[str]:
+    output = subprocess.check_output(["git", "ls-files", "-z"], cwd=root)
     return [path.decode() for path in output.split(b"\0") if path]
 
 
-def check() -> list[str]:
+def check(root: Path = ROOT, paths: list[str] | None = None) -> list[str]:
+    """Return findings for tracked paths, with injectable inputs for unit tests."""
     errors = []
-    for relative in tracked_paths():
+    for relative in tracked_paths(root) if paths is None else paths:
         path = Path(relative)
         lower = relative.lower()
         if path.name == ".env" or (path.name.startswith(".env.") and path.name != ".env.example"):
@@ -41,12 +43,12 @@ def check() -> list[str]:
         if lower.startswith(FIXTURE_DIR) and path.suffix.lower() in MEDIA_SUFFIXES:
             if relative not in ALLOWED_FIXTURES:
                 errors.append(f"new browser media fixture needs a generation recipe and review: {relative}")
-            elif (ROOT / relative).stat().st_size > 1_000_000:
+            elif (root / relative).stat().st_size > 1_000_000:
                 errors.append(f"browser media fixture exceeds 1 MB: {relative}")
 
         if relative == SELF or path.suffix.lower() in MEDIA_SUFFIXES:
             continue
-        content = (ROOT / relative).read_bytes()
+        content = (root / relative).read_bytes()
         if b"\0" in content:
             continue
         if PUBLIC_DEMO_HOST.encode() in content:
@@ -57,7 +59,7 @@ def check() -> list[str]:
                 if not urls or any(url.decode() != PUBLIC_DEMO_URL for url in urls):
                     errors.append("README must contain only the documented public hosted-demo URL")
 
-    citation_test = (ROOT / "apps/web/src/lib/citationAttribution.test.js").read_text()
+    citation_test = (root / "apps/web/src/lib/citationAttribution.test.js").read_text()
     for field, pattern in (
         ("collectionName", r"(?:Synthetic|Demo)"),
         ("speakerLabel", r"(?:|.* Example|Synthetic .*)"),
@@ -67,7 +69,7 @@ def check() -> list[str]:
             if not re.fullmatch(pattern, value) and not (field == "collectionName" and value.startswith("Synthetic ")):
                 errors.append(f"{field} in citation test is not plainly synthetic: {value}")
 
-    authoring_test = (ROOT / "apps/api/tests/test_authoring_api.py").read_text()
+    authoring_test = (root / "apps/api/tests/test_authoring_api.py").read_text()
     for value in re.findall(r'stable_video_id="([^"]+)"', authoring_test):
         if not value.startswith("video-test-") or value != "video-test-sample":
             errors.append(f"authoring test video ID needs a synthetic value: {value}")
