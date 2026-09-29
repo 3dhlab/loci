@@ -6828,6 +6828,12 @@ button.ghost {
   color: var(--ink-soft);
 }
 
+.public-browse-loading .brand-motion {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
+
 .public-library-grid.public-object-page-grid {
   align-items: stretch;
   min-height: 38rem;

@@ -1,17 +1,18 @@
 import assert from 'node:assert/strict'
-import { createReadStream } from 'node:fs'
+import { createReadStream, existsSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const webRoot = resolve(fileURLToPath(new URL('../..', import.meta.url)))
-const distRoot = resolve(webRoot, 'dist')
+const distRoot = resolve(webRoot, 'dist-ci')
+assert.ok(existsSync(resolve(distRoot, 'index.html')), 'run the CI production build before the browse browser regression')
 const contentTypes = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml' }
 const server = createServer((req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname
   let filePath = resolve(distRoot, `.${pathname}`)
-  if (!filePath.startsWith(`${distRoot}${sep}`)) filePath = resolve(distRoot, 'index.html')
+  if (!filePath.startsWith(`${distRoot}${sep}`) || !existsSync(filePath)) filePath = resolve(distRoot, 'index.html')
   createReadStream(filePath).on('error', () => {
     res.writeHead(404).end()
   }).on('open', () => {
