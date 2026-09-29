@@ -121,6 +121,7 @@ try {
   await context.tracing.start({ screenshots: true, snapshots: true, sources: true })
   page = await context.newPage()
   page.setDefaultTimeout(10000)
+  await context.addInitScript(() => window.localStorage.setItem('loci.studio.theme', 'muted-light'))
   page.on('console', message => { if (message.type() === 'error') consoleMessages.push(message.text()) })
   page.on('pageerror', error => consoleMessages.push(`pageerror: ${error.stack || error.message}`))
   page.on('requestfailed', request => requestDiagnostics.push({ type: 'failed', method: request.method(), url: request.url(), failure: request.failure()?.errorText }))
@@ -128,16 +129,47 @@ try {
     const url = response.url()
     if (url.includes('/fixtures/synthetic-12s.mp4') || url.includes('/api/v1/public/evidence/')) requestDiagnostics.push({ type: 'response', status: response.status(), url, contentRange: response.headers()['content-range'] || null })
   })
+  let releaseFirstEvidenceResponse
+  let signalFirstEvidenceRequest
+  const firstEvidenceRequest = new Promise(resolve => { signalFirstEvidenceRequest = resolve })
+  const firstEvidenceResponseGate = new Promise(resolve => { releaseFirstEvidenceResponse = resolve })
+  let heldFirstEvidenceResponse = false
   await page.route('**/api/v1/public/evidence/objects/**', async route => {
     const requestUrl = new URL(route.request().url())
     const params = Object.fromEntries(requestUrl.searchParams.entries())
     const response = fixture(requestUrl, params)
     apiDiagnostics.push({ url: requestUrl.toString(), status: 200, responseKeys: Object.keys(response) })
+    if (!heldFirstEvidenceResponse) {
+      heldFirstEvidenceResponse = true
+      signalFirstEvidenceRequest()
+      await firstEvidenceResponseGate
+    }
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(response) })
   })
   await page.route('**/api/public/clips/**', route => route.fulfill({ status: 200, contentType: 'image/png', body: readFileSync(posterPath) }))
   await page.goto(`${origin}/evidence/objects/${objectSlug}?studio=1`, { waitUntil: 'domcontentloaded' })
+  await firstEvidenceRequest
+  const evidenceLoading = page.locator('.evidence-loading-screen')
+  await evidenceLoading.waitFor({ state: 'visible' })
+  assert.equal(await evidenceLoading.getAttribute('data-studio-theme'), 'muted-light', 'loading state must inherit the persisted palette')
+  assert.equal(await page.locator('.evidence-loading-card').count(), 0, 'loading state must not render the old three-card skeleton')
+  const loadingGeometry = await page.evaluate(() => {
+    const main = document.querySelector('.evidence-loading-screen')
+    const footer = document.createElement('footer')
+    footer.id = 'synthetic-site-footer'
+    document.body.append(footer)
+    return {
+      viewportHeight: window.innerHeight,
+      mainHeight: main.getBoundingClientRect().height,
+      footerTop: footer.getBoundingClientRect().top,
+    }
+  })
+  assert.ok(loadingGeometry.mainHeight >= loadingGeometry.viewportHeight, `loading surface should reserve the viewport: ${JSON.stringify(loadingGeometry)}`)
+  assert.ok(loadingGeometry.footerTop >= loadingGeometry.viewportHeight, `site footer should remain below the initial viewport while loading: ${JSON.stringify(loadingGeometry)}`)
+  await page.locator('#synthetic-site-footer').evaluate(node => node.remove())
+  releaseFirstEvidenceResponse()
   await page.getByText('Synthetic Vessel', { exact: true }).waitFor({ state: 'visible' })
+  assert.equal(await page.locator('.evidence-loading-screen').count(), 0, 'loading state should clear after evidence data resolves')
 
   const annotationMarker = page.getByRole('button', { name: 'Vessel rim annotation', exact: true })
   await annotationMarker.waitFor({ state: 'visible', timeout: 20000 })
