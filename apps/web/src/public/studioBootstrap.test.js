@@ -25,6 +25,7 @@ test('public Studio startup selects the persisted and system palette before pain
   assert.equal(boot({ systemDark: true }).document.documentElement.dataset.studioBootstrap, 'darkroom')
   assert.equal(boot({ stored: 'light', systemDark: true }).document.documentElement.dataset.studioBootstrap, 'cobalt')
   assert.equal(boot({ stored: 'dark' }).document.documentElement.dataset.studioBootstrap, 'darkroom')
+  assert.equal(boot({ stored: 'muted-light', systemDark: true }).document.documentElement.dataset.studioBootstrap, 'muted-light')
 })
 
 test('startup honors explicit legacy escape hatches and leaves console alone', () => {

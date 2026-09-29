@@ -14,7 +14,7 @@ import { applyDocumentThemeChrome } from '../../lib/documentTheme'
 // renders by default; this renders only when `?studio=1` is present.
 
 const THEME_STORAGE_KEY = 'loci.studio.theme'
-const THEME_MODES = ['system', 'light', 'dark']
+const THEME_MODES = ['system', 'light', 'muted-light', 'dark']
 
 // View modes: Console = the full workspace (search + rail + transcript);
 // Focus = a decluttered, stage-forward reading view. Console is the default so
@@ -96,6 +96,9 @@ function systemPrefersDark() {
 function resolvePalette(mode, prefersDark) {
   if (mode === 'light') {
     return 'cobalt'
+  }
+  if (mode === 'muted-light') {
+    return 'muted-light'
   }
   if (mode === 'dark') {
     return 'darkroom'

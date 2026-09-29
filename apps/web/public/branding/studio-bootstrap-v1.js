@@ -13,12 +13,12 @@
   let mode = 'system'
   try {
     const saved = window.localStorage.getItem('loci.studio.theme')
-    if (['system', 'light', 'dark'].includes(saved)) mode = saved
+    if (['system', 'light', 'muted-light', 'dark'].includes(saved)) mode = saved
   } catch { /* Private browsing and storage restrictions use system mode. */ }
   const dark = mode === 'dark' || (mode === 'system' &&
     typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  const theme = dark ? 'darkroom' : 'cobalt'
+  const theme = dark ? 'darkroom' : mode === 'muted-light' ? 'muted-light' : 'cobalt'
   document.documentElement.dataset.studioBootstrap = theme
   const themeColors = document.querySelectorAll('meta[name="theme-color"]')
-  themeColors.forEach((meta) => { meta.media = ''; meta.content = dark ? '#0f1620' : '#eef2f8' })
+  themeColors.forEach((meta) => { meta.media = ''; meta.content = dark ? '#0f1620' : mode === 'muted-light' ? '#f2f3f1' : '#eef2f8' })
 })()
