@@ -6973,10 +6973,6 @@ button.ghost {
   transition: opacity 220ms ease;
 }
 
-.public-library-card-poster-frame.is-pending {
-  opacity: 0;
-}
-
 .public-library-card-poster-frame::after {
   display: none;
 }

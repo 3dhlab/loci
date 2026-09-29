@@ -276,7 +276,7 @@ function ReadyCardPoster({ posterUrl, objectName, loadStatus = 'loaded' }) {
   const [imageReady, setImageReady] = useState(false)
   const resolvedPosterUrl = normalizeOptionalText(posterUrl)
   const alt = `${objectName} poster`
-  const unavailable = loadStatus === 'error' || loadStatus === 'timeout'
+  const unavailable = loadStatus === 'error'
 
   useEffect(() => {
     setFailed(false)
@@ -290,9 +290,7 @@ function ReadyCardPoster({ posterUrl, objectName, loadStatus = 'loaded' }) {
         <span>
           {!resolvedPosterUrl
             ? 'A published poster has not been generated yet.'
-            : loadStatus === 'timeout'
-              ? 'The poster took too long to load.'
-              : 'The published poster could not be loaded.'}
+            : 'The published poster could not be loaded.'}
         </span>
       </div>
     )
