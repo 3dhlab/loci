@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "node --test",
     "test:browser": "node tests/browser/annotation-share-regression.mjs",
+    "test:browser:public-browse": "node tests/browser/public-browse-poster-reveal.mjs",
     "smoke:model-load-policy": "node scripts/modelLoadPolicySmoke.cjs",
     "test:demo": "node tests/browser/demo-journey.mjs"
   },

@@ -6830,6 +6830,7 @@ button.ghost {
 
 .public-library-grid.public-object-page-grid {
   align-items: stretch;
+  min-height: 38rem;
 }
 
 .public-library-card {
