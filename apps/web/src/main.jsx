@@ -118,7 +118,7 @@ function RootLoadingFallback({ pathname, search }) {
         ? 'Loading evidence page'
         : 'Loading application'
 
-  if (isEvidenceRoute) {
+  if (isEvidenceRoute && publicStudioEnabled(pathname, search)) {
     return <EvidenceLoadingState />
   }
 

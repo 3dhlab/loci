@@ -1,5 +1,6 @@
 import BrandMotion from '../components/BrandMotion'
-import { resolveStudioPaletteSync } from '../public/studioSurface'
+import SkeletonCard from '../components/SkeletonCard'
+import { isStudioSurfaceEnabled, resolveStudioPaletteSync } from '../public/studioSurface'
 
 export const EVIDENCE_MAIN_CONTENT_ID = 'evidence-main-content'
 
@@ -11,6 +12,29 @@ function focusEvidenceMainContent() {
 }
 
 export default function EvidenceLoadingState() {
+  if (!isStudioSurfaceEnabled(undefined, { defaultEnabled: true })) {
+    return (
+      <>
+        <a className="skip-link" href={`#${EVIDENCE_MAIN_CONTENT_ID}`} onClick={focusEvidenceMainContent}>
+          Skip to content
+        </a>
+        <main id={EVIDENCE_MAIN_CONTENT_ID} tabIndex={-1} className="evidence-shell skip-link-target">
+          <div className="evidence-shell-inner single-state">
+            <SkeletonCard
+              className="evidence-loading-card"
+              kicker="Loci Evidence"
+              title="Loading evidence page"
+              message="Loading the selected object and evidence moment."
+              headingAs="h1"
+              showBranding={true}
+              blocks={['stage', 'detail', 'detail']}
+            />
+          </div>
+        </main>
+      </>
+    )
+  }
+
   return (
     <>
       <a className="skip-link" href={`#${EVIDENCE_MAIN_CONTENT_ID}`} onClick={focusEvidenceMainContent}>

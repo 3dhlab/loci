@@ -131,6 +131,10 @@ try {
   })
   let releaseFirstEvidenceResponse
   let signalFirstEvidenceRequest
+  let holdEvidenceResponses = false
+  let releaseHeldEvidenceResponses
+  let heldEvidenceResponses
+  let expectLegacyEvidenceRequest = false
   const firstEvidenceRequest = new Promise(resolve => { signalFirstEvidenceRequest = resolve })
   const firstEvidenceResponseGate = new Promise(resolve => { releaseFirstEvidenceResponse = resolve })
   let heldFirstEvidenceResponse = false
@@ -139,10 +143,17 @@ try {
     const params = Object.fromEntries(requestUrl.searchParams.entries())
     const response = fixture(requestUrl, params)
     apiDiagnostics.push({ url: requestUrl.toString(), status: 200, responseKeys: Object.keys(response) })
+    if (expectLegacyEvidenceRequest) {
+      expectLegacyEvidenceRequest = false
+      legacyEvidenceRequested()
+    }
     if (!heldFirstEvidenceResponse) {
       heldFirstEvidenceResponse = true
       signalFirstEvidenceRequest()
       await firstEvidenceResponseGate
+    }
+    if (holdEvidenceResponses) {
+      await heldEvidenceResponses
     }
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(response) })
   })
@@ -175,6 +186,28 @@ try {
   releaseFirstEvidenceResponse()
   await page.getByText('Synthetic Vessel', { exact: true }).waitFor({ state: 'visible' })
   assert.equal(await page.locator('.evidence-loading-screen').count(), 0, 'loading state should clear after evidence data resolves')
+
+  holdEvidenceResponses = true
+  heldEvidenceResponses = new Promise(resolve => { releaseHeldEvidenceResponses = resolve })
+  let legacyEvidenceRequested
+  const legacyEvidenceRequest = new Promise(resolve => { legacyEvidenceRequested = resolve })
+  expectLegacyEvidenceRequest = true
+  await page.goto(`${origin}/evidence/objects/${objectSlug}?legacy=1`, { waitUntil: 'domcontentloaded' })
+  await Promise.race([
+    legacyEvidenceRequest,
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('legacy evidence API request did not start')), 10000).unref()
+    }),
+  ])
+  const legacyEvidenceLoading = page.locator('.evidence-loading-card')
+  await legacyEvidenceLoading.waitFor({ state: 'visible' })
+  assert.equal(await page.locator('.evidence-loading-screen').count(), 0, 'legacy loading must preserve the prior evidence skeleton')
+  releaseHeldEvidenceResponses()
+  holdEvidenceResponses = false
+  await page.getByText('Synthetic Vessel', { exact: true }).waitFor({ state: 'visible' })
+  assert.equal(await page.locator('.evidence-loading-card').count(), 0, 'legacy loading skeleton should clear when evidence data resolves')
+  await page.goto(`${origin}/evidence/objects/${objectSlug}?studio=1`, { waitUntil: 'domcontentloaded' })
+  await page.getByText('Synthetic Vessel', { exact: true }).waitFor({ state: 'visible' })
 
   const annotationMarker = page.getByRole('button', { name: 'Vessel rim annotation', exact: true })
   await annotationMarker.waitFor({ state: 'visible', timeout: 20000 })
