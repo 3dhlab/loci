@@ -20,7 +20,7 @@ import { PUBLIC_BROWSE_PATH, navigateToPublicBrowse } from '../lib/navigation'
 import { applyDocumentThemeChrome } from '../lib/documentTheme'
 
 const THEME_STORAGE_KEY = 'loci.studio.theme'
-const THEME_MODES = ['system', 'light', 'dark']
+const THEME_MODES = ['system', 'light', 'muted-light', 'dark']
 
 function readSearchParams(search) {
   const raw = typeof search === 'string'
@@ -74,6 +74,9 @@ function systemPrefersDark() {
 function resolvePalette(mode, prefersDark) {
   if (mode === 'light') {
     return 'cobalt'
+  }
+  if (mode === 'muted-light') {
+    return 'muted-light'
   }
   if (mode === 'dark') {
     return 'darkroom'

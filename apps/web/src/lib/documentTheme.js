@@ -7,12 +7,13 @@
  *   - html + body background     -> the fill iOS paints in the notch / home-
  *                                   indicator safe-area insets and overscroll
  *
- * Values come from a FIXED palette map keyed by the Studio palette enum
- * ('cobalt' | 'darkroom') — never from user input — so there is no DOM/CSS
+ * Values come from a fixed palette map keyed by the Studio palette enum
+ * ('cobalt' | 'muted-light' | 'darkroom') — never from user input — so there is no DOM/CSS
  * injection surface. Best-effort and SSR-safe; failures never break rendering.
  */
 const PALETTE_CHROME = {
   cobalt: { themeColor: '#eef2f8', colorScheme: 'light', background: '#eef2f8' },
+  'muted-light': { themeColor: '#f2f3f1', colorScheme: 'light', background: '#f2f3f1' },
   darkroom: { themeColor: '#0f1620', colorScheme: 'dark', background: '#0c121b' },
 }
 

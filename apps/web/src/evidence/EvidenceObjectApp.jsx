@@ -5,7 +5,7 @@ import BrandLockup from '../components/BrandLockup'
 import BrandMotion from '../components/BrandMotion'
 import ErrorState, { buildErrorState } from '../components/ErrorState'
 import SearchAutosuggest from '../components/SearchAutosuggest'
-import SkeletonCard from '../components/SkeletonCard'
+import EvidenceLoadingState, { EVIDENCE_MAIN_CONTENT_ID } from './EvidenceLoadingState'
 import StudioShell from './studio/StudioShell'
 import StudioSearch from './studio/StudioSearch'
 import { isStudioSurfaceEnabled, resolveStudioPaletteSync } from '../public/studioSurface'
@@ -34,7 +34,6 @@ import {
 
 const EVIDENCE_TABLET_MEDIA_QUERY = '(max-width: 1024px)'
 const EVIDENCE_MOBILE_MEDIA_QUERY = '(max-width: 760px)'
-const EVIDENCE_MAIN_CONTENT_ID = 'evidence-main-content'
 const EVIDENCE_MODEL_CANVAS_DPR = [1, 1.5]
 const EVIDENCE_PLAYBACK_RENDER_INTERVAL_MS = 250
 const EVIDENCE_TRANSCRIPT_SCROLL_QUERY_PARAM = 't_scroll'
@@ -2593,30 +2592,7 @@ export default function EvidenceObjectApp() {
   }, [autoScrollOnLoad, page?.transcript?.video_id, scheduleTranscriptScrollUrlSync, transcriptAutoFollow, transcriptScrollIndex])
 
   if (loading) {
-    return (
-      <>
-        <a
-          className="skip-link"
-          href={`#${EVIDENCE_MAIN_CONTENT_ID}`}
-          onClick={() => focusSkipTarget(EVIDENCE_MAIN_CONTENT_ID)}
-        >
-          Skip to content
-        </a>
-        <main id={EVIDENCE_MAIN_CONTENT_ID} tabIndex={-1} className="evidence-shell skip-link-target">
-          <div className="evidence-shell-inner single-state">
-            <SkeletonCard
-              className="evidence-loading-card"
-              kicker="Loci Evidence"
-              title="Loading evidence page"
-              message="Loading the selected object and evidence moment."
-              headingAs="h1"
-              showBranding={true}
-              blocks={['stage', 'detail', 'detail']}
-            />
-          </div>
-        </main>
-      </>
-    )
+    return <EvidenceLoadingState />
   }
 
   if (errorState || !page) {
