@@ -6,7 +6,7 @@ The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) 
 
 ## Hosted research instance
 
-[Explore the Loci research collection](https://loci.threedeezy.com/). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
+[Explore the Loci research collection](https://loci.threedeezy.com/public). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
 
 ## Quickstart
 
