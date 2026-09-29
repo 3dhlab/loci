@@ -13,6 +13,7 @@
  */
 const PALETTE_CHROME = {
   cobalt: { themeColor: '#eef2f8', colorScheme: 'light', background: '#eef2f8' },
+  'muted-light': { themeColor: '#f2f3f1', colorScheme: 'light', background: '#f2f3f1' },
   darkroom: { themeColor: '#0f1620', colorScheme: 'dark', background: '#0c121b' },
 }
 
