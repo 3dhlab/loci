@@ -21,13 +21,13 @@ const server = createServer((req, res) => {
 })
 
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/fS8AAAAASUVORK5CYII=', 'base64')
-const makeObjects = (count) => Array.from({ length: count }, (_, index) => ({
-  id: `synthetic-object-${index + 1}`,
-  name: `Synthetic object ${index + 1}`,
+const makeObjects = (count, first = 1) => Array.from({ length: count }, (_, index) => ({
+  id: `synthetic-object-${index + first}`,
+  name: `Synthetic object ${index + first}`,
   project_id: 'synthetic-collection',
   description: 'A generated object for public browse layout testing.',
-  evidence_url: `/evidence/objects/synthetic-object-${index + 1}`,
-  poster_url: `/synthetic/poster-${index + 1}.png`,
+  evidence_url: `/evidence/objects/synthetic-object-${index + first}`,
+  poster_url: `/synthetic/poster-${index + first}.png`,
 }))
 
 let browser
@@ -111,7 +111,62 @@ try {
       `${count} mobile cards: grid height ${sizes.gridHeight}px should match its rendered rows ${sizes.expectedHeight}px`)
     await context.close()
   }
-  console.log('PASS public browse cards remain usable during poster delay/failure, late recovery works, and mobile grid sizes match 1–3 cards')
+
+  // A delayed page-two API response keeps page-one cards and progress near the
+  // pager, then replaces both the cards and current-page announcement.
+  {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
+    const page = await context.newPage()
+    const pageErrors = []
+    let pageTwoRequestStarted
+    const pageTwoStarted = new Promise((resolveStarted) => { pageTwoRequestStarted = resolveStarted })
+    let releasePageTwo
+    const pageTwoRelease = new Promise((resolveRelease) => { releasePageTwo = resolveRelease })
+    page.on('pageerror', (error) => pageErrors.push(error.message))
+    await page.route('**/api/v1/public/projects', (route) => route.fulfill({ json: [] }))
+    await page.route('**/api/v1/public/stats', (route) => route.fulfill({ json: { open_now_count: 6, in_preparation_count: 0 } }))
+    await page.route('**/api/v1/public/objects/page*', async (route) => {
+      const requestedPage = Number(new URL(route.request().url()).searchParams.get('page'))
+      if (requestedPage === 2) {
+        pageTwoRequestStarted()
+        await pageTwoRelease
+      }
+      await route.fulfill({
+        json: { items: makeObjects(3, requestedPage === 2 ? 4 : 1), page: requestedPage, page_size: 3, total: 6, total_pages: 2 },
+      })
+    })
+    await page.route('**/synthetic/**', (route) => route.fulfill({ status: 200, contentType: 'image/png', body: png }))
+    await page.goto(`${origin}/public`, { waitUntil: 'domcontentloaded' })
+    await page.getByText('Synthetic object 3', { exact: true }).waitFor({ state: 'visible' })
+    await page.getByRole('button', { name: 'Next object page' }).click()
+    await pageTwoStarted
+
+    const status = page.locator('.public-object-page-loading')
+    await status.waitFor({ state: 'visible' })
+    assert.match(await status.textContent(), /Loading page 2/)
+    const statusBox = await status.boundingBox()
+    assert.ok(statusBox && statusBox.y >= 0 && statusBox.y < 844, 'mobile page-two progress stays inside the viewport after Next')
+    assert.equal(await page.locator('.public-object-page-grid .public-library-card').count(), 3, 'page-one cards remain available during refetch')
+    await page.getByRole('button', { name: 'Open evidence for Synthetic object 1' }).waitFor({ state: 'visible' })
+    assert.match(await page.locator('.public-object-page-announcement').textContent(), /Page 1 of 2; loading page 2/)
+    assert.equal(await page.getByRole('button', { name: 'Page 1' }).getAttribute('aria-current'), 'page')
+    assert.equal(await page.getByRole('button', { name: 'Page 2' }).getAttribute('aria-current'), null)
+    const spacing = await page.locator('.public-object-page-grid').evaluate((grid) => {
+      const statusRect = grid.previousElementSibling.getBoundingClientRect()
+      return grid.getBoundingClientRect().top - statusRect.bottom
+    })
+    assert.ok(spacing < 100, `loading status and previous cards stay close together (${spacing}px)`)
+
+    releasePageTwo()
+    await page.getByText('Synthetic object 6', { exact: true }).waitFor({ state: 'visible' })
+    assert.equal(await page.getByText('Synthetic object 1', { exact: true }).count(), 0)
+    assert.equal(await page.getByRole('button', { name: 'Page 2' }).getAttribute('aria-current'), 'page')
+    assert.match(await page.locator('.public-object-page-announcement').textContent(), /Page 2 of 2/)
+    assert.equal(await status.count(), 0)
+    assert.deepEqual(pageErrors, [])
+    await context.close()
+  }
+  console.log('PASS public browse posters, mobile 1–3 card sizing, and delayed page-two progress and completion')
 } finally {
   if (browser) await browser.close()
   if (server.listening) await new Promise((resolveClose) => server.close(resolveClose))

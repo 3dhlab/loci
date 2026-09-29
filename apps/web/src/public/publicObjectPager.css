@@ -164,7 +164,7 @@
 }
 
 .public-object-page-loading {
-  justify-self: center;
+  justify-self: start;
   font-size: 0.85rem;
 }
 
@@ -182,7 +182,7 @@
   }
 
   .public-browse-loading {
-    min-height: max(30svh, var(--public-browse-reserve-height, 0px));
+    min-height: 30svh;
   }
 
   .public-object-page-grid > .public-library-card {

@@ -1060,18 +1060,25 @@ export default function PublicBrowseApp() {
                     <button key={page} type="button" className="public-object-page-number" aria-label={`Page ${page}`} aria-current={page === objectPageMeta.page ? 'page' : undefined} onClick={() => changeObjectPage(page)} disabled={objectsLoading}>{page}</button>
                   ))}
                 </span>
-                <span className="public-object-page-announcement" aria-live="polite" aria-atomic="true">Page {objectPageMeta.page} of {objectPageMeta.totalPages}</span>
+                <span className="public-object-page-announcement" aria-live="polite" aria-atomic="true">
+                  Page {objectPageMeta.page} of {objectPageMeta.totalPages}{objectsLoading && objects.length ? `; loading page ${objectPage}` : ''}
+                </span>
                 <button type="button" className="public-object-page-arrow" aria-label="Next object page" onClick={() => changeObjectPage(objectPageMeta.page + 1)} disabled={objectPageMeta.page >= objectPageMeta.totalPages || objectsLoading}>›</button>
               </nav>
             ) : null}
           </div>
 
-          {loading || objectsLoading ? (
+          {objectsLoading && objects.length ? (
+            <p className="public-object-page-loading" role="status" aria-live="polite">
+              Loading page {objectPage}… Page {objectPageMeta.page} objects remain available.
+            </p>
+          ) : null}
+
+          {loading || (objectsLoading && !objects.length) ? (
             <div
               className="public-browse-loading"
               role="status"
               aria-live="polite"
-              style={objects.length ? { '--public-browse-reserve-height': `${objects.length * 36}rem` } : undefined}
             >
               <BrandMotion name="scan" size={40} className="brand-motion-glow" />
               <span>Loading published objects…</span>
@@ -1149,7 +1156,6 @@ export default function PublicBrowseApp() {
               <button type="button" className="ghost" onClick={() => void loadObjectPage(objectPage, activeProjectId)}>Retry</button>
             </div>
           ) : null}
-          {objectsLoading && objects.length ? <span className="public-object-page-loading" role="status">Loading page {objectPage}…</span> : null}
         </section>
         </div>
       </main>
