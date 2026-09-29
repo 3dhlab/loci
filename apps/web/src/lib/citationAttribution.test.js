@@ -187,7 +187,7 @@ test('isLocatorLikeTitle: Transcript/time strings are locators, real titles are 
 test('buildEvidenceCitationLead: object title leads; transcript/time locators demoted', () => {
   // Direct ?t= / transcript focus -> title is the object, not "Transcript 00:00".
   assert.equal(buildEvidenceCitationLead('Synthetic Vessel', 'Transcript 00:00'), 'Synthetic Vessel')
-  assert.equal(buildEvidenceCitationLead('Synthetic Sculpture (Sowei)', '01:30 - 01:45'), 'Synthetic Sculpture (Sowei)')
+  assert.equal(buildEvidenceCitationLead('Synthetic Sculpture (Study Model)', '01:30 - 01:45'), 'Synthetic Sculpture (Study Model)')
   // A real curated moment title rides in front of the object as a subtitle.
   assert.equal(
     buildEvidenceCitationLead('Synthetic Large Model', "A synthetic example statement"),
@@ -202,7 +202,7 @@ test('named speaker + annotation moment: speaker is source identity, moment+obje
   const input = {
     objectTitle: 'Synthetic Large Model',
     momentTitle: "A synthetic example statement",
-    collectionName: 'LIB 2025 VR Object Interpretations',
+    collectionName: 'Synthetic Demonstration Collection',
     speakerLabel: 'Morgan Example',
     speakerAuthorName: 'Example, Morgan',
     recordedDate: 'February 8, 2025',
@@ -234,7 +234,7 @@ test('speakerless transcript at 00:00: title starts from object, never "Transcri
   const input = {
     objectTitle: 'Synthetic Vessel',
     momentTitle: 'Transcript 00:00', // synthetic locator fed by the ?t= wiring
-    collectionName: 'LIB 2025 VR Object Interpretations',
+    collectionName: 'Synthetic Demonstration Collection',
     speakerLabel: '', // unavailable
     speakerAuthorName: '',
     recordedDate: '',
@@ -267,9 +267,9 @@ test('speakerless transcript at 00:00: title starts from object, never "Transcri
 // ---- Scenario C: Synthetic speaker speakerless boundary gap (date known, speaker not) ----
 test('Synthetic speaker speakerless boundary gap: object/platform identity, date kept, no speaker (all formats)', () => {
   const input = {
-    objectTitle: 'Synthetic Sculpture (Sowei)',
+    objectTitle: 'Synthetic Sculpture (Study Model)',
     momentTitle: '01:30 - 01:45', // bare window locator at a gap between named speakers
-    collectionName: 'LIB 2025 VR Object Interpretations',
+    collectionName: 'Synthetic Demonstration Collection',
     speakerLabel: '', // gap -> unavailable
     speakerAuthorName: '',
     recordedDate: 'February 23, 2025',
@@ -282,7 +282,7 @@ test('Synthetic speaker speakerless boundary gap: object/platform identity, date
   }
   const out = Object.fromEntries(FORMATS.map((f) => [f, buildFormattedEvidenceCitation(f, input)]))
   for (const f of FORMATS) {
-    assert.ok(out[f].includes('Synthetic Sculpture (Sowei)'), `${f} missing object title`)
+    assert.ok(out[f].includes('Synthetic Sculpture (Study Model)'), `${f} missing object title`)
     assert.ok(!out[f].includes('01:30 - 01:45') || out[f].includes('Time: 01:30 - 01:45') || out[f].includes(', 01:30 - 01:45]'),
       `${f} window should appear only as a locator, not the title`)
     assert.ok(!/^["A-Za-z].*(InventedSpeakerA|InventedSpeakerB)/.test(out[f]), `${f} invented a speaker`)
@@ -290,8 +290,8 @@ test('Synthetic speaker speakerless boundary gap: object/platform identity, date
     assertNoLeak(out[f], f)
   }
   // Object leads; recorded date preserved; speaker absent.
-  assert.ok(out.apa.startsWith('Synthetic Sculpture (Sowei). (2025, February 23). '), out.apa)
-  assert.ok(out.harvard.startsWith("Loci (February 23, 2025) 'Synthetic Sculpture (Sowei)'"), out.harvard)
+  assert.ok(out.apa.startsWith('Synthetic Sculpture (Study Model). (2025, February 23). '), out.apa)
+  assert.ok(out.harvard.startsWith("Loci (February 23, 2025) 'Synthetic Sculpture (Study Model)'"), out.harvard)
   assert.ok(out.chicago.includes('Recorded February 23, 2025.'), out.chicago)
 })
 
@@ -300,9 +300,9 @@ test('no raw filename / storage path / private field leaks in any citation outpu
   const input = {
     objectTitle: 'Synthetic Container',
     momentTitle: 'Transcript 02:10',
-    collectionName: 'LIB 2025 VR Object Interpretations',
-    speakerLabel: 'Arthur Saygbah',
-    speakerAuthorName: 'Saygbah, Arthur',
+    collectionName: 'Synthetic Demonstration Collection',
+    speakerLabel: 'Avery Example',
+    speakerAuthorName: 'Example, Avery',
     recordedDate: 'March 3, 2025',
     apaRecordedDate: '2025, March 3',
     focusType: 'Timestamp focus',
