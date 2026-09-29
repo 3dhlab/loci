@@ -11,7 +11,6 @@ import { PUBLIC_BROWSE_PATH, currentLocationKey, ensureLocationChangeEvents, nav
 import { buildPublicBrowsePageUrl, getPublicObjectPageButtons, normalizePublicObjectPageResponse, PUBLIC_OBJECT_PAGE_SIZE, readPublicObjectPage } from '../lib/publicObjectPager'
 import { setPageMeta } from '../lib/seo'
 import './publicObjectPager.css'
-import { preloadPublicPoster } from './publicPosterLoading'
 import { StudioSurfaceChrome, isStudioSurfaceEnabled, useStudioSurfaceTheme } from './studioSurface'
 
 const PUBLIC_MAIN_CONTENT_ID = 'public-main-content'
@@ -271,34 +270,25 @@ function BrowseCardVisual({ variant = 'evidence' }) {
   )
 }
 
-function ReadyCardPoster({ posterUrl, objectName, loadStatus = 'loaded' }) {
+function ReadyCardPoster({ posterUrl, objectName }) {
   const [failed, setFailed] = useState(false)
+  const [timedOut, setTimedOut] = useState(false)
   const [imageReady, setImageReady] = useState(false)
   const resolvedPosterUrl = normalizeOptionalText(posterUrl)
   const alt = `${objectName} poster`
-  const unavailable = loadStatus === 'error'
 
   useEffect(() => {
     setFailed(false)
+    setTimedOut(false)
     setImageReady(false)
+    if (!resolvedPosterUrl) return undefined
+    const timeoutId = window.setTimeout(() => setTimedOut(true), 8000)
+    return () => window.clearTimeout(timeoutId)
   }, [resolvedPosterUrl])
-
-  if (!resolvedPosterUrl || failed || unavailable) {
-    return (
-      <div className="public-library-card-visual public-library-card-poster-fallback" role="img" aria-label={alt}>
-        <strong>Poster unavailable</strong>
-        <span>
-          {!resolvedPosterUrl
-            ? 'A published poster has not been generated yet.'
-            : 'The published poster could not be loaded.'}
-        </span>
-      </div>
-    )
-  }
 
   return (
     <div className={`public-library-card-visual public-library-card-poster-frame ${imageReady ? 'is-loaded' : 'is-pending'}`}>
-      <img
+      {resolvedPosterUrl && !failed ? <img
         src={resolvedPosterUrl}
         alt={alt}
         className="public-library-card-poster-image"
@@ -310,16 +300,28 @@ function ReadyCardPoster({ posterUrl, objectName, loadStatus = 'loaded' }) {
           else setImageReady(true)
         }}
         onError={() => setFailed(true)}
-      />
+      /> : null}
+      {!imageReady ? (
+        <div className="public-library-card-poster-placeholder" role="img" aria-label={alt}>
+          <strong>{failed || !resolvedPosterUrl ? 'Poster unavailable' : 'Poster loading'}</strong>
+          <span>{!resolvedPosterUrl
+            ? 'A published poster has not been generated yet.'
+            : failed
+              ? 'The published poster could not be loaded.'
+              : timedOut
+                ? 'The poster is taking longer to load. Object details remain available.'
+                : 'Object details are available while the poster loads.'}</span>
+        </div>
+      ) : null}
     </div>
   )
 }
 
-function ReadyCardPosterLink({ objectRow, label, onOpen, posterUrl, posterStatus }) {
+function ReadyCardPosterLink({ objectRow, label, onOpen, posterUrl }) {
   const evidenceUrl = normalizeEvidenceUrl(objectRow?.evidence_url)
 
   if (!evidenceUrl) {
-    return <ReadyCardPoster posterUrl={posterUrl} objectName={objectRow?.name || 'Published object'} loadStatus={posterStatus} />
+    return <ReadyCardPoster posterUrl={posterUrl} objectName={objectRow?.name || 'Published object'} />
   }
 
   return (
@@ -332,7 +334,7 @@ function ReadyCardPosterLink({ objectRow, label, onOpen, posterUrl, posterStatus
         onOpen(objectRow)
       }}
     >
-      <ReadyCardPoster posterUrl={posterUrl} objectName={objectRow?.name || 'Published object'} loadStatus={posterStatus} />
+      <ReadyCardPoster posterUrl={posterUrl} objectName={objectRow?.name || 'Published object'} />
     </a>
   )
 }
@@ -490,33 +492,6 @@ export default function PublicBrowseApp() {
       browsePageRequestIdRef.current += 1
     }
   }, [loadObjectPage, objectPage, activeProjectId])
-
-  const posterPreloadEntries = useMemo(() => objects
-    .filter((objectRow) => normalizeEvidenceUrl(objectRow.evidence_url))
-    .map((objectRow) => ({
-      objectId: objectRow.id,
-      url: resolvePublicObjectPosterUrl(normalizeOptionalText(objectRow.poster_url)),
-    })), [objects])
-  const posterPageKey = `${objectPageMeta.page}:${posterPreloadEntries.map(({ objectId, url }) => `${objectId}:${url}`).join('|')}`
-  const [posterReadiness, setPosterReadiness] = useState({ key: '', ready: false, statuses: {} })
-
-  useEffect(() => {
-    let cancelled = false
-    setPosterReadiness({ key: posterPageKey, ready: posterPreloadEntries.length === 0, statuses: {} })
-    if (!posterPreloadEntries.length) return undefined
-
-    Promise.all(posterPreloadEntries.map(async ({ objectId, url }) => [
-      objectId,
-      await preloadPublicPoster(url),
-    ])).then((entries) => {
-      if (cancelled) return
-      setPosterReadiness({ key: posterPageKey, ready: true, statuses: Object.fromEntries(entries) })
-    })
-
-    return () => { cancelled = true }
-  }, [posterPageKey, posterPreloadEntries])
-
-  const postersLoading = objects.length > 0 && (posterReadiness.key !== posterPageKey || !posterReadiness.ready)
 
   useEffect(() => subscribeToLocationChanges(() => {
     const params = new URLSearchParams(window.location.search)
@@ -1091,8 +1066,13 @@ export default function PublicBrowseApp() {
             ) : null}
           </div>
 
-          {loading || objectsLoading || postersLoading ? (
-            <div className="public-browse-loading" role="status" aria-live="polite">
+          {loading || objectsLoading ? (
+            <div
+              className="public-browse-loading"
+              role="status"
+              aria-live="polite"
+              style={objects.length ? { '--public-browse-reserve-height': `${objects.length * 36}rem` } : undefined}
+            >
               <BrandMotion name="scan" size={40} className="brand-motion-glow" />
               <span>Loading published objects…</span>
             </div>
@@ -1131,7 +1111,6 @@ export default function PublicBrowseApp() {
                       label={posterLabel}
                       onOpen={openObjectEvidence}
                       posterUrl={resolvePublicObjectPosterUrl(normalizeOptionalText(objectRow.poster_url))}
-                      posterStatus={posterReadiness.key === posterPageKey ? posterReadiness.statuses[objectRow.id] : 'loading'}
                     />
                     <h3>{objectRow.name}</h3>
                     <p className="public-library-card-summary">{browseSummary(objectRow)}</p>

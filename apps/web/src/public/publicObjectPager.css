@@ -179,11 +179,10 @@
 
   .public-library-grid.public-object-page-grid {
     grid-template-columns: minmax(0, 1fr);
-    min-height: 100rem;
   }
 
   .public-browse-loading {
-    min-height: 100rem;
+    min-height: var(--public-browse-reserve-height, 0);
   }
 
   .public-object-page-grid > .public-library-card {

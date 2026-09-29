@@ -6964,6 +6964,7 @@ button.ghost {
 }
 
 .public-library-card-poster-frame {
+  position: relative;
   background:
     radial-gradient(circle at 18% 18%, rgba(247, 231, 212, 0.72) 0%, transparent 26%),
     radial-gradient(circle at 80% 22%, rgba(214, 199, 181, 0.32) 0%, transparent 32%),
@@ -7009,6 +7010,31 @@ button.ghost {
 }
 
 .public-library-card-poster-fallback span {
+  max-width: 18rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.public-library-card-poster-placeholder {
+  position: absolute;
+  inset: 0.75rem;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(245, 239, 231, 0.96));
+}
+
+.public-library-card-poster-placeholder strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+.public-library-card-poster-placeholder span {
   max-width: 18rem;
   font-size: 0.88rem;
   line-height: 1.45;
