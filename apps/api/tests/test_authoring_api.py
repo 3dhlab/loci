@@ -286,7 +286,7 @@ class AuthoringApiHttpTests(unittest.TestCase):
             # Batch with NO project_slug -> project_key falls back to stable_video_id.
             batch = OcrBatch(
                 website_object_id="demo-container",
-                stable_video_id="video-test-konia",
+                stable_video_id="video-test-sample",
                 project_slug=None,
                 artifact_dir="examples/test-artifacts",
                 cadence_seconds=5,
@@ -406,7 +406,7 @@ class AuthoringApiHttpTests(unittest.TestCase):
         r = self.client.get(f"/api/v1/authoring/batches/{self.batch_id}", headers=self._auth("reviewer"))
         self.assertEqual(r.status_code, 200, r.text)
         body = r.json()
-        self.assertEqual(body["project_key"], "video-test-konia")  # project_slug was null
+        self.assertEqual(body["project_key"], "video-test-sample")  # project_slug was null
         self.assertEqual(body["counts"]["observations"], 3)
         rr = self.client.get(f"/api/v1/authoring/batches/{self.batch_id}/readiness", headers=self._auth("reviewer"))
         self.assertEqual(rr.status_code, 200, rr.text)
