@@ -4,6 +4,18 @@ Use GitHub Issues for reproducible bugs and scoped feature proposals. Review exi
 
 Keep pull requests focused on one change. Explain the problem, resulting behavior, validation and migration/configuration effects. Update documentation when setup or interfaces change. Follow the existing JavaScript module style (two spaces, single quotes) and Python PEP 8 conventions. Prefer named functions and meaningful domain names; comments should explain important assumptions or design decisions.
 
+## Pull request path
+
+Create a branch in your fork, make a focused change, and open a pull request against `main`. Link the relevant issue when there is one. Use the pull request template to describe the change and the checks you ran. Contributors do not need write access to this repository to propose changes.
+
+`main` is maintained through pull requests. A maintainer reviews the diff, confirms that discussions are resolved and the required CI checks pass, then merges the pull request. The pull request author cannot supply the required approval. A later code change needs a fresh approval. Do not push directly to `main`, force-push it, delete it, or use an administrator bypass for an ordinary change.
+
+The required CI jobs are **Web unit, build, dependency gate**, **API PostgreSQL, Redis, migrations**, **Browser annotation, media, share regression**, and **Clean demo install and real API browser journey**. They run on pull requests through [the CI workflow](.github/workflows/ci.yml). A failed or missing required check must be resolved before merging.
+
+The `3dhlab` account owns the repository rules and performs merges. Changes to branch rules, required checks, repository permissions, or this process are owner decisions; record the reason and resulting settings in a pull request or issue. `3dhlab` is currently the sole upstream writer. An independent contributor may critically assess an owner-drafted change, preserve its original authorship, document that assessment, and submit it from a fork for `3dhlab` to review. Merely copying a draft is not an independent assessment. An owner-authored pull request cannot be self-approved; it would require another trusted maintainer with write access. Do not add write access solely to satisfy the review rule or bypass it for an ordinary change.
+
+Only the `3dhlab` account publishes release tags and GitHub releases, using a reviewed commit already merged to `main` with passing CI. Several separately reviewed PRs can be merged into one release: verify CI on the final `main` commit, then tag that commit and publish the release notes. GitHub grants release creation to accounts with repository write access, so ordinary contributors should use forks without write access. Grant write access only to a trusted maintainer when its merge and release authority is intended.
+
 ## Checks
 
 Use Node 22 and the npm lockfile. From `apps/web`:
