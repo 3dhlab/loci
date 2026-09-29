@@ -2,7 +2,14 @@
 node_modules
 **/node_modules
 .env
+.env.*
+!.env.example
 .media
 .backups
+**/.media
+**/.backups
 **/__pycache__
 **/test-results
+*.dump
+*.sqlite
+*.sqlite3

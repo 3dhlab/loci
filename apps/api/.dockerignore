@@ -1,9 +1,17 @@
 .env
 .env.*
 !.env.example
+.media
+.backups
+**/.media
+**/.backups
 __pycache__
 **/__pycache__
 *.pyc
 .pytest_cache
 .venv
 *.log
+*.dump
+*.sqlite
+*.sqlite3
+tests
