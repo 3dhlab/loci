@@ -80,6 +80,13 @@ html[data-studio-bootstrap='cobalt'] #root {
   color: #0e1b2e;
 }
 
+html[data-studio-bootstrap='muted-light'],
+html[data-studio-bootstrap='muted-light'] body,
+html[data-studio-bootstrap='muted-light'] #root {
+  background: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  color: #202a31;
+}
+
 html[data-studio-bootstrap='darkroom'],
 html[data-studio-bootstrap='darkroom'] body,
 html[data-studio-bootstrap='darkroom'] #root {
@@ -7267,7 +7274,19 @@ button.ghost {
   --studio-ink-soft: #4a5a6e;
   --studio-line: #d4dce8;
   --studio-now: #ff5a1f;
+  --studio-now-text: #ff5a1f;
   --studio-moment: #1f5bff;
+}
+
+.studio-shell[data-studio-theme='muted-light'] {
+  --studio-bg: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  --studio-surface: #fbfcfa;
+  --studio-ink: #202a31;
+  --studio-ink-soft: #5c686d;
+  --studio-line: #d5dcda;
+  --studio-now: #bd684b;
+  --studio-now-text: #82432f;
+  --studio-moment: #547a78;
 }
 
 .studio-shell[data-studio-theme='darkroom'] {
@@ -7277,6 +7296,7 @@ button.ghost {
   --studio-ink-soft: #9fb0c2;
   --studio-line: #2a3744;
   --studio-now: #ff7a3c;
+  --studio-now-text: #ff7a3c;
   --studio-moment: #45c8d6;
 }
 
@@ -7738,7 +7758,7 @@ button.ghost {
 }
 
 .studio-transport-time-current {
-  color: var(--studio-now);
+  color: var(--studio-now-text);
   font-weight: 600;
 }
 
@@ -7853,7 +7873,7 @@ button.ghost {
 }
 
 .studio-rail-item.is-playing .studio-rail-item-time {
-  color: var(--studio-now);
+  color: var(--studio-now-text);
   font-weight: 600;
 }
 
@@ -8570,7 +8590,7 @@ button.ghost {
 }
 
 .studio-transcript-line.is-active .studio-transcript-time {
-  color: var(--studio-now);
+  color: var(--studio-now-text);
   font-weight: 600;
 }
 
@@ -8612,7 +8632,19 @@ button.ghost {
   --studio-ink-soft: #4a5a6e;
   --studio-line: #d4dce8;
   --studio-now: #ff5a1f;
+  --studio-now-text: #ff5a1f;
   --studio-moment: #1f5bff;
+}
+
+.studio-surface[data-studio-theme='muted-light'] {
+  --studio-bg: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  --studio-surface-color: #fbfcfa;
+  --studio-ink: #202a31;
+  --studio-ink-soft: #5c686d;
+  --studio-line: #d5dcda;
+  --studio-now: #bd684b;
+  --studio-now-text: #82432f;
+  --studio-moment: #547a78;
 }
 
 .studio-surface[data-studio-theme='darkroom'] {
@@ -8622,6 +8654,7 @@ button.ghost {
   --studio-ink-soft: #9fb0c2;
   --studio-line: #2a3744;
   --studio-now: #ff7a3c;
+  --studio-now-text: #ff7a3c;
   --studio-moment: #45c8d6;
 }
 
@@ -8926,6 +8959,20 @@ button.ghost {
   padding: clamp(1rem, 4vw, 3rem);
 }
 
+.evidence-loading-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.evidence-loading-indicator {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  color: var(--studio-ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
 .studio-status-card {
   display: grid;
   gap: 0.6rem;
@@ -9044,7 +9091,7 @@ button.ghost {
   font-weight: 400;
   font-size: 1.15rem;
   line-height: 1.4;
-  color: var(--studio-now);
+  color: var(--studio-now-text);
   margin: 0 0 1rem;
 }
 
@@ -9161,7 +9208,7 @@ button.ghost {
 .studio-landing .notify-capture__button:disabled { opacity: 0.55; cursor: not-allowed; }
 .studio-landing .notify-capture__status { text-align: center; font: 400 0.85rem/1.5 var(--font-ui); color: var(--studio-ink-soft); }
 .studio-landing .notify-capture__status--success { color: #1f8a61; }
-.studio-landing .notify-capture__status--error { color: var(--studio-now); }
+.studio-landing .notify-capture__status--error { color: var(--studio-now-text); }
 
 .studio-landing .landing-search,
 .studio-landing .landing-search__form { width: 100%; }

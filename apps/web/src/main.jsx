@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import BrandLockup from './components/BrandLockup'
 import BrandMotion from './components/BrandMotion'
 import ViewErrorBoundary from './components/ViewErrorBoundary'
+import EvidenceLoadingState from './evidence/EvidenceLoadingState'
 import { captureViewError, initializeMonitoring } from './lib/monitoring'
 import { readWindowLocation, subscribeToLocationChanges } from './lib/navigation'
 import { isStudioSurfaceEnabled, resolveStudioPaletteSync } from './public/studioSurface'
@@ -117,9 +118,13 @@ function RootLoadingFallback({ pathname, search }) {
         ? 'Loading evidence page'
         : 'Loading application'
 
-  if (publicStudioEnabled(pathname, search) && (isPublicRoute || isEmbedRoute || isEvidenceRoute || pathname === '/')) {
+  if (isEvidenceRoute && publicStudioEnabled(pathname, search)) {
+    return <EvidenceLoadingState />
+  }
+
+  if (publicStudioEnabled(pathname, search) && (isPublicRoute || isEmbedRoute || pathname === '/')) {
     return (
-      <main className="studio-surface studio-surface-status" data-studio-theme="cobalt">
+        <main className="studio-surface studio-surface-status" data-studio-theme={resolveStudioPaletteSync()}>
         <section className="studio-status-card" role="status" aria-live="polite">
           <BrandLockup variant="stacked" />
           <p className="studio-surface-eyebrow">{surfaceLabel}</p>
