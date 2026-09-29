@@ -1,8 +1,13 @@
 .env
 .env.*
 !.env.example
+.media
+.backups
+**/.media
+**/.backups
 node_modules
 dist
 playwright-report
 test-results
 *.log
+tests
