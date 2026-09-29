@@ -148,7 +148,12 @@ try {
   })
   await page.route('**/api/public/clips/**', route => route.fulfill({ status: 200, contentType: 'image/png', body: readFileSync(posterPath) }))
   await page.goto(`${origin}/evidence/objects/${objectSlug}?studio=1`, { waitUntil: 'domcontentloaded' })
-  await firstEvidenceRequest
+  await Promise.race([
+    firstEvidenceRequest,
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('evidence API request did not start')), 10000).unref()
+    }),
+  ])
   const evidenceLoading = page.locator('.evidence-loading-screen')
   await evidenceLoading.waitFor({ state: 'visible' })
   assert.equal(await evidenceLoading.getAttribute('data-studio-theme'), 'muted-light', 'loading state must inherit the persisted palette')
