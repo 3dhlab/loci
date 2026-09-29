@@ -103,12 +103,19 @@ try {
       const cards = [...node.children]
       const grid = node.getBoundingClientRect()
       const cardHeights = cards.map((card) => card.getBoundingClientRect().height)
+      const actionHeight = cards[0]?.querySelector('.public-library-card-actions .search-result-button')?.getBoundingClientRect().height ?? 0
       const gap = parseFloat(getComputedStyle(node).rowGap) || 0
-      return { gridHeight: grid.height, expectedHeight: cardHeights.reduce((sum, height) => sum + height, 0) + gap * Math.max(0, cards.length - 1) }
+      return { gridHeight: grid.height, cardHeights, actionHeight, expectedHeight: cardHeights.reduce((sum, height) => sum + height, 0) + gap * Math.max(0, cards.length - 1) }
     })
     assert.equal(await page.locator('.public-library-card').count(), count)
     assert.ok(Math.abs(sizes.gridHeight - sizes.expectedHeight) <= 2,
       `${count} mobile cards: grid height ${sizes.gridHeight}px should match its rendered rows ${sizes.expectedHeight}px`)
+    if (count === 1) {
+      assert.ok(sizes.cardHeights[0] < 500,
+        `one mobile card should follow its content (${sizes.cardHeights[0]}px)`)
+      assert.ok(sizes.actionHeight <= 60,
+        `one-card action should keep its normal button height (${sizes.actionHeight}px)`)
+    }
     await context.close()
   }
 

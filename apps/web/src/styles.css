@@ -7183,6 +7183,11 @@ button.ghost {
 }
 
 @media (max-width: 480px) {
+  .public-library-grid.public-object-page-grid {
+    align-items: start;
+    min-height: 0;
+  }
+
   .public-library-hero,
   .public-library-search-panel,
   .public-library-section {
