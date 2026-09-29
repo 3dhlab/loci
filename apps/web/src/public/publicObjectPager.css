@@ -182,7 +182,7 @@
   }
 
   .public-browse-loading {
-    min-height: var(--public-browse-reserve-height, 0);
+    min-height: max(30svh, var(--public-browse-reserve-height, 0px));
   }
 
   .public-object-page-grid > .public-library-card {

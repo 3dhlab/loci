@@ -7026,7 +7026,7 @@ button.ghost {
   border-radius: 14px;
   color: var(--ink-soft);
   text-align: center;
-  background: linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(245, 239, 231, 0.96));
+  background: var(--card);
 }
 
 .public-library-card-poster-placeholder strong {
@@ -7038,6 +7038,15 @@ button.ghost {
   max-width: 18rem;
   font-size: 0.88rem;
   line-height: 1.45;
+}
+
+.studio-surface .public-library-card-poster-placeholder {
+  background: var(--studio-surface-color);
+  color: var(--studio-ink-soft);
+}
+
+.studio-surface .public-library-card-poster-placeholder strong {
+  color: var(--studio-ink);
 }
 
 .public-library-card-top,
