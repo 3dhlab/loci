@@ -164,7 +164,7 @@
 }
 
 .public-object-page-loading {
-  justify-self: center;
+  justify-self: start;
   font-size: 0.85rem;
 }
 
@@ -179,6 +179,12 @@
 
   .public-library-grid.public-object-page-grid {
     grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    min-height: 0;
+  }
+
+  .public-browse-loading {
+    min-height: 30svh;
   }
 
   .public-object-page-grid > .public-library-card {

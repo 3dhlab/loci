@@ -6826,6 +6826,26 @@ button.ghost {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.public-browse-loading {
+  display: flex;
+  min-height: 38rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.public-browse-loading .brand-motion {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
+
+.public-library-grid.public-object-page-grid {
+  align-items: stretch;
+  min-height: 38rem;
+}
+
 .public-library-card {
   display: grid;
   gap: 0.8rem;
@@ -6951,11 +6971,14 @@ button.ghost {
 }
 
 .public-library-card-poster-frame {
+  position: relative;
   background:
     radial-gradient(circle at 18% 18%, rgba(247, 231, 212, 0.72) 0%, transparent 26%),
     radial-gradient(circle at 80% 22%, rgba(214, 199, 181, 0.32) 0%, transparent 32%),
     linear-gradient(180deg, rgba(244, 236, 226, 0.98), rgba(233, 223, 211, 0.96));
   padding: 0.75rem;
+  opacity: 1;
+  transition: opacity 220ms ease;
 }
 
 .public-library-card-poster-frame::after {
@@ -6970,6 +6993,12 @@ button.ghost {
   object-position: center;
   border-radius: 14px;
   background: transparent;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.public-library-card-poster-frame.is-loaded .public-library-card-poster-image {
+  opacity: 1;
 }
 
 .public-library-card-poster-fallback {
@@ -6991,6 +7020,40 @@ button.ghost {
   max-width: 18rem;
   font-size: 0.88rem;
   line-height: 1.45;
+}
+
+.public-library-card-poster-placeholder {
+  position: absolute;
+  inset: 0.75rem;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  background: var(--card);
+}
+
+.public-library-card-poster-placeholder strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+.public-library-card-poster-placeholder span {
+  max-width: 18rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.studio-surface .public-library-card-poster-placeholder {
+  background: var(--studio-surface-color);
+  color: var(--studio-ink-soft);
+}
+
+.studio-surface .public-library-card-poster-placeholder strong {
+  color: var(--studio-ink);
 }
 
 .public-library-card-top,
