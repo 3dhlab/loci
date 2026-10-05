@@ -8,6 +8,10 @@ The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) 
 
 [Explore the Loci research collection](https://loci.threedeezy.com/public). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
 
+[![Preview: a walkthrough of the hosted Loci research collection](docs/media/hosted-walkthrough-preview.gif)](docs/media/hosted-walkthrough.mp4)
+
+[Watch or download the 64.5-second hosted walkthrough with audio (MP4)](docs/media/hosted-walkthrough.mp4) · [Read the walkthrough guide](docs/media/hosted-walkthrough.md)
+
 ## Quickstart
 
 Requirements: Docker Engine with Compose v2 or later, or Docker Desktop; Python 3; and internet access for dependencies and images. Containers run Linux. Application ports 8000 and 8080 must be free.
