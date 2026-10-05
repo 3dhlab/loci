@@ -2,7 +2,7 @@
 
 Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
 
-The public [v0.1.1 release](https://github.com/3dhlab/loci/releases/tag/v0.1.1) includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
+The source includes a local demonstration with one authoring account; [published releases](https://github.com/3dhlab/loci/releases) identify the available packages. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
 
 ## Hosted research instance
 
@@ -43,8 +43,9 @@ improvements and this video are a **3D Humanities Lab** contribution. The
 [video provenance and license](docs/media/demo-authoring/README.md) describe its
 generated content.
 
-Build this source checkout to follow the optional visual authoring walkthrough.
-The v0.1.1 release predates the authoring override and updated chapter media.
+Build a source checkout or release archive containing `docker-compose.authoring.yml`
+to follow the optional visual authoring walkthrough. The v0.1.1 release predates
+that override and the updated chapter media.
 
 ## Documentation
 

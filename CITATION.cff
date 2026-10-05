@@ -3,7 +3,7 @@ message: "Please cite Loci when using the software in research."
 title: "Loci: Spatially linked video evidence"
 type: software
 license: Apache-2.0
-version: "0.1.1"
+version: "0.2.0"
 authors:
   - family-names: "Stevens"
     given-names: "Craig"

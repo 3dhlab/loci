@@ -2,8 +2,9 @@
 
 [Watch the 3D Humanities Lab walkthrough](media/demo-authoring/loci-demo-authoring.mp4)
 or read its [timed text description](media/demo-authoring/transcript.md).
-Use this source checkout for the workflow below; the packaged v0.1.1 release
-predates the optional console override and new chapter media.
+Use a source checkout or release archive containing `docker-compose.authoring.yml`
+for the workflow below. The packaged v0.1.1 release predates the optional console
+override and new chapter media.
 
 This source includes a signed-in visual console for selecting a video range,
 placing an annotation on a model, reviewing it, and making it visible to local
