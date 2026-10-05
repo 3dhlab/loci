@@ -11,11 +11,12 @@ Collection media and contributor material retain their own permissions and attri
 ## Permission and reuse
 
 The maintainer confirmed on October 4, 2026 that there is permission to show
-the participants in this walkthrough. That permission does not grant a reuse
-license for the walkthrough video or its previews, or for the depicted collection
-media, participant interviews, models or research content. These hosted media
-assets are excluded from the software's Apache 2.0 license. The license applies
-to the software and generated local-demo material.
+the participants in this edited walkthrough. `hosted-walkthrough.mp4`,
+`hosted-walkthrough.jpg` and `hosted-walkthrough-preview.gif` are excluded from
+the software's Apache 2.0 license. Inclusion grants no reuse license for the
+walkthrough video or its previews, or for the depicted collection media,
+participant interviews, models or research content. Software, first-party
+documentation and generated local-demo material retain their Apache 2.0 terms.
 Original captions, credits and recording attribution remain visible in the video.
 
 These files contain the edited screen recording and its previews. They include

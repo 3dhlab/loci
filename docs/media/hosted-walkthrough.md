@@ -18,8 +18,9 @@ The example follows **Field Museum Spoon** from the LIB 2025 VR Object Interpret
 The application remains visible throughout. Instructions animate within the fixed top banner, with brief zooms around the annotation and citation actions.
 
 Walkthrough recording and editing: **Unlock Digital**. The maintainer has
-permission to show the participants in this video. The depicted research content
-has no reuse license; the repository contains the walkthrough and previews,
-without the underlying collection files or datasets.
+permission to show the participants in this edited video. Inclusion grants no
+reuse license for the walkthrough, previews or depicted research content.
+Underlying collection datasets, source interviews and source models remain
+outside this repository.
 
 The shared link demonstrated in the final step opens the recording at **00:21.425**. Collection media and contributor material retain their original permissions and attributions. [Media provenance](README.md) describes the recording.

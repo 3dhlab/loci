@@ -13,8 +13,10 @@ The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) 
 [Watch or download the 64.5-second hosted walkthrough with audio (MP4)](docs/media/hosted-walkthrough.mp4) · [Read the walkthrough guide](docs/media/hosted-walkthrough.md)
 
 Hosted walkthrough recording and editing: **Unlock Digital**. Permission to
-show participants in this video grants no reuse license for the depicted
-research content. See [media permissions and attribution](docs/media/README.md).
+show participants in this edited video grants no reuse license for the
+walkthrough, its previews or the depicted research content. See
+[media permissions and attribution](docs/media/README.md),
+[Apache 2.0 scope and media exceptions](LICENSE_STATUS.md) and [NOTICE](NOTICE).
 
 ## Quickstart
 

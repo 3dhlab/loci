@@ -5,4 +5,10 @@ Loci's first-party application code, documentation, original interface artwork, 
 
 Third-party components retain their own copyright and license terms. See THIRD_PARTY_NOTICES.md and PYTHON_THIRD_PARTY_NOTICES.md.
 
-Hosted research walkthrough media have separate permissions and are excluded from the Apache 2.0 license. See LICENSE_STATUS.md and docs/media/README.md.
+Hosted research walkthrough recording and editing: Unlock Digital.
+docs/media/hosted-walkthrough.mp4, docs/media/hosted-walkthrough.jpg and
+docs/media/hosted-walkthrough-preview.gif have separate presentation permissions
+and are excluded from the Apache 2.0 license. Inclusion grants no reuse license
+for these assets or the depicted interviews, collection media, models and
+research content. Original captions, credits and recording attribution are
+retained. See LICENSE_STATUS.md and docs/media/README.md.
