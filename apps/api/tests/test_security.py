@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import base64
+from datetime import datetime, timedelta, timezone
+
 import jwt
 import pytest
 
@@ -47,3 +50,24 @@ def test_access_token_rejects_unknown_critical_header(monkeypatch: pytest.Monkey
 
     with pytest.raises(ValueError, match="Invalid access token"):
         security.decode_access_token(token)
+
+
+def test_access_token_rejects_expired_claims(monkeypatch: pytest.MonkeyPatch) -> None:
+    secret = "synthetic-expiry-check-secret-at-least-32-bytes"
+    monkeypatch.setattr(security.settings, "jwt_algorithm", "HS256")
+    monkeypatch.setattr(security.settings, "jwt_secret_key", secret)
+    token = jwt.encode({"sub": "user-1", "exp": datetime.now(timezone.utc) - timedelta(minutes=1)},
+                       secret, algorithm="HS256")
+
+    with pytest.raises(ValueError, match="Invalid access token"):
+        security.decode_access_token(token)
+
+
+def test_access_token_normalizes_deeply_nested_header_errors(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(security.settings, "jwt_algorithm", "HS256")
+    monkeypatch.setattr(security.settings, "jwt_secret_key", "synthetic-malformed-header-secret-at-least-32-bytes")
+    nested = b'{"nested":' + b'[' * 2000 + b'0' + b']' * 2000 + b'}'
+    header = base64.urlsafe_b64encode(nested).rstrip(b'=').decode()
+
+    with pytest.raises(ValueError, match="Invalid access token"):
+        security.decode_access_token(f"{header}.e30.invalid-signature")

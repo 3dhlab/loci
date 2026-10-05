@@ -68,6 +68,17 @@ await new Promise(r => server.listen(0, '127.0.0.1', r))
 origin = `http://127.0.0.1:${server.address().port}`
 const browser = await chromium.launch({ headless: true, args: ['--enable-webgl', '--use-gl=swiftshader', '--enable-unsafe-swiftshader'] })
 const report = { api: 'Synthetic review responses; no backend, real account, or database', origin, login: [], authoring: [], errors: [] }
+async function syntheticContext(options) {
+  const context = await browser.newContext(options)
+  // The source build defaults to the dev API port; Compose uses /api. Both
+  // configurations must exercise the same controlled synthetic responses.
+  await context.route('**/api/**', async route => {
+    const url = new URL(route.request().url())
+    const response = await route.fetch({ url: `${origin}${url.pathname}${url.search}` })
+    await route.fulfill({ response, headers: { ...response.headers(), 'access-control-allow-origin': origin } })
+  })
+  return context
+}
 async function measures(page) {
   return page.evaluate(() => {
     const logo = document.querySelector('.brand-lockup')
@@ -100,7 +111,7 @@ async function checkContrast(page, selectors = ['.login-card label', '.login-car
 }
 try {
   for (const theme of ['light', 'dark', 'muted-light']) {
-    const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 1000 } })
+    const context = await syntheticContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 1000 } })
     await context.addInitScript(theme => localStorage.setItem('loci.studio.theme', theme), theme)
     const page = await context.newPage(); page.setDefaultTimeout(15000)
     page.on('pageerror', error => report.errors.push(error.message))
@@ -121,7 +132,7 @@ try {
     await page.screenshot({ path: resolve(artifacts, `preview-${theme}-390.png`) })
     await context.close()
   }
-  const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 1000 } })
+  const context = await syntheticContext({ reducedMotion: 'reduce', viewport: { width: 1440, height: 1000 } })
   await context.addInitScript(() => { localStorage.setItem('semantic.console.token', 'synthetic-review-token'); localStorage.setItem('loci.studio.theme', 'dark') })
   const page = await context.newPage(); page.setDefaultTimeout(15000)
   page.on('pageerror', error => report.errors.push(error.message))

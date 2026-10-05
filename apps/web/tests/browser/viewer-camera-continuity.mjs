@@ -11,6 +11,23 @@ mkdirSync(artifacts, { recursive: true })
 const browser = await chromium.launch({ headless: true, args: ['--enable-webgl', '--use-gl=swiftshader', '--enable-unsafe-swiftshader'] })
 const report = { origin, api: 'actual seeded demo; no request interception', cases: [] }
 const poseDistance = (a, b) => Math.max(...['position', 'target'].flatMap(key => a[key].map((value, i) => Math.abs(value - b[key][i]))))
+async function settledCamera(page) {
+  // OrbitControls damping is frame based. A fixed wall-clock delay can still
+  // sample a moving drag on a busy software-rendered CI worker.
+  await page.waitForFunction(() => {
+    const pose = window.cameraContinuityViews.at(-1)
+    if (!pose) return false
+    const sample = window.cameraSettleSample
+    const time = performance.now()
+    const distance = sample ? Math.max(...['position', 'target'].flatMap(key =>
+      pose[key].map((value, i) => Math.abs(value - sample.pose[key][i])))) : Infinity
+    const stableSince = distance < .0001 ? sample.stableSince : time
+    window.cameraSettleSample = { pose, stableSince }
+    return time - stableSince >= 500
+  }, null, { timeout: 10000, polling: 100 })
+  await page.evaluate(() => { window.cameraSettleSample = null })
+  return page.evaluate(() => window.cameraContinuityViews.at(-1))
+}
 try {
   for (const reducedMotion of ['reduce', 'no-preference']) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion })
@@ -36,8 +53,7 @@ try {
     await page.mouse.down()
     await page.mouse.move(box.x + box.width * .82 - 170, box.y + box.height * .82 - 50, { steps: 30 })
     await page.mouse.up()
-    await page.waitForTimeout(800) // Let the user's OrbitControls damping settle.
-    const manualPose = await page.evaluate(() => window.cameraContinuityViews.at(-1))
+    const manualPose = await settledCamera(page)
     assert.ok(poseDistance(initialPose, manualPose) > .1, 'The real drag must substantially change the camera')
 
     // A single interior window must retain focus after its completion seek.
@@ -58,7 +74,7 @@ try {
       `completed single window retains its active clip (${reducedMotion})`)
     const singleCompletionPose = await page.evaluate(() => window.cameraContinuityViews.at(-1))
     assert.ok(poseDistance(manualPose, singleCompletionPose) < .005,
-      `single-window completion preserves the camera (${reducedMotion})`)
+      `single-window completion preserves the camera (${reducedMotion}): ${poseDistance(manualPose, singleCompletionPose)}`)
     // A later seek to a distinct timestamp remains a manual scrub and clears focus.
     await page.locator('video.evidence-video-element').evaluate(node => { node.currentTime = 6.5 })
     await page.waitForFunction(() => {
@@ -82,8 +98,7 @@ try {
     await page.mouse.down()
     await page.mouse.move(postScrubBox.x + postScrubBox.width * .82 - 150, postScrubBox.y + postScrubBox.height * .82 - 45, { steps: 30 })
     await page.mouse.up()
-    await page.waitForTimeout(800)
-    const sequenceManualPose = await page.evaluate(() => window.cameraContinuityViews.at(-1))
+    const sequenceManualPose = await settledCamera(page)
     assert.ok(poseDistance(poseAfterManualScrub, sequenceManualPose) > .1,
       'A new camera drag establishes the two-window continuity baseline')
 
@@ -185,8 +200,11 @@ try {
       railChange: poseDistance(sequenceManualPose, railPose), restoredAnnotation: true })
     await context.close()
   }
-  writeFileSync(resolve(artifacts, 'report.json'), JSON.stringify(report, null, 2) + '\n')
   console.log(JSON.stringify(report))
+} catch (error) {
+  report.error = error.stack
+  throw error
 } finally {
+  writeFileSync(resolve(artifacts, 'report.json'), JSON.stringify(report, null, 2) + '\n')
   await browser.close()
 }

@@ -9,7 +9,7 @@ email-validator==2.2.0
 redis==6.4.0
 rq==2.6.0
 passlib[bcrypt]==1.7.4
-PyJWT[crypto]==2.13.0
+PyJWT[crypto]==2.15.0
 python-multipart==0.0.31
 pgvector==0.4.1
 python-dotenv==1.2.2
