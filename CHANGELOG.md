@@ -1,15 +1,18 @@
 # Changelog
 
-## Unreleased v0.2.0 candidate
+## v0.2.0
 
 - Added an optional visual authoring console for mapping one video range to a captured model point, previewing privately and publishing the annotation individually.
 - Clarified the generated demo's three chapters and added an explicit guarded refresh with rollback for existing synthetic installations.
 - Preserved a manually chosen camera during direct pin playback and retained selection at a guided range's exclusive end.
 - Corrected blank point validation, dark-mode branding, the retained muted-light palette and the generated Top edge placement.
-- Refresh clean transcript drafts from the latest server text, preserve unsaved edits during tab changes, and require explicit reconciliation before saving a conflicting transcript.
+- Refreshed clean transcript drafts from the latest server text, preserved unsaved edits during tab changes, and required explicit reconciliation before saving a conflicting transcript.
 - Added the 3D Humanities Lab's complete-viewport authoring tutorial, poster, timed description and setup guide.
+- Added Unlock Digital's hosted collection walkthrough, still poster, optional animated preview and feature guide, with explicit presentation permissions and reuse exclusions.
 - Patched brace-expansion and PyJWT dependency pins with matching license notices, and expanded browser and real-API demo checks.
 - Aligned the API, web package and software citation version metadata to 0.2.0, and clarified setup and security documentation for the source and earlier releases.
+
+3D Humanities Lab contributed the generated-demo code, guarded refresh, dependency and transcript corrections, and local authoring tutorial. Unlock Digital contributed the hosted walkthrough recording/editing and assessed incorporation of the Lab-authored media notices. The hosted media retains separate presentation permissions; inclusion grants no reuse license for those assets or depicted research content.
 
 ## v0.1.1, September 29, 2026
 
