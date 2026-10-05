@@ -10,6 +10,8 @@ The source includes a local demonstration with one authoring account; [published
 
 Watch the 64.5-second hosted walkthrough with audio.
 
+https://github.com/user-attachments/assets/8ed45214-8053-4f76-a1cf-8d37fdcebe1a
+
 [Read the walkthrough guide](docs/media/hosted-walkthrough.md)
 
 Hosted walkthrough recording and editing: **Unlock Digital**. Permission to
@@ -41,6 +43,8 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 `docker compose down` stops services and preserves data. `docker compose down --volumes` deletes the demo database and media for that Compose project. Keep `.env` for the lifetime of its database volume.
 
 ## Local demo walkthrough
+
+https://github.com/user-attachments/assets/daaeb92e-b3a2-4adc-af80-01662bce84bd
 
 [Follow the authoring guide](docs/demo-authoring.md) · [Timed text description](docs/media/demo-authoring/transcript.md)
 
