@@ -157,7 +157,11 @@ try {
       return media && !media.paused && media.currentTime >= 10 && media.currentTime < 11.5
         && secondClip?.getAttribute('aria-pressed') === 'true'
     }, null, { timeout: 15000 })
-    await guidedSinglePin.click()
+    // Rail framing resumes the viewer's intentional ambient sway, so the pin
+    // may keep moving in ordinary-motion mode. Exercise its native keyboard
+    // activation here; a mouse click's stability wait is inappropriate for it.
+    await guidedSinglePin.waitFor({ state: 'visible' })
+    await guidedSinglePin.press('Enter')
     await page.waitForFunction(() => {
       const media = document.querySelector('video.evidence-video-element')
       const activeClip = document.querySelector('.studio-clip-sequence button[aria-pressed="true"]')
@@ -195,7 +199,8 @@ try {
     report.cases.push({ reducedMotion, dragChange: poseDistance(initialPose, manualPose),
       singleStopSeconds,
       singleCompletionPoseChange: poseDistance(manualPose, singleCompletionPose),
-      manualScrubClearedPin: true, guidedScrubClearedFocusAndContinued: true,
+      manualScrubClearedPin: true, guidedRangeSwitchInput: 'keyboard',
+      guidedScrubClearedFocusAndContinued: true,
       sequenceTimes, largestDirectSelectionChange,
       railChange: poseDistance(sequenceManualPose, railPose), restoredAnnotation: true })
     await context.close()
