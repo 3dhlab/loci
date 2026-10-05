@@ -6,6 +6,7 @@
 - Clarified the generated demo's three chapters and added an explicit guarded refresh with rollback for existing synthetic installations.
 - Preserved a manually chosen camera during direct pin playback and retained selection at a guided range's exclusive end.
 - Corrected blank point validation, dark-mode branding, the retained muted-light palette and the generated Top edge placement.
+- Refresh clean transcript drafts from the latest server text, preserve unsaved edits during tab changes, and require explicit reconciliation before saving a conflicting transcript.
 - Added the 3D Humanities Lab's complete-viewport authoring tutorial, poster, timed description and setup guide.
 - Patched brace-expansion and PyJWT dependency pins with matching license notices, and expanded browser and real-API demo checks.
 - Aligned the API, web package and software citation version metadata to 0.2.0, and clarified setup and security documentation for the source and earlier releases.

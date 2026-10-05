@@ -59,6 +59,7 @@ import PublicExperienceShell from './components/PublicExperienceShell'
 import { formatLociTitle } from './lib/seo'
 import { StudioThemeToggle, useStudioSurfaceTheme } from './public/studioSurface'
 import { hasAnnotationPoint } from './lib/annotationPoint'
+import { reconcileTranscriptDraft } from './lib/transcriptDraft'
 
 const TOKEN_KEY = 'semantic.console.token'
 const SEARCH_PAGE_SIZE = 5
@@ -751,6 +752,7 @@ export default function App() {
   const [viewerTranscript, setViewerTranscript] = useState(null)
   const [viewerSegments, setViewerSegments] = useState([])
   const [viewerDraftText, setViewerDraftText] = useState('')
+  const [viewerDraftConflict, setViewerDraftConflict] = useState(false)
   const [viewerHistory, setViewerHistory] = useState({ entries: [], index: -1 })
   const [viewerMediaUrl, setViewerMediaUrl] = useState('')
   const [viewerLoading, setViewerLoading] = useState(false)
@@ -1188,7 +1190,29 @@ export default function App() {
   const previousModeRef = useRef(mode)
   const analysisSessionRef = useRef(null)
   const viewerDraftSourceRef = useRef(null)
+  const viewerDraftTextRef = useRef('')
   const previousLiveDatabaseSyncStateRef = useRef(liveDatabaseSyncStatus.state)
+
+  function updateViewerDraftText(text) {
+    viewerDraftTextRef.current = text
+    setViewerDraftText(text)
+  }
+
+  function refreshViewerDraft(transcript, { force = false } = {}) {
+    const result = reconcileTranscriptDraft({
+      source: force ? null : viewerDraftSourceRef.current,
+      draftText: viewerDraftTextRef.current,
+      videoId: viewerVideoId,
+      token,
+      transcript
+    })
+    if (result.action === 'replace') {
+      viewerDraftSourceRef.current = result.source
+      updateViewerDraftText(result.text)
+      initializeViewerHistory(result.text)
+    }
+    setViewerDraftConflict(result.action === 'conflict')
+  }
 
   function initializeViewerHistory(nextText) {
     setViewerHistory({ entries: nextText ? [nextText] : [], index: nextText ? 0 : -1 })
@@ -1864,12 +1888,7 @@ export default function App() {
           }
         setViewerTranscript(transcriptData.transcript)
         setViewerSegments(transcriptData.segments || [])
-        const draftSource = viewerDraftSourceRef.current
-        if (draftSource?.videoId !== viewerVideoId || draftSource?.token !== token) {
-          setViewerDraftText(transcriptData.transcript.raw_text)
-          initializeViewerHistory(transcriptData.transcript.raw_text)
-          viewerDraftSourceRef.current = { videoId: viewerVideoId, token }
-        }
+        refreshViewerDraft(transcriptData.transcript)
           setViewerCurrentMs((current) => (
             current > 0 && analysisSessionRef.current?.videoId === viewerVideoId ? current : 0
           ))
@@ -1879,11 +1898,7 @@ export default function App() {
             if (activeVideo?.status === 'READY' && isTranscriptMissing) {
               setViewerTranscript(null)
               setViewerSegments([])
-              if (viewerDraftSourceRef.current?.videoId !== viewerVideoId || viewerDraftSourceRef.current?.token !== token) {
-                setViewerDraftText('')
-                initializeViewerHistory('')
-                viewerDraftSourceRef.current = null
-              }
+              refreshViewerDraft(null)
               setNotice('Transcript is still finalizing. Retrying automatically...')
               setTimeout(() => {
                 refreshData(token).catch(() => null)
@@ -1892,11 +1907,7 @@ export default function App() {
             }
           setViewerTranscript(null)
           setViewerSegments([])
-          if (viewerDraftSourceRef.current?.videoId !== viewerVideoId || viewerDraftSourceRef.current?.token !== token) {
-            setViewerDraftText('')
-            initializeViewerHistory('')
-            viewerDraftSourceRef.current = null
-          }
+          refreshViewerDraft(null)
           setViewerMediaUrl('')
           setError(err.message)
         }
@@ -3645,11 +3656,11 @@ export default function App() {
     if (viewerHistory.index < 1) return
     const previous = viewerHistory.entries[viewerHistory.index - 1] || ''
     setViewerHistory((prev) => ({ ...prev, index: prev.index - 1 }))
-    setViewerDraftText(previous)
+    updateViewerDraftText(previous)
   }
 
   async function saveViewerTranscript() {
-    if (!viewerVideoId || !viewerTranscript) return
+    if (!viewerVideoId || !viewerTranscript || viewerDraftConflict || viewerLoading) return
     setViewerSaving(true)
     setError('')
     try {
@@ -3663,7 +3674,12 @@ export default function App() {
       setViewerTranscript(result.transcript)
       const refreshed = await getVideoTranscript(token, viewerVideoId)
       setViewerSegments(refreshed.segments || [])
-      setViewerDraftText(refreshed.transcript.raw_text)
+      setViewerTranscript(refreshed.transcript)
+      viewerDraftSourceRef.current = {
+        videoId: viewerVideoId, token, transcriptId: refreshed.transcript.id, rawText: refreshed.transcript.raw_text
+      }
+      updateViewerDraftText(refreshed.transcript.raw_text)
+      setViewerDraftConflict(false)
       pushUndoState(refreshed.transcript.raw_text)
       setNotice('Transcript saved and reindexed for analysis.')
     } catch (err) {
@@ -4517,16 +4533,29 @@ export default function App() {
                 rows={12}
                 value={viewerDraftText}
                 onChange={(e) => {
-                  setViewerDraftText(e.target.value)
+                  updateViewerDraftText(e.target.value)
                   pushUndoState(e.target.value)
                 }}
                 placeholder="Transcript raw text"
               />
+              {viewerDraftConflict ? (
+                <div role="alert">
+                  <p>The transcript changed or became unavailable. Your unsaved text is preserved. Copy any edits you need, then load the latest transcript before saving.</p>
+                  <button type="button" className="ghost" disabled={!viewerTranscript || viewerLoading || viewerSaving} onClick={() => setConfirmAction({
+                    title: 'Load latest transcript?',
+                    message: 'Replace the editor text and undo history with the latest loaded transcript? Copy any unsaved edits you want to keep first.',
+                    confirmLabel: 'Load latest',
+                    onConfirm: () => refreshViewerDraft(viewerTranscript, { force: true })
+                  })}>
+                    Load latest transcript
+                  </button>
+                </div>
+              ) : null}
               <div className="topbar-actions">
                 <button type="button" className="ghost" disabled={viewerHistory.index < 1 || viewerSaving} onClick={undoViewerDraft}>
                   Undo
                 </button>
-                <button type="button" disabled={!viewerVideoId || viewerSaving} onClick={saveViewerTranscript}>
+                <button type="button" disabled={!viewerVideoId || !viewerTranscript || viewerLoading || viewerSaving || viewerDraftConflict} onClick={saveViewerTranscript}>
                   {viewerSaving ? 'Saving...' : 'Save + Reindex'}
                 </button>
               </div>

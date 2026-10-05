@@ -16,6 +16,7 @@ const object = { id: ids.object, project_id: ids.project, title: 'Demo cube', de
 const video = { id: ids.video, project_id: ids.project, object_id: ids.object, title: 'Three cube views', stable_video_id: 'demo-colors', status: 'READY', duration_ms: 12000, is_published: true, updated_at: '2026-10-04T00:00:00Z' }
 const raw = 'WEBVTT\n\n00:00:00.000 --> 00:00:04.000\nSection 1: Front face. A square marks the front face of the cube.\n'
 const transcript = { id: ids.transcript, video_id: ids.video, title: 'Cube view demonstration transcript', format: 'VTT', language: 'en', raw_text: raw, is_published: true }
+let transcriptMissing = false
 const segments = [0, 1, 2].map(i => ({ id: `synthetic-segment-${i}`, position: i, start_ms: i * 4000, end_ms: (i + 1) * 4000, text: ['Section 1: Front face. A square marks the front face of the cube.', 'Section 2: Top edge. A triangle marks the top edge of the cube.', 'Section 3: Compare view. A circle marks the side face of the cube.'][i] }))
 const model = { id: ids.model, object_id: ids.object, revision: 1, original_filename: 'cube.glb', file_size_bytes: 896, is_published: true, model_transform_json: null, default_camera_json: null }
 const annotations = []
@@ -41,11 +42,20 @@ const server = createServer(async (req, res) => {
   if (path.endsWith('/stream') || path === '/fixtures/colors.mp4') { sendFile(req, res, resolve(mediaRoot, 'synthetic-12s.mp4')); return }
   if (path.endsWith('/model/file') || path === '/fixtures/cube.glb') { sendFile(req, res, resolve(mediaRoot, 'synthetic-cube.glb')); return }
   if (path.startsWith('/api/')) {
+    if (req.method === 'GET' && path.startsWith('/api/v1/transcripts/videos/') && transcriptMissing) {
+      res.writeHead(404, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify({ detail: 'Transcript not found' })); return
+    }
     let payload = []
     if (req.method === 'POST') {
       let body = ''; for await (const chunk of req) body += chunk
       const value = JSON.parse(body || '{}'); posts.push({ path, value })
       if (path.endsWith('/annotations')) { payload = { ...value, id: 'synthetic-created', review_status: 'ACTIVE', is_published: false }; annotations.push(payload) }
+      else if (path === '/api/v1/transcripts') {
+        Object.assign(transcript, value)
+        segments[0].text = value.raw_text.split('\n').filter(Boolean).at(-1)
+        payload = { transcript, segments }
+      }
       else payload = { detail: 'Synthetic review only' }
     } else if (path === '/api/v1/projects') payload = [project]
     else if (path === '/api/v1/objects') payload = [object]
@@ -156,6 +166,78 @@ try {
   await page.getByRole('button', { name: 'Undo', exact: true }).click()
   assert.equal(await draft.inputValue(), raw)
   report.draftRoundtripAndUndo = 'PASS with synthetic API responses'
+
+  // Reproduce a same-tab replacement of a clean transcript through Content Upload.
+  const replacement = raw.replace('Section 1: Front face. A square marks the front face of the cube.', 'Fresh uploaded transcript')
+  await page.getByRole('button', { name: 'Content Upload', exact: true }).click()
+  await page.locator('#transcript-video-select').selectOption(ids.video)
+  await page.locator('#transcript-format-select').selectOption('VTT')
+  await page.locator('#transcript-raw-input').fill(replacement)
+  await page.getByRole('button', { name: 'Ingest transcript', exact: true }).click()
+  await page.getByText('Transcript ingested and indexing queued.', { exact: true }).waitFor()
+  await page.getByRole('button', { name: 'Analysis', exact: true }).click()
+  await page.waitForFunction(text => document.querySelector('textarea[placeholder="Transcript raw text"]')?.value === text, replacement)
+  assert.equal(await page.getByRole('button', { name: 'Undo', exact: true }).isDisabled(), true, 'Clean refresh resets stale undo history')
+  const save = page.getByRole('button', { name: 'Save + Reindex', exact: true })
+  await page.waitForFunction(() => [...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Save + Reindex' && !button.disabled))
+  await save.click()
+  await page.getByText('Transcript saved and reindexed for analysis.', { exact: true }).waitFor()
+  assert.equal(posts.filter(post => post.path === '/api/v1/transcripts').at(-1).value.raw_text, replacement, 'Saving posts the newly loaded text')
+  report.cleanTranscriptRefresh = 'PASS through Content Upload, Analysis and Save'
+
+  async function analysisRoundtrip() {
+    await page.getByRole('button', { name: '3D Model', exact: true }).click()
+    await page.getByRole('heading', { name: 'Annotation Editor', exact: true }).waitFor()
+    await page.getByRole('button', { name: 'Analysis', exact: true }).click()
+  }
+  const localEdit = `${replacement}\nUnsaved local text to preserve`
+  await draft.fill(localEdit)
+  const serverReplacement = replacement.replace('Fresh uploaded transcript', 'New server transcript')
+  transcript.raw_text = serverReplacement
+  segments[0].text = 'New server transcript'
+  const transcriptPostCount = posts.filter(post => post.path === '/api/v1/transcripts').length
+  await analysisRoundtrip()
+  const conflict = page.getByText('The transcript changed or became unavailable. Your unsaved text is preserved. Copy any edits you need, then load the latest transcript before saving.', { exact: true })
+  await conflict.waitFor()
+  assert.equal(await draft.inputValue(), localEdit, 'Changed server text retains unsaved edits')
+  assert.equal(await save.isDisabled(), true, 'Conflicting draft cannot post over the server text')
+  assert.equal(posts.filter(post => post.path === '/api/v1/transcripts').length, transcriptPostCount)
+  await page.getByRole('button', { name: 'Load latest transcript', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Cancel', exact: true }).click()
+  assert.equal(await draft.inputValue(), localEdit, 'Cancel keeps the local draft')
+  await page.getByRole('button', { name: 'Load latest transcript', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Load latest', exact: true }).click()
+  assert.equal(await draft.inputValue(), serverReplacement)
+  assert.equal(await page.getByRole('button', { name: 'Undo', exact: true }).isDisabled(), true)
+  report.dirtyTranscriptConflict = 'PASS: preserve, block Save, cancel or explicitly load latest'
+
+  transcriptMissing = true
+  await analysisRoundtrip()
+  await page.waitForFunction(() => document.querySelector('textarea[placeholder="Transcript raw text"]')?.value === '')
+  assert.equal(await save.isDisabled(), true, 'Missing transcript cannot be saved')
+  transcriptMissing = false
+  transcript.id = 'synthetic-recreated-transcript'
+  transcript.raw_text = replacement.replace('Fresh uploaded transcript', 'Recreated transcript')
+  segments[0].text = 'Recreated transcript'
+  await analysisRoundtrip()
+  await page.waitForFunction(text => document.querySelector('textarea[placeholder="Transcript raw text"]')?.value === text, transcript.raw_text)
+  report.recreatedTranscriptRefresh = 'PASS: clear clean missing text, load new identity'
+
+  const missingLocalEdit = `${transcript.raw_text}\nUnsaved edit during recovery`
+  await draft.fill(missingLocalEdit)
+  transcriptMissing = true
+  await analysisRoundtrip()
+  await conflict.waitFor()
+  assert.equal(await draft.inputValue(), missingLocalEdit)
+  assert.equal(await save.isDisabled(), true)
+  transcriptMissing = false
+  await analysisRoundtrip()
+  await conflict.waitFor({ state: 'hidden' })
+  assert.equal(await draft.inputValue(), missingLocalEdit, 'Same-source recovery keeps unsaved text')
+  await page.getByRole('button', { name: 'Undo', exact: true }).click()
+  assert.equal(await draft.inputValue(), transcript.raw_text)
+  report.dirtyTranscriptRecovery = 'PASS: preserve during missing response and unchanged recovery'
+
   await page.getByRole('button', { name: '3D Model', exact: true }).click()
   const editor = page.locator('.model-sidebar .card').filter({ has: page.getByRole('heading', { name: 'Annotation Editor', exact: true }) })
   await editor.getByPlaceholder('Annotation title', { exact: true }).fill('Untouched point review probe')
