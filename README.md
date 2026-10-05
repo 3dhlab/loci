@@ -8,9 +8,9 @@ The source includes a local demonstration with one authoring account; [published
 
 [Explore the Loci research collection](https://loci.threedeezy.com/public). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
 
-[![Watch the hosted Loci research collection walkthrough](docs/media/hosted-walkthrough.jpg)](docs/media/hosted-walkthrough.mp4)
+Watch the 64.5-second hosted walkthrough with audio.
 
-[Watch or download the 64.5-second hosted walkthrough with audio (MP4)](docs/media/hosted-walkthrough.mp4) · [Read the walkthrough guide](docs/media/hosted-walkthrough.md)
+[Read the walkthrough guide](docs/media/hosted-walkthrough.md)
 
 Hosted walkthrough recording and editing: **Unlock Digital**. Permission to
 show participants in this edited video grants no reuse license for the
@@ -42,9 +42,7 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 
 ## Local demo walkthrough
 
-[![Watch the Loci local demo and visual authoring walkthrough](docs/media/demo-authoring/poster.jpg)](docs/media/demo-authoring/loci-demo-authoring.mp4)
-
-[Watch or download the video](docs/media/demo-authoring/loci-demo-authoring.mp4) · [Timed text description](docs/media/demo-authoring/transcript.md) · [Follow the authoring guide](docs/demo-authoring.md)
+[Follow the authoring guide](docs/demo-authoring.md) · [Timed text description](docs/media/demo-authoring/transcript.md)
 
 This silent 41-second walkthrough shows the generated cube in the public reader,
 then selects a video range, places and refines a pin, previews it privately,
