@@ -47,9 +47,11 @@ try {
     await singlePin.click()
     await page.waitForFunction(() => {
       const media = document.querySelector('video.evidence-video-element')
-      return media && media.paused && media.currentTime >= 7.9 && media.currentTime < 8.2
+      return media && !media.seeking && media.paused && media.currentTime >= 7.9 && media.currentTime < 8
     }, null, { timeout: 20000 })
     await page.waitForTimeout(500)
+    const singleStopSeconds = await page.locator('video.evidence-video-element').evaluate(node => node.currentTime)
+    assert.ok(singleStopSeconds < 8, 'The final frame stays inside the exclusive 4–8s window')
     assert.equal(await singlePin.getAttribute('aria-current'), 'true',
       `completed single window retains its selected pin (${reducedMotion})`)
     assert.equal(await singleClip.getAttribute('aria-pressed'), 'true',
@@ -176,6 +178,7 @@ try {
     assert.equal(await restoredPin.getAttribute('aria-current'), 'true')
     assert.deepEqual(errors, [])
     report.cases.push({ reducedMotion, dragChange: poseDistance(initialPose, manualPose),
+      singleStopSeconds,
       singleCompletionPoseChange: poseDistance(manualPose, singleCompletionPose),
       manualScrubClearedPin: true, guidedScrubClearedFocusAndContinued: true,
       sequenceTimes, largestDirectSelectionChange,

@@ -25,7 +25,7 @@ Build and start the updated demo's web service. From `apps/web`, run:
 ```sh
 npm test
 npm run build
-node tests/browser/viewer-camera-continuity.mjs
+npm run test:demo:continuity
 ```
 
 The browser regression uses the actual seeded demo at `http://127.0.0.1:8080`.

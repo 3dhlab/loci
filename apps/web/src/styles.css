@@ -9630,16 +9630,10 @@ button.ghost {
   box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
-/* ---------------------------------------------------------------------------
-   P4.8-C (#5) dark-mode readability. In the Darkroom palette the baked SVG LOCI
-   lockup (an <img>, so it can only be recolored via filter) and the cream model-
-   loading overlay must invert to read on the dark ground. Scoped to darkroom
-   studio surfaces; light Cobalt and all legacy (non-studio) surfaces unchanged.
-   The object-page wordmark (.studio-brand-wordmark), embed, not-found, and
-   crash-fallback lockups already have their own darkroom invert rules.
-   --------------------------------------------------------------------------- */
+/* The lockup contains white lettering on an opaque navy background. Preserve
+   both colors: forcing the entire image to white also erases its lettering. */
 .studio-surface[data-studio-theme='darkroom'] .brand-lockup {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 [data-studio-theme='darkroom'] .model-canvas-loading-copy {
@@ -9680,6 +9674,13 @@ html.authoring-document-surface[data-authoring-theme='darkroom'] body,
 html.authoring-document-surface[data-authoring-theme='darkroom'] #root {
   background: linear-gradient(180deg, #0f1620 0%, #0c121b 100%);
   color: #e8eef6;
+}
+
+html.authoring-document-surface[data-authoring-theme='muted-light'],
+html.authoring-document-surface[data-authoring-theme='muted-light'] body,
+html.authoring-document-surface[data-authoring-theme='muted-light'] #root {
+  background: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  color: #202a31;
 }
 
 .authoring-surface {
@@ -9731,6 +9732,29 @@ html.authoring-document-surface[data-authoring-theme='darkroom'] #root {
   --studio-moment: #45c8d6;
   --focus-ring: 2px solid #45c8d6;
   color-scheme: dark;
+  background: var(--studio-bg);
+  color: var(--ink);
+}
+
+.authoring-surface[data-studio-theme='muted-light'] {
+  --bg: #f4f5f3;
+  --bg-alt: #e9ece9;
+  --card: #fbfcfa;
+  --ink: #202a31;
+  --ink-soft: #5c686d;
+  --line: #d5dcda;
+  --accent: #547a78;
+  --accent-rgb: 84, 122, 120;
+  --accent-soft: #a8c1be;
+  --studio-bg: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  --studio-surface: #fbfcfa;
+  --studio-ink: #202a31;
+  --studio-ink-soft: #5c686d;
+  --studio-line: #d5dcda;
+  --studio-now: #bd684b;
+  --studio-moment: #547a78;
+  --focus-ring: 2px solid #547a78;
+  color-scheme: light;
   background: var(--studio-bg);
   color: var(--ink);
 }
@@ -9999,7 +10023,7 @@ html.authoring-document-surface[data-authoring-theme='darkroom'] #root {
 }
 
 .authoring-surface[data-studio-theme='darkroom'] .brand-lockup {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .authoring-surface :where(a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex='-1'])):focus-visible {

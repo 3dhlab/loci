@@ -17,6 +17,7 @@ from app.scripts.demo_storyboard import CHAPTERS
 IDS = {name: UUID(f'00000000-0000-4000-8000-{index:012d}') for index,name in enumerate(
     ('user','project','object','model','video','transcript','segment1','segment2','segment3','annotation1','annotation2','annotation3','clip1','clip2','clip3'),1)}
 TEXT = [chapter['text'] for chapter in CHAPTERS]
+ANNOTATION_POINTS = ((0, 0, .5), (0, .5, .5), (.5, 0, 0))
 
 
 def seed() -> None:
@@ -68,14 +69,13 @@ def seed() -> None:
                 status=ClipStatus.COMPLETE,
             ))
         db.flush()
-        points=[(0,0,.5),(0,.5,0),(.5,0,0)]
         for i,title in enumerate(('Front face','Top edge','Compare two sections'),1):
             start,end=((i-1)*4000,i*4000)
             playlist=[{'video_id':str(IDS['video']),'clip_id':str(IDS[f'clip{i}']),'transcript_segment_id':str(IDS[f'segment{i}']),'start_ms':start,'end_ms':end,'label':title}]
             if i==3:
                 start,end=0,4000
                 playlist=[{'video_id':str(IDS['video']),'clip_id':str(IDS['clip1']),'transcript_segment_id':str(IDS['segment1']),'start_ms':0,'end_ms':4000,'label':'Front face / square'}, {'video_id':str(IDS['video']),'clip_id':str(IDS['clip3']),'transcript_segment_id':str(IDS['segment3']),'start_ms':8000,'end_ms':12000,'label':'Compare view / circle'}]
-            x,y,z=points[i-1]
+            x,y,z=ANNOTATION_POINTS[i-1]
             db.add(ObjectModelAnnotation(id=IDS[f'annotation{i}'],object_model_id=IDS['model'],object_id=IDS['object'],video_id=IDS['video'],clip_id=IDS[f'clip{1 if i == 3 else i}'],transcript_segment_id=IDS[f'segment{1 if i == 3 else i}'],website_annotation_id=f'demo-annotation-{i}',title=title,description='Synthetic demonstration annotation.',point_x=x,point_y=y,point_z=z,camera_json={'position':[2,1.5,2],'target':[0,0,0]},playlist_json=playlist,start_ms=start,end_ms=end,is_published=True,model_revision_created_against=1,created_by=IDS['user']))
         db.commit()
     print('Seeded demo-cube with three annotations, including a two-clip sequence.')

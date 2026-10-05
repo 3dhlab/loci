@@ -14,7 +14,7 @@ from app.api.v1.endpoints.object_models import upload_object_model
 from app.core.config import settings
 from app.db.session import SessionLocal
 from app.models.entities import Object, ObjectModel, ObjectModelAnnotation, AnnotationReviewStatus, Transcript, User, Video, Clip, Segment
-from app.scripts.seed_demo import IDS, TEXT
+from app.scripts.seed_demo import ANNOTATION_POINTS, IDS, TEXT
 from app.scripts.generate_demo_assets import generate_clip
 from app.scripts.demo_storyboard import CHAPTERS, FPS, HEIGHT, VERSION, WIDTH
 
@@ -89,10 +89,14 @@ def refresh_synthetic(assets: Path) -> None:
             annotation = next((a for a in annotations if a.id == IDS[f'annotation{index}']), None)
             expected_clips = [1, 3] if index == 3 else [index]
             expected_ranges = [(0, 4000), (8000, 12000)] if index == 3 else [((index-1)*4000, index*4000)]
-            expected_point = [(0,0,.5),(0,.5,0),(.5,0,0)][index-1]
+            allowed_points = {ANNOTATION_POINTS[index-1]}
+            if index == 2:
+                # Only the exact original generated pin may move from the top
+                # face center to the front top edge highlighted by the chapter.
+                allowed_points.add((0, .5, 0))
             if (annotation is None or annotation.title != title
                     or annotation.object_model_id != model.id or annotation.video_id != video.id
-                    or (annotation.point_x,annotation.point_y,annotation.point_z) != expected_point
+                    or (annotation.point_x,annotation.point_y,annotation.point_z) not in allowed_points
                     or (annotation.start_ms,annotation.end_ms) != expected_ranges[0]
                     or [(p.get('start_ms'),p.get('end_ms')) for p in annotation.playlist_json or []] != expected_ranges
                     or [p.get('clip_id') for p in annotation.playlist_json] != [str(IDS[f'clip{i}']) for i in expected_clips]):
@@ -127,12 +131,15 @@ def refresh_synthetic(assets: Path) -> None:
             comparison = next(a for a in annotations if a.id == IDS['annotation3'])
             comparison.playlist_json = [dict(entry, label=label) for entry,label in zip(
                 comparison.playlist_json, ('Front face / square', 'Compare view / circle'))]
+            top_edge = next(a for a in annotations if a.id == IDS['annotation2'])
+            top_edge.point_x, top_edge.point_y, top_edge.point_z = ANNOTATION_POINTS[1]
             db.commit()
         except BaseException:
             for path in generated:
                 path.unlink(missing_ok=True)
             raise
-    print('Synthetic chapters refreshed. IDs, geometry, timing, review and publication states preserved.')
+    print('Synthetic chapters refreshed; original Top edge pin aligned to the front top edge. '
+          'IDs, model geometry, timing, review and publication states preserved.')
 
 
 def replace(model: Path | None, video: Path | None) -> None:

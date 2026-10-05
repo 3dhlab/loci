@@ -21,7 +21,7 @@ from app.models.entities import (
 )
 from app.scripts import replace_demo_media as refresh
 from app.scripts.demo_storyboard import CHAPTERS
-from app.scripts.seed_demo import IDS, TEXT
+from app.scripts.seed_demo import ANNOTATION_POINTS, IDS, TEXT
 
 
 class _Rows:
@@ -164,10 +164,15 @@ def test_refresh_updates_only_generated_title_aliases_and_preserves_contract(ref
         )):
             segment.text = text
 
+    if not legacy:
+        case.annotations[1].point_z = .5
+
     refresh.refresh_synthetic(case.assets)
     first_paths = [clip.output_mp4_path for clip in case.clips]
     first_video_key = case.video.playback_storage_key
     refresh.refresh_synthetic(case.assets)
+
+    assert [(a.point_x, a.point_y, a.point_z) for a in case.annotations] == list(ANNOTATION_POINTS)
 
     assert case.video.title == refresh.CURRENT_VIDEO_TITLE
     assert case.transcript.title == refresh.CURRENT_TRANSCRIPT_TITLE
@@ -219,6 +224,18 @@ def test_refresh_guard_failure_creates_no_media(refresh_case):
     assert case.session.commit_calls == 0
 
 
+def test_refresh_rejects_a_customized_top_edge_point(refresh_case):
+    case = refresh_case
+    case.annotations[1].point_z = .25
+    case.session.persisted[id(case.annotations[1])]['point_z'] = .25
+
+    with pytest.raises(SystemExit, match='Seeded annotation geometry or playlist changed'):
+        refresh.refresh_synthetic(case.assets)
+
+    assert case.session.commit_calls == 0
+    assert case.annotations[1].point_z == .25
+
+
 def test_partial_clip_generation_cleans_new_files_and_keeps_old_media(refresh_case, monkeypatch):
     case = refresh_case
     old_paths = [clip.output_mp4_path for clip in case.clips]
@@ -260,6 +277,7 @@ def test_database_commit_failure_cleans_new_files_and_rolls_back_references(refr
     assert case.video.playback_storage_key == old_key
     assert case.video.title == refresh.LEGACY_VIDEO_TITLE
     assert case.transcript.title == refresh.LEGACY_TRANSCRIPT_TITLE
+    assert case.annotations[1].point_z == 0
     assert [clip.output_mp4_path for clip in case.clips] == old_paths
     assert all(Path(path).is_file() for path in old_paths)
     assert case.old_video.is_file()

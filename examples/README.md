@@ -99,8 +99,11 @@ exact twelve-second duration. It also verifies the original cube checksum,
 seeded IDs, annotation points and playlists, clip/segment ranges and sample
 transcript. Matching original geometry can have a later reviewed model revision.
 The refresh updates full and derived video files, clip posters, transcript text
-and comparison labels. It preserves publication/review states, annotation
-positions, IDs and the 0–4/4–8/8–12 second windows. Personalized content is
+and comparison labels. It also moves the original **Top edge** pin from the
+top-face center `(0, 0.5, 0)` to the front top edge `(0, 0.5, 0.5)` highlighted
+in the new chapter. Only that exact original pin is eligible for this correction;
+customized coordinates cause the refresh to stop. The other annotation positions,
+publication/review states, IDs and the 0–4/4–8/8–12 second windows stay intact. Personalized content is
 directed to the ordinary replacement workflow below. New playback storage keys
 and checksums invalidate cached full video. Reload the viewer after refreshing.
 The original preservation source and old playback files remain available.

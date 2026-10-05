@@ -58,6 +58,7 @@ import SearchAutosuggest from './components/SearchAutosuggest'
 import PublicExperienceShell from './components/PublicExperienceShell'
 import { formatLociTitle } from './lib/seo'
 import { StudioThemeToggle, useStudioSurfaceTheme } from './public/studioSurface'
+import { hasAnnotationPoint } from './lib/annotationPoint'
 
 const TOKEN_KEY = 'semantic.console.token'
 const SEARCH_PAGE_SIZE = 5
@@ -2720,7 +2721,7 @@ export default function App() {
       setError('Annotation start and end times must be valid, and end must be greater than start.')
       return
     }
-    if (!Number.isFinite(pointX) || !Number.isFinite(pointY) || !Number.isFinite(pointZ)) {
+    if (!hasAnnotationPoint(annotationEdit)) {
       setError('Click the model to capture a valid annotation point before saving.')
       return
     }
@@ -5691,15 +5692,18 @@ export default function App() {
                           ) : null}
                           <input
                             placeholder="Annotation title"
+                            aria-label="Annotation title"
                             value={annotationEdit.title}
                             onChange={(e) => setAnnotationEdit((prev) => ({ ...prev, title: e.target.value }))}
                           />
                           <textarea
                             placeholder="Annotation note"
+                            aria-label="Annotation note"
                             value={annotationEdit.description}
                             onChange={(e) => setAnnotationEdit((prev) => ({ ...prev, description: e.target.value }))}
                           />
                           <select
+                            aria-label="Annotation linked video"
                             value={annotationEdit.video_id}
                             onChange={(e) => setAnnotationEdit((prev) => ({ ...prev, video_id: e.target.value }))}
                           >
@@ -5713,11 +5717,13 @@ export default function App() {
                           <div className="ops-inline-grid">
                             <input
                               placeholder="Start ms"
+                              aria-label="Annotation start ms"
                               value={annotationEdit.start_ms}
                               onChange={(e) => setAnnotationEdit((prev) => ({ ...prev, start_ms: e.target.value }))}
                             />
                             <input
                               placeholder="End ms"
+                              aria-label="Annotation end ms"
                               value={annotationEdit.end_ms}
                               onChange={(e) => setAnnotationEdit((prev) => ({ ...prev, end_ms: e.target.value }))}
                             />
@@ -5758,7 +5764,7 @@ export default function App() {
                           </div>
                           <div className="result-box">
                             <p>
-                              Placement point: <strong>{annotationEdit.point_x && annotationEdit.point_y && annotationEdit.point_z ? 'Captured' : 'Not placed yet'}</strong>
+                              Placement point: <strong>{hasAnnotationPoint(annotationEdit) ? 'Captured' : 'Not placed yet'}</strong>
                             </p>
                             <p>
                               {placementMode

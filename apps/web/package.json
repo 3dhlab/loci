@@ -8,10 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test",
-    "test:browser": "node tests/browser/annotation-share-regression.mjs && node tests/browser/public-browse-poster-reveal.mjs",
+    "test:browser": "node tests/browser/annotation-share-regression.mjs && node tests/browser/public-browse-poster-reveal.mjs && node tests/browser/console-surface-regression.mjs",
     "test:browser:public-browse": "node tests/browser/public-browse-poster-reveal.mjs",
     "smoke:model-load-policy": "node scripts/modelLoadPolicySmoke.cjs",
-    "test:demo": "node tests/browser/demo-journey.mjs"
+    "test:demo": "node tests/browser/demo-journey.mjs && npm run test:demo:continuity",
+    "test:demo:continuity": "node tests/browser/viewer-camera-continuity.mjs",
+    "test:demo:authoring": "node tests/browser/demo-authoring-journey.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
