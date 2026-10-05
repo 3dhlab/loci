@@ -1,6 +1,6 @@
 # Hosted Loci walkthrough
 
-[Watch the complete 64.5-second walkthrough](hosted-walkthrough.mp4) · [Explore the hosted collection](https://loci.threedeezy.com/public)
+[Watch the complete 64.5-second walkthrough](hosted-walkthrough.mp4) · [Find the hosted collection link](../../README.md#hosted-research-instance)
 
 The example follows **Field Museum Spoon** from the LIB 2025 VR Object Interpretations collection. It shows published research content, 3D annotations, synchronized video and transcript navigation, citation formats, and a shared timestamp. Short excerpts of the original interview audio play during the matching video passages. The original recording’s visible captions and credits are retained.
 
