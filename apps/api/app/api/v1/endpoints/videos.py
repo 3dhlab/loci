@@ -16,7 +16,7 @@ from app.db.session import get_db
 from app.models.entities import Object, Project, User, Video, VideoStatus
 from app.schemas.video import MediaFileResponse, VideoCreate, VideoCreateResponse, VideoResponse, VideoUpdate
 from app.services.audit_events import append_metadata_change_event, append_publication_state_event, build_user_actor_payload
-from app.services.media_transcode import transcode_output_path
+from app.services.media_transcode import transcode_output_path, video_playback_path
 from app.services.job_queue import enqueue_transcode, enqueue_transcription
 from app.services.upload_validation import UploadTooLargeError, UploadValidationError, persist_bounded_upload
 
@@ -208,8 +208,8 @@ def stream_video(video_id: UUID, db: Session = Depends(get_db), current_user: Us
             detail="Video is still processing. Playback is enabled when status is READY.",
         )
 
-    playback_path = transcode_output_path(str(video.id))
-    if not playback_path.exists() or not playback_path.is_file():
+    playback_path = video_playback_path(video)
+    if playback_path is None or not playback_path.exists() or not playback_path.is_file():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Normalized playback asset is unavailable for this video.",

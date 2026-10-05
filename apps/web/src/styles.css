@@ -9609,16 +9609,31 @@ button.ghost {
   }
 }
 
-/* ---------------------------------------------------------------------------
-   P4.8-C (#5) dark-mode readability. In the Darkroom palette the baked SVG LOCI
-   lockup (an <img>, so it can only be recolored via filter) and the cream model-
-   loading overlay must invert to read on the dark ground. Scoped to darkroom
-   studio surfaces; light Cobalt and all legacy (non-studio) surfaces unchanged.
-   The object-page wordmark (.studio-brand-wordmark), embed, not-found, and
-   crash-fallback lockups already have their own darkroom invert rules.
-   --------------------------------------------------------------------------- */
+.app-shell.authoring-surface .notify-followers-toggle input[type='checkbox'] {
+  width: 1.1rem;
+  height: 1.1rem;
+  min-width: 1.1rem;
+  min-height: 1.1rem;
+  flex: 0 0 1.1rem;
+  margin: 0.18rem 0 0;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+.app-shell.authoring-surface .notify-followers-toggle__copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.app-shell.authoring-surface button.ghost:hover:not(:disabled) {
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* The lockup contains white lettering on an opaque navy background. Preserve
+   both colors: forcing the entire image to white also erases its lettering. */
 .studio-surface[data-studio-theme='darkroom'] .brand-lockup {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 [data-studio-theme='darkroom'] .model-canvas-loading-copy {
@@ -9637,4 +9652,616 @@ button.ghost {
 
 [data-studio-theme='darkroom'] .model-canvas-loading-copy p {
   color: #b8c4d2;
+}
+
+/* Private authoring reuses the published Studio palette while retaining the
+   console's existing layout and controls. */
+html.authoring-document-surface,
+html.authoring-document-surface body,
+html.authoring-document-surface #root {
+  min-height: 100%;
+}
+
+html.authoring-document-surface[data-authoring-theme='cobalt'],
+html.authoring-document-surface[data-authoring-theme='cobalt'] body,
+html.authoring-document-surface[data-authoring-theme='cobalt'] #root {
+  background: linear-gradient(180deg, #eef2f8 0%, #e7edf6 100%);
+  color: #0e1b2e;
+}
+
+html.authoring-document-surface[data-authoring-theme='darkroom'],
+html.authoring-document-surface[data-authoring-theme='darkroom'] body,
+html.authoring-document-surface[data-authoring-theme='darkroom'] #root {
+  background: linear-gradient(180deg, #0f1620 0%, #0c121b 100%);
+  color: #e8eef6;
+}
+
+html.authoring-document-surface[data-authoring-theme='muted-light'],
+html.authoring-document-surface[data-authoring-theme='muted-light'] body,
+html.authoring-document-surface[data-authoring-theme='muted-light'] #root {
+  background: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  color: #202a31;
+}
+
+.authoring-surface {
+  --studio-sweep: radial-gradient(120% 92% at 50% 14%, #ffffff 0%, #f3f5f9 48%, #dfe5ee 100%);
+  --studio-sweep-shadow: 0 24px 48px -28px rgba(15, 22, 32, 0.45);
+  --font-body: var(--font-ui);
+  font-family: var(--font-ui);
+}
+
+.authoring-surface[data-studio-theme='cobalt'] {
+  --bg: #eef2f8;
+  --bg-alt: #e7edf6;
+  --card: #ffffff;
+  --ink: #0e1b2e;
+  --ink-soft: #4a5a6e;
+  --line: #d4dce8;
+  --accent: #1f5bff;
+  --accent-rgb: 31, 91, 255;
+  --accent-soft: #92afff;
+  --studio-bg: linear-gradient(180deg, #eef2f8 0%, #e7edf6 100%);
+  --studio-surface: #ffffff;
+  --studio-ink: #0e1b2e;
+  --studio-ink-soft: #4a5a6e;
+  --studio-line: #d4dce8;
+  --studio-now: #ff5a1f;
+  --studio-moment: #1f5bff;
+  --focus-ring: 2px solid #1f5bff;
+  color-scheme: light;
+  background: var(--studio-bg);
+  color: var(--ink);
+}
+
+.authoring-surface[data-studio-theme='darkroom'] {
+  --bg: #0f1620;
+  --bg-alt: #18222e;
+  --card: #18222e;
+  --ink: #e8eef6;
+  --ink-soft: #9fb0c2;
+  --line: #2a3744;
+  --accent: #45c8d6;
+  --accent-rgb: 69, 200, 214;
+  --accent-soft: #83dce5;
+  --studio-bg: linear-gradient(180deg, #0f1620 0%, #0c121b 100%);
+  --studio-surface: #18222e;
+  --studio-ink: #e8eef6;
+  --studio-ink-soft: #9fb0c2;
+  --studio-line: #2a3744;
+  --studio-now: #ff7a3c;
+  --studio-moment: #45c8d6;
+  --focus-ring: 2px solid #45c8d6;
+  color-scheme: dark;
+  background: var(--studio-bg);
+  color: var(--ink);
+}
+
+.authoring-surface[data-studio-theme='muted-light'] {
+  --bg: #f4f5f3;
+  --bg-alt: #e9ece9;
+  --card: #fbfcfa;
+  --ink: #202a31;
+  --ink-soft: #5c686d;
+  --line: #d5dcda;
+  --accent: #547a78;
+  --accent-rgb: 84, 122, 120;
+  --accent-soft: #a8c1be;
+  --studio-bg: linear-gradient(180deg, #f4f5f3 0%, #e9ece9 100%);
+  --studio-surface: #fbfcfa;
+  --studio-ink: #202a31;
+  --studio-ink-soft: #5c686d;
+  --studio-line: #d5dcda;
+  --studio-now: #bd684b;
+  --studio-moment: #547a78;
+  --focus-ring: 2px solid #547a78;
+  color-scheme: light;
+  background: var(--studio-bg);
+  color: var(--ink);
+}
+
+.app-shell.authoring-surface {
+  width: min(1240px, 100%);
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 0.85rem 1rem 0.75rem;
+}
+
+.authoring-surface .topbar h1 {
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+  color: var(--ink);
+}
+
+.authoring-context-label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.17rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font: 600 0.68rem/1.25 var(--font-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.authoring-login-context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.authoring-surface .studio-theme-toggle {
+  flex: 0 0 auto;
+}
+
+.authoring-surface .orb.one,
+.authoring-surface .orb.two {
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-alt));
+  opacity: 0.42;
+}
+
+.authoring-surface .card,
+.authoring-surface .login-card,
+.authoring-surface .overlay-card,
+.authoring-surface .viewer-video,
+.authoring-surface .viewer-transcript,
+.authoring-surface .model-status-box,
+.authoring-surface .model-upload-box,
+.authoring-surface .model-toolbar-status,
+.authoring-surface .model-canvas-loading-copy,
+.authoring-surface .search-panel-top,
+.authoring-surface .ops-upload-intro,
+.authoring-surface .ops-selected-file,
+.authoring-surface .list li,
+.authoring-surface .result-box,
+.authoring-surface .empty-state,
+.authoring-surface .publication-summary-box,
+.authoring-surface .annotation-sequence-box,
+.authoring-surface .annotation-mapping-prompt,
+.authoring-surface .annotation-overlay-shell,
+.authoring-surface .annotation-overlay-summary,
+.authoring-surface .annotation-overlay-transcript-panel,
+.authoring-surface .annotation-overlay-model-panel,
+.authoring-surface .annotation-transcript-row,
+.authoring-surface .annotation-playlist-chip,
+.authoring-surface .annotation-overlay-video-panel,
+.authoring-surface .annotation-overlay-side-panel,
+.authoring-surface .annotation-overlay-placeholder,
+.authoring-surface .model-canvas-empty,
+.authoring-surface .search-autosuggest-dropdown,
+.authoring-surface .confirm-dialog-card {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.authoring-surface .card,
+.authoring-surface .login-card,
+.authoring-surface .overlay-card,
+.authoring-surface .viewer-video,
+.authoring-surface .viewer-transcript,
+.authoring-surface .result-box,
+.authoring-surface .model-canvas-empty {
+  box-shadow: 0 8px 24px rgba(15, 22, 32, 0.08);
+}
+
+.authoring-surface .search-panel-top,
+.authoring-surface .ops-selected-file,
+.authoring-surface .model-status-box,
+.authoring-surface .model-upload-box,
+.authoring-surface .model-toolbar-status,
+.authoring-surface .empty-state,
+.authoring-surface .annotation-sequence-box,
+.authoring-surface .publication-summary-box {
+  background: color-mix(in srgb, var(--card) 88%, var(--bg-alt));
+}
+
+.authoring-surface .model-canvas-shell,
+.authoring-surface .annotation-overlay-model-panel .model-canvas-shell {
+  background: var(--studio-sweep);
+  border-color: var(--line);
+}
+
+.authoring-surface .model-canvas-loading-overlay {
+  background: radial-gradient(120% 92% at 50% 14%, rgba(255, 255, 255, 0.28) 0%, rgba(243, 245, 249, 0.16) 48%, rgba(223, 229, 238, 0.24) 100%);
+}
+
+.authoring-surface[data-studio-theme='darkroom'] .model-canvas-loading-overlay {
+  background: radial-gradient(120% 92% at 50% 14%, rgba(24, 34, 46, 0.34) 0%, rgba(15, 22, 32, 0.2) 48%, rgba(12, 18, 27, 0.3) 100%);
+}
+
+.authoring-surface input,
+.authoring-surface textarea,
+.authoring-surface select {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.authoring-surface input::placeholder,
+.authoring-surface textarea::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.authoring-surface input:disabled,
+.authoring-surface textarea:disabled,
+.authoring-surface select:disabled {
+  background: var(--bg-alt);
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.authoring-surface button:not(.ghost):not(.studio-theme-toggle):not(.model-pin-callout):not(.search-autosuggest-clear):not(.transcript-line):not(.search-autosuggest-item):not(.annotation-transcript-row):not(.annotation-playlist-chip),
+.authoring-surface .button-link:not(.secondary) {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.authoring-surface[data-studio-theme='darkroom'] button:not(.ghost):not(.studio-theme-toggle):not(.model-pin-callout):not(.search-autosuggest-clear):not(.transcript-line):not(.search-autosuggest-item):not(.annotation-transcript-row):not(.annotation-playlist-chip),
+.authoring-surface[data-studio-theme='darkroom'] .button-link:not(.secondary) {
+  color: #0e1b2e;
+}
+
+.authoring-surface button.ghost,
+.authoring-surface .button-link.secondary {
+  border-color: var(--line);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.authoring-surface button:disabled:not(.ghost):not(.studio-theme-toggle):not(.model-pin-callout):not(.search-autosuggest-clear):not(.transcript-line):not(.search-autosuggest-item):not(.annotation-transcript-row):not(.annotation-playlist-chip),
+.authoring-surface button.ghost:disabled {
+  border: 1px solid var(--line);
+  background: var(--bg-alt);
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.authoring-surface .transcript-line,
+.authoring-surface .search-autosuggest-item,
+.authoring-surface .search-result-shell,
+.authoring-surface .search-mode-indicator,
+.authoring-surface .annotation-playlist-chip,
+.authoring-surface .model-annotation-item {
+  border-color: var(--line);
+  background: var(--bg-alt);
+  color: var(--ink);
+}
+
+.authoring-surface .transcript-line.active,
+.authoring-surface .search-autosuggest-item.is-active,
+.authoring-surface .search-autosuggest-item:hover,
+.authoring-surface .model-annotation-item.selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.authoring-surface .annotation-playlist-chip.active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.authoring-surface .annotation-sequence-item {
+  border-color: var(--line);
+  background: var(--bg-alt);
+  color: var(--ink);
+}
+
+.authoring-surface .annotation-sequence-copy strong {
+  color: var(--ink);
+}
+
+.authoring-surface .annotation-sequence-copy span {
+  color: var(--ink-soft);
+}
+
+.authoring-surface .annotation-transcript-row.active,
+.authoring-surface .annotation-transcript-row.in-range {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.authoring-surface .annotation-transcript-row strong {
+  color: var(--ink);
+}
+
+.authoring-surface button:not(.ghost):not(.studio-theme-toggle):not(.model-pin-callout):not(.search-autosuggest-clear):not(.transcript-line):not(.search-autosuggest-item):not(.annotation-transcript-row):not(.annotation-playlist-chip):hover:not(:disabled) {
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.authoring-surface .transcript-line span,
+.authoring-surface .search-mode-detail,
+.authoring-surface .search-result-kicker,
+.authoring-surface .search-result-context,
+.authoring-surface .search-result-text,
+.authoring-surface .search-result-scene-line,
+.authoring-surface .search-result-match-line,
+.authoring-surface .publication-sync-status,
+.authoring-surface .annotation-transcript-row span {
+  color: var(--ink-soft);
+}
+
+.authoring-surface .search-autosuggest-ghost-completion {
+  color: color-mix(in srgb, var(--ink-soft) 72%, transparent);
+}
+
+.authoring-surface .notice {
+  border-color: color-mix(in srgb, #1f8a61 26%, var(--line));
+}
+
+.authoring-surface .error {
+  color: #a42935;
+}
+
+.authoring-surface[data-studio-theme='darkroom'] .error {
+  border-color: #74414a;
+  background: #38252c;
+  color: #ffb5be;
+}
+
+.authoring-surface .brand-lockup {
+  filter: none;
+}
+
+.authoring-surface .model-preview-summary {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--card) 90%, var(--bg-alt));
+  color: var(--ink);
+}
+
+.authoring-surface .model-canvas-empty-copy strong {
+  color: var(--ink);
+}
+
+.authoring-surface .model-canvas-empty-copy p {
+  color: var(--ink-soft);
+}
+
+.authoring-surface[data-studio-theme='darkroom'] .brand-lockup {
+  filter: none;
+}
+
+.authoring-surface :where(a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The model workspace keeps the editor beside the canvas on desktop, then
+   flows through model, editor, and publication on tablet and phone widths. */
+.app-shell.authoring-surface .model-sidebar {
+  min-width: 0;
+  align-content: start;
+}
+
+.app-shell.authoring-surface .model-toolbar-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.app-shell.authoring-surface .model-publication-card {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-canvas-shell,
+.app-shell.authoring-surface .model-canvas-empty {
+  width: 100%;
+  height: clamp(420px, 52vh, 500px);
+  min-height: 0;
+}
+
+.app-shell.authoring-surface .model-annotation-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6rem;
+}
+
+.app-shell.authoring-surface .model-layout > *,
+.app-shell.authoring-surface .model-toolbar > * {
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-annotation-actions {
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.app-shell.authoring-surface .model-annotation-actions button,
+.app-shell.authoring-surface .model-filter-row button,
+.app-shell.authoring-surface .model-sidebar .topbar-actions button,
+.app-shell.authoring-surface .model-canvas-panel .topbar-actions button,
+.app-shell.authoring-surface .annotation-sequence-actions button,
+.app-shell.authoring-surface .annotation-mapping-actions button,
+.app-shell.authoring-surface .publication-toggle-grid button,
+.app-shell.authoring-surface .publication-actions button,
+.app-shell.authoring-surface .model-publication-card .publication-sync-button {
+  min-width: 0;
+  min-height: 44px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  white-space: normal;
+  flex: 0 1 auto;
+}
+
+.app-shell.authoring-surface .model-publication-card .model-side-body {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+.app-shell.authoring-surface .model-publication-card .model-side-body > .muted {
+  grid-column: span 2;
+  align-self: center;
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status),
+.app-shell.authoring-surface .model-publication-card .notify-followers-toggle,
+.app-shell.authoring-surface .model-publication-card .publication-sync-status,
+.app-shell.authoring-surface .model-publication-card .publication-actions {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) .publication-blocker-list {
+  grid-column: 1 / -1;
+}
+
+.app-shell.authoring-surface .model-publication-card .publication-toggle-grid {
+  grid-column: span 2;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-publication-card .field {
+  min-width: 0;
+}
+
+.app-shell.authoring-surface .model-publication-card .publication-sync-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.app-shell.authoring-surface .model-annotation-item .list-main,
+.app-shell.authoring-surface .model-annotation-item .list-main strong,
+.app-shell.authoring-surface .model-annotation-item .list-main span,
+.app-shell.authoring-surface .model-preview-copy,
+.app-shell.authoring-surface .model-preview-copy > *,
+.app-shell.authoring-surface .annotation-sequence-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1100px) {
+  .app-shell.authoring-surface .model-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-shell.authoring-surface .model-canvas-shell,
+  .app-shell.authoring-surface .model-canvas-empty {
+    height: clamp(380px, 46vh, 460px);
+  }
+
+  .app-shell.authoring-surface .model-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-shell.authoring-surface .model-toolbar-status {
+    grid-column: 1 / -1;
+  }
+
+  .app-shell.authoring-surface .model-publication-card .model-side-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-shell.authoring-surface .model-publication-card .publication-toggle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-shell.authoring-surface .model-publication-card .publication-sync-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell.authoring-surface .model-publication-card .model-side-body,
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status),
+  .app-shell.authoring-surface .model-publication-card .publication-toggle-grid,
+  .app-shell.authoring-surface .model-publication-card .publication-sync-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-shell.authoring-surface .model-publication-card .model-side-body > .muted,
+  .app-shell.authoring-surface .model-publication-card .publication-toggle-grid {
+    grid-column: 1 / -1;
+  }
+
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) > *,
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) .publication-blocker-list {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .app-shell.authoring-surface .model-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-shell.authoring-surface .model-toolbar-status {
+    grid-column: auto;
+  }
+
+  .app-shell.authoring-surface .model-canvas-shell,
+  .app-shell.authoring-surface .model-canvas-empty {
+    height: clamp(320px, 55vh, 420px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .app-shell.authoring-surface > .topbar > .topbar-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    max-width: none;
+    gap: 0.4rem;
+  }
+
+  .app-shell.authoring-surface > .topbar > .topbar-actions button {
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.5rem 0.55rem;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    white-space: normal;
+  }
+
+  .app-shell.authoring-surface > .topbar > .topbar-actions .studio-theme-toggle {
+    width: 100%;
+    height: 46px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 599px) {
+  .app-shell.authoring-surface .model-sidebar .ops-inline-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-shell.authoring-surface > .topbar > .topbar-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1100px) {
+  .app-shell.authoring-surface .model-sidebar .ops-inline-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status),
+  .app-shell.authoring-surface .model-publication-card .publication-toggle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-shell.authoring-surface .model-publication-card .publication-summary-box:not(.publication-sync-status) .publication-blocker-list {
+    grid-column: 1 / -1;
+  }
 }

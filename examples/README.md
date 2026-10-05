@@ -1,14 +1,24 @@
 # Synthetic demonstration
 
 The demo generator constructs an eight-vertex cube from numerical coordinates,
-a twelve-second silent video with blue, amber and purple sections, a poster, three derived clip videos with posters,
+a twelve-second silent video with three labeled cube views, a poster, three derived clip videos with posters,
 and a manually authored timed transcript. All sample content is generated specifically for this demonstration. `apps/api/app/scripts/generate_demo_assets.py`
-contains the complete geometry and FFmpeg recipe. FFmpeg encoder versions can
+contains the complete geometry and FFmpeg recipe. `demo_storyboard.py` supplies
+an original bitmap alphabet and raster geometry using Python's standard library.
+The 960×540 video pairs blue, amber and purple with large chapter titles and
+square, triangle and circle symbols. A moving marker traces the highlighted
+cube feature, and an absolute video clock and progress bar make seeks visible.
+The dark outline around highlighted features preserves their visibility across
+the palette. Motion is continuous, with chapter changes every four seconds.
+FFmpeg encoder versions can
 change output bytes; the seed calculates identities from the actual generated files.
 See the repository's sample notices for redistribution terms.
 
-The seeded object has three annotations. “Compare two sections” plays the blue
-section (0–4 seconds), followed by purple (8–12 seconds). Points use model-space
+The seeded object has three annotations. “Front face” plays section 1, marked by
+a square (0–4 seconds). “Top edge” plays section 2, marked by a triangle (4–8
+seconds). “Compare two sections” plays the front face, followed by “Compare
+view”, marked by a circle on the side face (8–12 seconds). The burned-in video
+clock retains absolute source time in each derived clip. Points use model-space
 coordinates and timing values use integer milliseconds. The cube spans −0.5 to
 0.5 on each axis. Camera settings contain `position` and `target` vectors.
 
@@ -71,6 +81,38 @@ ranged media responses, transcript timing, and an authenticated annotation
 creation/deletion round trip against the actual database.
 
 ## Substitute your own model and video
+
+### Refresh the generated sample in an existing installation
+
+After updating this source and rebuilding the API image, regenerate the sample
+inside the running local demo and apply the explicit synthetic refresh:
+
+```sh
+docker compose build api
+docker compose up -d --wait api
+docker compose exec api python -m app.scripts.generate_demo_assets /tmp/loci-demo-v2
+docker compose exec api python -m app.scripts.replace_demo_media --synthetic-demo /tmp/loci-demo-v2
+```
+
+This path checks the generated manifest, media checksum, codec, dimensions and
+exact twelve-second duration. It also verifies the original cube checksum,
+seeded IDs, annotation points and playlists, clip/segment ranges and sample
+transcript. Matching original geometry can have a later reviewed model revision.
+The refresh updates full and derived video files, clip posters, transcript text
+and comparison labels. It also moves the original **Top edge** pin from the
+top-face center `(0, 0.5, 0)` to the front top edge `(0, 0.5, 0.5)` highlighted
+in the new chapter. Only that exact original pin is eligible for this correction;
+customized coordinates cause the refresh to stop. The other annotation positions,
+publication/review states, IDs and the 0–4/4–8/8–12 second windows stay intact. Personalized content is
+directed to the ordinary replacement workflow below. New playback storage keys
+and checksums invalidate cached full video. Reload the viewer after refreshing.
+The original preservation source and old playback files remain available.
+
+The refresh writes all media before switching database references in one
+transaction. Take a database backup for the isolated Compose project before
+running it if you need to restore the previous content.
+
+### Supply your own content
 
 Copy your files into the API container, then run the scoped replacement command:
 

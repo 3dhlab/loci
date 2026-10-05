@@ -463,12 +463,12 @@
     },
     {
       "name": "PyJWT",
-      "version": "2.13.0",
+      "version": "2.15.0",
       "licenseExpression": "MIT",
       "licenseMetadata": null,
       "licenseFiles": [
-        "pyjwt-2.13.0.dist-info/licenses/AUTHORS.rst",
-        "pyjwt-2.13.0.dist-info/licenses/LICENSE"
+        "pyjwt-2.15.0.dist-info/licenses/AUTHORS.rst",
+        "pyjwt-2.15.0.dist-info/licenses/LICENSE"
       ]
     },
     {

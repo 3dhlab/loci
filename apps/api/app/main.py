@@ -47,7 +47,7 @@ async def lifespan(_: FastAPI):
     if warmup_task is not None:
         warmup_task.cancel()
 
-app = FastAPI(title=settings.app_name, version="0.1.0", lifespan=lifespan)
+app = FastAPI(title=settings.app_name, version="0.2.0", lifespan=lifespan)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(
     CORSMiddleware,

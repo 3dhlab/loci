@@ -4303,7 +4303,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## brace-expansion 5.0.9 | LICENSE
+## brace-expansion 5.0.12 | LICENSE
 
 ```text
 MIT License
@@ -4331,7 +4331,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## brace-expansion 5.0.9 | license
+## brace-expansion 5.0.12 | license
 
 ```text
 MIT License

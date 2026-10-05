@@ -425,11 +425,13 @@ export async function updateTranscript(token, transcriptId, body) {
   return apiRequest(`/api/v1/transcripts/${transcriptId}`, { method: 'PATCH', token, body })
 }
 
-export function getVideoPlaybackUrl(token, videoId) {
+export function getVideoPlaybackUrl(token, videoId, mediaRevision = null) {
   if (!token) {
     throw new Error('Authentication token is required for playback.')
   }
-  return `${buildApiUrl(`/api/v1/videos/${videoId}/stream`)}?access_token=${encodeURIComponent(token)}`
+  const revision = mediaRevision == null ? '' : String(mediaRevision).trim()
+  const versionQuery = revision ? `&v=${encodeURIComponent(revision)}` : ''
+  return `${buildApiUrl(`/api/v1/videos/${videoId}/stream`)}?access_token=${encodeURIComponent(token)}${versionQuery}`
 }
 
 export async function queueVideoTranscode(token, videoId) {
