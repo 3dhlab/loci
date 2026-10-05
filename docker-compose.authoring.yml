@@ -1,0 +1,8 @@
+# Optional local visual authoring console; uses the existing demo API and volumes.
+# docker compose -f docker-compose.yml -f docker-compose.authoring.yml build web
+# docker compose -f docker-compose.yml -f docker-compose.authoring.yml up -d --no-deps --wait web
+services:
+  web:
+    build:
+      args:
+        VITE_APP_SURFACE: console

@@ -6639,7 +6639,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## PyJWT 2.13.0 | pyjwt-2.13.0.dist-info/licenses/AUTHORS.rst
+## PyJWT 2.15.0 | pyjwt-2.15.0.dist-info/licenses/AUTHORS.rst
 
 ```text
 Authors
@@ -6651,7 +6651,7 @@ Originally written and maintained by `Jeff Lindsay <https://github.com/progrium>
 A full list of contributors can be found on GitHub’s `overview <https://github.com/jpadilla/pyjwt/graphs/contributors>`_.
 ```
 
-## PyJWT 2.13.0 | pyjwt-2.13.0.dist-info/licenses/LICENSE
+## PyJWT 2.15.0 | pyjwt-2.15.0.dist-info/licenses/LICENSE
 
 ```text
 The MIT License (MIT)

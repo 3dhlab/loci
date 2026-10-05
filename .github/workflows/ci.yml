@@ -195,12 +195,22 @@ jobs:
       - name: Exercise actual demo in Chromium
         working-directory: apps/web
         run: npm run test:demo
+      - name: Enable the optional authoring console in the disposable demo
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.demo-ci.yml -f docker-compose.authoring.yml build web
+          docker compose -f docker-compose.yml -f docker-compose.demo-ci.yml -f docker-compose.authoring.yml up -d --no-deps --wait web
+      - name: Create, preview and publish a captured range through the real console
+        working-directory: apps/web
+        run: npm run test:demo:authoring
       - name: Upload browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: demo-browser-${{ github.sha }}
-          path: apps/web/test-results/demo-journey
+          path: |
+            apps/web/test-results/demo-journey
+            apps/web/test-results/viewer-camera-continuity
+            apps/web/test-results/demo-authoring
           if-no-files-found: warn
       - name: Collect demo runtime diagnostics
         if: always()
