@@ -12,12 +12,11 @@ from app.core.security import get_password_hash
 from app.db.session import SessionLocal
 from app.models.entities import User, Project, Object, ObjectModel, ObjectModelAnnotation, Video, VideoStatus, Transcript, TranscriptFormat, TranscriptSource, Segment, Clip, ClipStatus
 from app.scripts.generate_demo_assets import generate_assets, generate_clip
+from app.scripts.demo_storyboard import CHAPTERS
 
 IDS = {name: UUID(f'00000000-0000-4000-8000-{index:012d}') for index,name in enumerate(
     ('user','project','object','model','video','transcript','segment1','segment2','segment3','annotation1','annotation2','annotation3','clip1','clip2','clip3'),1)}
-TEXT = ['The blue section introduces the cube and its front face.',
-        'The amber section identifies the top edge of the cube.',
-        'The purple section returns to the cube for comparison.']
+TEXT = [chapter['text'] for chapter in CHAPTERS]
 
 
 def seed() -> None:
@@ -48,12 +47,12 @@ def seed() -> None:
         db.flush()
         db.add(Object(id=IDS['object'],project_id=IDS['project'],name='Demo cube',description='A generated cube with timed video annotations.',website_object_id='demo-cube',is_published=True,is_embed_ready=True,metadata_json={'public_standfirst':'Explore three annotations on an original geometric sample.'}))
         db.flush()
-        db.add(Video(id=IDS['video'],project_id=IDS['project'],object_id=IDS['object'],stable_video_id='demo-colors',title='Three color sections',original_filename='colors.mp4',source_path=str(assets/'colors.mp4'),sha256_checksum=video_hash,playback_sha256_checksum=video_hash,playback_file_size_bytes=len(video_bytes),duration_ms=12000,status=VideoStatus.READY,is_published=True))
+        db.add(Video(id=IDS['video'],project_id=IDS['project'],object_id=IDS['object'],stable_video_id='demo-colors',title='Three cube views',original_filename='colors.mp4',source_path=str(assets/'colors.mp4'),sha256_checksum=video_hash,playback_sha256_checksum=video_hash,playback_file_size_bytes=len(video_bytes),duration_ms=12000,status=VideoStatus.READY,is_published=True))
         db.add(ObjectModel(id=IDS['model'],object_id=IDS['object'],storage_path=str(assets/'cube.glb'),original_filename='cube.glb',mime_type='model/gltf-binary',sha256_checksum=hashlib.sha256((assets/'cube.glb').read_bytes()).hexdigest(),file_size_bytes=(assets/'cube.glb').stat().st_size,revision_number=1,default_camera_json={'position':[2,1.5,2],'target':[0,0,0]},public_poster_path=str(assets/'poster.png'),is_published=True,uploaded_by=IDS['user']))
         db.flush()
         vtt='WEBVTT\n\n'+'\n\n'.join(f'00:00:{i*4:02d}.000 --> 00:00:{(i+1)*4:02d}.000\n{text}' for i,text in enumerate(TEXT))+'\n'
         (assets/'transcript.vtt').write_text(vtt)
-        db.add(Transcript(id=IDS['transcript'],video_id=IDS['video'],title='Color demonstration transcript',source=TranscriptSource.MANUAL,format=TranscriptFormat.VTT,language='en',raw_text=vtt,is_published=True))
+        db.add(Transcript(id=IDS['transcript'],video_id=IDS['video'],title='Cube view demonstration transcript',source=TranscriptSource.MANUAL,format=TranscriptFormat.VTT,language='en',raw_text=vtt,is_published=True))
         db.flush()
         for i,text in enumerate(TEXT,1):
             db.add(Segment(id=IDS[f'segment{i}'],transcript_id=IDS['transcript'],position=i-1,start_ms=(i-1)*4000,end_ms=i*4000,text=text))
@@ -75,7 +74,7 @@ def seed() -> None:
             playlist=[{'video_id':str(IDS['video']),'clip_id':str(IDS[f'clip{i}']),'transcript_segment_id':str(IDS[f'segment{i}']),'start_ms':start,'end_ms':end,'label':title}]
             if i==3:
                 start,end=0,4000
-                playlist=[{'video_id':str(IDS['video']),'clip_id':str(IDS['clip1']),'transcript_segment_id':str(IDS['segment1']),'start_ms':0,'end_ms':4000,'label':'Blue section'}, {'video_id':str(IDS['video']),'clip_id':str(IDS['clip3']),'transcript_segment_id':str(IDS['segment3']),'start_ms':8000,'end_ms':12000,'label':'Purple section'}]
+                playlist=[{'video_id':str(IDS['video']),'clip_id':str(IDS['clip1']),'transcript_segment_id':str(IDS['segment1']),'start_ms':0,'end_ms':4000,'label':'Front face / square'}, {'video_id':str(IDS['video']),'clip_id':str(IDS['clip3']),'transcript_segment_id':str(IDS['segment3']),'start_ms':8000,'end_ms':12000,'label':'Compare view / circle'}]
             x,y,z=points[i-1]
             db.add(ObjectModelAnnotation(id=IDS[f'annotation{i}'],object_model_id=IDS['model'],object_id=IDS['object'],video_id=IDS['video'],clip_id=IDS[f'clip{1 if i == 3 else i}'],transcript_segment_id=IDS[f'segment{1 if i == 3 else i}'],website_annotation_id=f'demo-annotation-{i}',title=title,description='Synthetic demonstration annotation.',point_x=x,point_y=y,point_z=z,camera_json={'position':[2,1.5,2],'target':[0,0,0]},playlist_json=playlist,start_ms=start,end_ms=end,is_published=True,model_revision_created_against=1,created_by=IDS['user']))
         db.commit()

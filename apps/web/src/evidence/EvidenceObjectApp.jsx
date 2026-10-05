@@ -1,3 +1,4 @@
+import { guidedWindowBoundary } from '../lib/guidedWindowBoundary'
 import { semanticFitTier } from '../lib/searchPresentation'
 import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
@@ -959,6 +960,7 @@ export default function EvidenceObjectApp() {
   const programmaticSeekRef = useRef(false)
   const programmaticSeekTargetMsRef = useRef(null)
   const lastReportedPlaybackMsRef = useRef(0)
+  const decodedFrameGenerationRef = useRef(0)
   // P4.5 — guided moment playback: the ordered clip windows to play for the
   // currently selected moment, and the index of the window in progress. `active`
   // is true only while a moment is auto-playing its sequence; a manual scrub or a
@@ -987,6 +989,14 @@ export default function EvidenceObjectApp() {
   // the linked transport can render a real timeline; legacy path ignores it.
   const [studioDurationMs, setStudioDurationMs] = useState(0)
   const [selectedAnnotationId, setSelectedAnnotationId] = useState('')
+  const [modelCameraSelection, setModelCameraSelection] = useState({ annotationId: '', revision: 0 })
+  const selectAnnotationWithCamera = useCallback((annotationId, preserveCamera = false) => {
+    setSelectedAnnotationId(annotationId)
+    setModelCameraSelection((previous) => ({
+      annotationId: preserveCamera ? annotationId : '',
+      revision: previous.revision + 1,
+    }))
+  }, [])
   const [activeClipId, setActiveClipId] = useState('')
   const [momentSource, setMomentSource] = useState('')
   const [citationFeedback, setCitationFeedback] = useState('')
@@ -1133,7 +1143,7 @@ export default function EvidenceObjectApp() {
       setPage(payload)
       replaceEvidenceCanonicalUrl(canonicalUrl)
       setCurrentMs(initialSeekMs)
-      setSelectedAnnotationId(hydrateAnnotationSelection ? resolveHydratedAnnotationId(payload, handoff?.annotationId || route.params.annotationContext) : '')
+      selectAnnotationWithCamera(hydrateAnnotationSelection ? resolveHydratedAnnotationId(payload, handoff?.annotationId || route.params.annotationContext) : '')
       setActiveClipId(hydrateAnnotationSelection ? payload?.focus?.clip_id || payload?.selected_clip?.id || '' : '')
       setMomentSource(handoff?.source || payload?.focus?.source || 'default')
     } catch (error) {
@@ -1142,7 +1152,7 @@ export default function EvidenceObjectApp() {
     } finally {
       setLoading(false)
     }
-  }, [handoff, route.errorState, route.params.annotation, route.params.clip, route.params.t, route.params.video, route.websiteObjectId, routeHasFocusedMoment])
+  }, [handoff, route.errorState, route.params.annotation, route.params.clip, route.params.t, route.params.video, route.websiteObjectId, routeHasFocusedMoment, selectAnnotationWithCamera])
 
   useEffect(() => {
     loadEvidencePage()
@@ -1378,8 +1388,8 @@ export default function EvidenceObjectApp() {
     return { title: selectedAnnotation.title, startMs: Number(marker?.startMs ?? selectedAnnotation.start_ms ?? 0) }
   }, [selectedAnnotation, studioRailItems])
 
-  // The focused moment fed to ModelCanvas (camera_json-preferred framing). Null
-  // when no moment is selected, so idle framing is unchanged.
+  // Navigation frames this moment; direct canvas selection retains the live
+  // camera through its separate selection intent. Idle framing defaults null.
   const studioFocusAnnotation = useMemo(
     () => (selectedAnnotationId
       ? selectedAnnotationMarkers.find((marker) => marker.id === selectedAnnotationId) || null
@@ -1963,6 +1973,7 @@ export default function EvidenceObjectApp() {
         programmaticSeekRef.current = true
         programmaticSeekTargetMsRef.current = Math.round(nextTime * 1000)
         target.currentTime = nextTime
+        decodedFrameGenerationRef.current += 1
       } catch {
         programmaticSeekRef.current = false
         programmaticSeekTargetMsRef.current = null
@@ -2046,7 +2057,7 @@ export default function EvidenceObjectApp() {
       return
     }
     const index = Math.min(Math.max(0, startIndex), clips.length - 1)
-    momentPlaybackRef.current = { active: true, clips, index }
+    momentPlaybackRef.current = { active: true, clips, index, lastFrameMs: clips[index].startMs, frameStepMs: 1000 / 30 }
   }, [studioEnabled])
 
   const disarmMomentPlayback = useCallback(() => {
@@ -2073,21 +2084,21 @@ export default function EvidenceObjectApp() {
     disarmMomentPlayback()
     setTranscriptAutoFollow(true)
     setSelectedSearchResultId('')
-    setSelectedAnnotationId(moment?.annotationId || '')
+    selectAnnotationWithCamera(moment?.annotationId || '')
     setActiveClipId('')
     setMomentSource('video')
     setCurrentMs(seekMs)
     focusVideoMoment(seekMs, Boolean(target?.autoplay))
   }
 
-  const handleVideoTimeUpdate = useCallback((event) => {
+  const handleVideoTimeUpdate = useCallback((event, decodedMs = null) => {
     const media = event.currentTarget
     const mediaDuration = Number(media.duration)
     if (Number.isFinite(mediaDuration) && mediaDuration > 0) {
       const nextDurationMs = Math.floor(mediaDuration * 1000)
       setStudioDurationMs((current) => (current === nextDurationMs ? current : nextDurationMs))
     }
-    const nextMs = Math.max(0, Math.floor(event.currentTarget.currentTime * 1000))
+    const nextMs = Math.max(0, decodedMs ?? Math.floor(event.currentTarget.currentTime * 1000))
 
     // P4.5 — enforce guided moment playback boundaries. Checked BEFORE the render
     // throttle so a clip end is never skipped. On reaching the current window end:
@@ -2096,15 +2107,19 @@ export default function EvidenceObjectApp() {
     // full video. Bounded O(1) ref work — no DOM scans.
     const guided = momentPlaybackRef.current
     if (guided.active && guided.clips.length) {
-      const clip = guided.clips[guided.index]
-      if (clip && clip.endMs !== null && nextMs >= clip.endMs) {
+      const boundary = guidedWindowBoundary(guided, nextMs, mediaDuration * 1000, decodedMs !== null)
+      if (boundary.finish) {
         if (guided.index + 1 < guided.clips.length) {
           const nextClip = guided.clips[guided.index + 1]
           guided.index += 1
+          guided.hasDecodedFrame = false
+          guided.lastFrameMs = nextClip.startMs
+          guided.frameStepMs = 1000 / 30
           programmaticSeekRef.current = true
           programmaticSeekTargetMsRef.current = nextClip.startMs
           try {
             media.currentTime = nextClip.startMs / 1000
+            decodedFrameGenerationRef.current += 1
           } catch {
             programmaticSeekRef.current = false
             programmaticSeekTargetMsRef.current = null
@@ -2117,13 +2132,18 @@ export default function EvidenceObjectApp() {
           return
         }
         momentPlaybackRef.current = { active: false, clips: [], index: 0 }
+        programmaticSeekRef.current = true
+        programmaticSeekTargetMsRef.current = boundary.stopMs
         try {
           media.pause()
+          media.currentTime = boundary.stopMs / 1000
+          decodedFrameGenerationRef.current += 1
         } catch {
-          // best-effort; leaving playback running is acceptable
+          programmaticSeekRef.current = false
+          programmaticSeekTargetMsRef.current = null
         }
-        lastReportedPlaybackMsRef.current = nextMs
-        setCurrentMs(nextMs)
+        lastReportedPlaybackMsRef.current = boundary.stopMs
+        setCurrentMs(boundary.stopMs)
         return
       }
     }
@@ -2144,6 +2164,53 @@ export default function EvidenceObjectApp() {
       setSelectedSearchResultId('')
     }
   }, [activeSearchResultFocus])
+
+  // Decoded frame callbacks keep short guided windows independent of the
+  // browser's coarse timeupdate cadence. The fallback watches the media clock.
+  useEffect(() => {
+    const media = videoRef.current
+    if (!media) return undefined
+    let frame = 0
+    let disposed = false
+    const hasVideoFrames = typeof media.requestVideoFrameCallback === 'function'
+    const schedule = () => {
+      if (disposed || media.paused || media.ended || media.seeking) return
+      const generation = decodedFrameGenerationRef.current
+      frame = hasVideoFrames
+        ? media.requestVideoFrameCallback((now, metadata) => tick(generation, now, metadata))
+        : window.requestAnimationFrame((now) => tick(generation, now, null))
+    }
+    const tick = (generation, _now, metadata) => {
+      if (disposed || generation !== decodedFrameGenerationRef.current || media.seeking || media.paused) return
+      const decodedMs = hasVideoFrames ? Number(metadata.mediaTime) * 1000 : null
+      if (hasVideoFrames && !Number.isFinite(decodedMs)) return
+      handleVideoTimeUpdate({ currentTarget: media }, decodedMs)
+      schedule()
+    }
+    const cancel = () => {
+      if (hasVideoFrames) media.cancelVideoFrameCallback(frame)
+      else window.cancelAnimationFrame(frame)
+    }
+    const onSeeking = () => {
+      decodedFrameGenerationRef.current += 1
+      cancel()
+    }
+    const onSeeked = () => { schedule() }
+    const start = () => { cancel(); schedule() }
+    media.addEventListener('play', start)
+    media.addEventListener('pause', cancel)
+    media.addEventListener('seeking', onSeeking)
+    media.addEventListener('seeked', onSeeked)
+    schedule()
+    return () => {
+      disposed = true
+      cancel()
+      media.removeEventListener('play', start)
+      media.removeEventListener('pause', cancel)
+      media.removeEventListener('seeking', onSeeking)
+      media.removeEventListener('seeked', onSeeked)
+    }
+  }, [handleVideoTimeUpdate, page?.playback?.video_stream_url])
 
   useEffect(() => {
     if (!initialPlaybackRequest) {
@@ -2167,7 +2234,7 @@ export default function EvidenceObjectApp() {
     focusVideoMoment(initialPlaybackRequest.seekMs, initialPlaybackRequest.autoplay)
   }, [activeClipId, handoff, initialPlaybackRequest, route.params.annotation, route.params.clip, selectedAnnotation?.id])
 
-  const handleAnnotationSelection = useCallback((annotationId) => {
+  const handleAnnotationSelection = useCallback((annotationId, { preserveCamera = false } = {}) => {
     const annotation = annotationMap.get(annotationId)
     if (!annotation) {
       return
@@ -2176,14 +2243,14 @@ export default function EvidenceObjectApp() {
     const nextClip = (annotation.related_clip_ids || []).map((clipId) => clipMap.get(clipId)).find(Boolean) || null
     setTranscriptAutoFollow(true)
     setSelectedSearchResultId('')
-    setSelectedAnnotationId(annotation.id)
+    selectAnnotationWithCamera(annotation.id, preserveCamera)
     setActiveClipId(nextClip?.id || '')
     setMomentSource('annotation')
     // Play ONLY this moment's clip sequence (single clip stops at its end;
     // multi-clip auto-advances then stops) — Studio only.
     armMomentPlayback(buildMomentPlaybackClips(annotation, clipMap), 0)
     focusVideoMoment(nextClip?.start_ms ?? annotation.start_ms, true)
-  }, [annotationMap, armMomentPlayback, clipMap, focusVideoMoment])
+  }, [annotationMap, armMomentPlayback, clipMap, focusVideoMoment, selectAnnotationWithCamera])
 
   // Studio P3 — rail dispatch. A moment routes through the existing annotation
   // selection (sets selectedAnnotationId so the model focus follows); an auto
@@ -2201,7 +2268,7 @@ export default function EvidenceObjectApp() {
       const clip = clipMap.get(item.clipId)
       setTranscriptAutoFollow(true)
       setSelectedSearchResultId('')
-      setSelectedAnnotationId('')
+      selectAnnotationWithCamera('')
       setActiveClipId(item.clipId)
       setMomentSource('clip')
       // A standalone auto-clip plays only its own window, then stops.
@@ -2212,14 +2279,14 @@ export default function EvidenceObjectApp() {
       armMomentPlayback(endMs !== null && endMs > startMs ? [{ id: item.clipId, startMs, endMs }] : [], 0)
       focusVideoMoment(startMs, true)
     }
-  }, [armMomentPlayback, clipMap, focusVideoMoment, handleAnnotationSelection])
+  }, [armMomentPlayback, clipMap, focusVideoMoment, handleAnnotationSelection, selectAnnotationWithCamera])
 
   const handleCanvasAnnotationSelect = useCallback((annotation) => {
     if (!annotation?.id) {
       return
     }
 
-    handleAnnotationSelection(annotation.id)
+    handleAnnotationSelection(annotation.id, { preserveCamera: true })
   }, [handleAnnotationSelection])
 
   // Studio P4 — search "Jump": an on-page result seeks the current recording in
@@ -2234,7 +2301,7 @@ export default function EvidenceObjectApp() {
       : Math.max(0, Math.floor(Number(result.context_start_ms) || 0))
     disarmMomentPlayback()
     setTranscriptAutoFollow(true)
-    setSelectedAnnotationId('')
+    selectAnnotationWithCamera('')
     setActiveClipId('')
     setMomentSource('video')
     setSelectedSearchResultId(result.segment_id || '')
@@ -2252,7 +2319,7 @@ export default function EvidenceObjectApp() {
         }
       })
     }
-  }, [disarmMomentPlayback, focusVideoMoment])
+  }, [disarmMomentPlayback, focusVideoMoment, selectAnnotationWithCamera])
 
   // Studio P4 — search "Open": a cross-collection result navigates to its public
   // evidence deep link. Same-origin /evidence/objects/ guard (defense in depth;
@@ -2392,7 +2459,7 @@ export default function EvidenceObjectApp() {
     }
 
     setTranscriptAutoFollow(true)
-    setSelectedAnnotationId('')
+    selectAnnotationWithCamera('')
     setActiveClipId('')
     setMomentSource('video')
     setSelectedSearchResultId(result.segment_id)
@@ -2779,7 +2846,7 @@ export default function EvidenceObjectApp() {
           setCurrentMs(nextMs)
           setTranscriptAutoFollow(true)
           setSelectedSearchResultId('')
-          setSelectedAnnotationId('')
+          selectAnnotationWithCamera('')
           setActiveClipId('')
           setMomentSource('video')
           return
@@ -2886,7 +2953,7 @@ export default function EvidenceObjectApp() {
                 onClick={() => {
                   setTranscriptAutoFollow(true)
                   setSelectedSearchResultId('')
-                  setSelectedAnnotationId('')
+                  selectAnnotationWithCamera('')
                   setActiveClipId('')
                   setMomentSource('video')
                   setCurrentMs(segment.start_ms)
@@ -2941,11 +3008,12 @@ export default function EvidenceObjectApp() {
           annotations={selectedAnnotationMarkers}
           selectedAnnotationId={selectedAnnotationId}
           placementMode={false}
-          cameraViewKey={`evidence:${selectedAnnotationId || page.focus.video_id || page.object.id}`}
+          cameraViewKey={`evidence:${selectedAnnotationId || page.focus.video_id || page.object.id}:${modelCameraSelection.revision}`}
           canvasDpr={modelCanvasDpr}
           preferLowPower={true}
           showAnnotationLabels={selectedAnnotationMarkers.length > 0}
           focusAnnotation={studioFocusAnnotation}
+          preserveCameraOnSelection={Boolean(selectedAnnotationId && modelCameraSelection.annotationId === selectedAnnotationId)}
           enableAmbientMotion={studioEnabled && !modelLoadPolicy.gated}
           fadePinsWhenAway={studioEnabled}
           showViewerHelp={studioEnabled}

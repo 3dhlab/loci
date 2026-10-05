@@ -33,6 +33,7 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 ## Documentation
 
 - [Synthetic demo and content workflow](examples/README.md)
+- [Optional visual authoring console and single-range walkthrough](docs/demo-authoring.md)
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Model, annotation, transcript and media contracts](docs/data-contract.md)
 - [Development and contribution checks](CONTRIBUTING.md)

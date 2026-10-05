@@ -622,6 +622,7 @@ function CameraController({
   onCameraViewChange,
   targetRef,
   viewKey,
+  preserveCameraOnSelection = false,
   smoothMotion = false,
   desiredPoseRef = null,
   poseVersionRef = null,
@@ -636,6 +637,12 @@ function CameraController({
       return
     }
     appliedKeyRef.current = nextKey
+
+    // A pin already visible in the user's chosen view selects evidence in
+    // place. Keep the live OrbitControls pose, including its zoom and target.
+    if (preserveCameraOnSelection) {
+      return undefined
+    }
 
     const animationFrameId = window.requestAnimationFrame(() => {
       const controls = controlsRef.current
@@ -669,7 +676,7 @@ function CameraController({
     })
 
     return () => window.cancelAnimationFrame(animationFrameId)
-  }, [camera, controlsRef, focusAnnotation, normalizedCameraView, onCameraViewChange, targetRef, viewKey, smoothMotion, desiredPoseRef, poseVersionRef])
+  }, [camera, controlsRef, focusAnnotation, normalizedCameraView, onCameraViewChange, targetRef, viewKey, preserveCameraOnSelection, smoothMotion, desiredPoseRef, poseVersionRef])
 
   return (
     <OrbitControls
@@ -1030,11 +1037,12 @@ function ModelCanvas({
   onTransformChange,
   onCameraViewChange,
   onSelectAnnotation,
-  // Studio P3: an optional focused moment. When present its stored `camera_json`
-  // ({position,target}) is preferred for framing; otherwise the camera is
-  // computed to frame the pin head-on from its point/normal (lib/focusCamera).
-  // Null by default, so legacy/embed callers behave exactly as before.
+  // Optional focused moment: navigation computes a whole-object fit biased
+  // toward its point/normal (lib/focusCamera). Legacy/embed callers default null.
   focusAnnotation = null,
+  // Direct spatial selection retains the view the reader chose with OrbitControls.
+  // Hosts keep this scoped to that selection; restored/rail moments still frame.
+  preserveCameraOnSelection = false,
   // Studio-only, opt-in (default off so legacy/embed/mobile are unchanged):
   // bounded sway when focused + slow idle turntable; auto-disabled under
   // prefers-reduced-motion. And fade pins whose surface faces away from camera.
@@ -1362,6 +1370,7 @@ function ModelCanvas({
             <CameraController
               appliedCameraView={resolvedAppliedCameraView}
               focusAnnotation={focusAnnotation}
+              preserveCameraOnSelection={preserveCameraOnSelection && sceneReady}
               controlsRef={orbitControlsRef}
               onCameraViewChange={handleCameraViewUpdate}
               targetRef={modelGeometryRef}
@@ -1376,7 +1385,7 @@ function ModelCanvas({
               hasFocus={hasFocus}
               desiredPoseRef={desiredPoseRef}
               poseVersionRef={poseVersionRef}
-              paused={viewerHelpOpen || suspendAmbientMotion}
+              paused={viewerHelpOpen || suspendAmbientMotion || preserveCameraOnSelection}
             />
             <PinFacingController
               enabled={pinFadeActive}

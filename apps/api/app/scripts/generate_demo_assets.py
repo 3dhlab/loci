@@ -1,9 +1,12 @@
 """Generate original geometric sample media using the standard library and FFmpeg."""
 from __future__ import annotations
+import hashlib
 import json
 from pathlib import Path
 import struct
 import subprocess
+
+from app.scripts.demo_storyboard import CHAPTERS, FPS, HEIGHT, VERSION, WIDTH, chapter_base, render_frame
 
 
 def generate_assets(destination: Path) -> None:
@@ -25,16 +28,29 @@ def generate_assets(destination: Path) -> None:
     glb += struct.pack('<I4s',len(encoded),b'JSON')+encoded
     glb += struct.pack('<I4s',len(binary),b'BIN\0')+binary
     (destination/'cube.glb').write_bytes(glb)
-    # Three solid-color sections make clip boundaries visible without external media.
-    subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y',
-        '-f','lavfi','-i','color=c=0x208cb8:s=640x360:r=24:d=4',
-        '-f','lavfi','-i','color=c=0xe6a03c:s=640x360:r=24:d=4',
-        '-f','lavfi','-i','color=c=0x7056a0:s=640x360:r=24:d=4',
-        '-filter_complex','[0:v][1:v][2:v]concat=n=3:v=1:a=0[v]',
-        '-map','[v]','-an','-c:v','libx264','-pix_fmt','yuv420p','-threads','1',
-        '-movflags','+faststart',str(destination/'colors.mp4')],check=True)
+    # Semantic labels, shape badges and a moving marker make every seek visible.
+    # Keep the established filename and 0/4/8/12 second boundaries stable.
+    bases = tuple(chapter_base(i) for i in range(len(CHAPTERS)))
+    command = ['ffmpeg','-hide_banner','-loglevel','error','-y',
+        '-f','rawvideo','-pixel_format','rgb24','-video_size',f'{WIDTH}x{HEIGHT}',
+        '-framerate',str(FPS),'-i','pipe:0','-an','-c:v','libx264',
+        '-pix_fmt','yuv420p','-threads','1','-movflags','+faststart',str(destination/'colors.mp4')]
+    with subprocess.Popen(command, stdin=subprocess.PIPE) as encoder:
+        assert encoder.stdin is not None
+        try:
+            for frame in range(FPS * 12):
+                encoder.stdin.write(render_frame(frame, bases))
+        finally:
+            encoder.stdin.close()
+        if encoder.wait():
+            raise subprocess.CalledProcessError(encoder.returncode, command)
     subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(destination/'colors.mp4'),
         '-frames:v','1','-threads','1',str(destination/'poster.png')],check=True)
+    manifest = {'version': VERSION, 'width': WIDTH, 'height': HEIGHT, 'fps': FPS,
+                'duration_ms': 12000, 'chapters': CHAPTERS,
+                'cube_sha256': hashlib.sha256(glb).hexdigest(),
+                'video_sha256': hashlib.sha256((destination/'colors.mp4').read_bytes()).hexdigest()}
+    (destination/'demo-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
 
 
 def generate_clip(source: Path, destination: Path, start_ms: int, end_ms: int) -> None:

@@ -57,6 +57,7 @@ import ConfirmDialog from './components/ConfirmDialog'
 import SearchAutosuggest from './components/SearchAutosuggest'
 import PublicExperienceShell from './components/PublicExperienceShell'
 import { formatLociTitle } from './lib/seo'
+import { StudioThemeToggle, useStudioSurfaceTheme } from './public/studioSurface'
 
 const TOKEN_KEY = 'semantic.console.token'
 const SEARCH_PAGE_SIZE = 5
@@ -694,11 +695,33 @@ function defaultModelTransform(model = null) {
 export default function App() {
   const initialRouteState = useMemo(() => readConsoleRouteState(), [])
   const isPreviewRouteLocked = initialRouteState.previewRouteLocked
+  const isPrivateAuthoringSurface = !IS_PUBLIC_APP && !isPreviewRouteLocked
+  const { palette, toggle: toggleStudioTheme } = useStudioSurfaceTheme({ applyToDocument: isPrivateAuthoringSurface })
   const [token, setToken] = useState(() => (IS_PUBLIC_APP ? '' : localStorage.getItem(TOKEN_KEY) || ''))
   const [mode, setMode] = useState(() => ((IS_PUBLIC_APP || isPreviewRouteLocked) ? 'publicPreview' : 'analysis'))
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
+
+  useEffect(() => {
+    if (!isPrivateAuthoringSurface) return undefined
+    const root = document.documentElement
+    root.classList.add('authoring-document-surface')
+    return () => {
+      root.classList.remove('authoring-document-surface')
+    }
+  }, [isPrivateAuthoringSurface])
+
+  useEffect(() => {
+    if (!isPrivateAuthoringSurface) return undefined
+    const root = document.documentElement
+    const previousTheme = root.dataset.authoringTheme
+    root.dataset.authoringTheme = palette
+    return () => {
+      if (previousTheme === undefined) delete root.dataset.authoringTheme
+      else root.dataset.authoringTheme = previousTheme
+    }
+  }, [isPrivateAuthoringSurface, palette])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -1163,6 +1186,7 @@ export default function App() {
   const modelFileInputRef = useRef(null)
   const previousModeRef = useRef(mode)
   const analysisSessionRef = useRef(null)
+  const viewerDraftSourceRef = useRef(null)
   const previousLiveDatabaseSyncStateRef = useRef(liveDatabaseSyncStatus.state)
 
   function initializeViewerHistory(nextText) {
@@ -1642,7 +1666,7 @@ export default function App() {
     }
 
     try {
-      setSelectedModelAnnotationUrl(getVideoPlaybackUrl(token, annotationOverlayClipVideo.id))
+      setSelectedModelAnnotationUrl(getVideoPlaybackUrl(token, annotationOverlayClipVideo.id, annotationOverlayClipVideo.updated_at))
     } catch {
       setSelectedModelAnnotationUrl('')
     }
@@ -1825,7 +1849,7 @@ export default function App() {
       setViewerMediaUrl('')
       try {
         if (activeVideo?.status === 'READY') {
-          const mediaUrl = await getVideoPlaybackUrl(token, viewerVideoId)
+          const mediaUrl = await getVideoPlaybackUrl(token, viewerVideoId, activeVideo?.updated_at)
           if (!cancelled) {
             setViewerMediaUrl(mediaUrl)
           }
@@ -1839,8 +1863,12 @@ export default function App() {
           }
         setViewerTranscript(transcriptData.transcript)
         setViewerSegments(transcriptData.segments || [])
-        setViewerDraftText(transcriptData.transcript.raw_text)
-        initializeViewerHistory(transcriptData.transcript.raw_text)
+        const draftSource = viewerDraftSourceRef.current
+        if (draftSource?.videoId !== viewerVideoId || draftSource?.token !== token) {
+          setViewerDraftText(transcriptData.transcript.raw_text)
+          initializeViewerHistory(transcriptData.transcript.raw_text)
+          viewerDraftSourceRef.current = { videoId: viewerVideoId, token }
+        }
           setViewerCurrentMs((current) => (
             current > 0 && analysisSessionRef.current?.videoId === viewerVideoId ? current : 0
           ))
@@ -1850,8 +1878,11 @@ export default function App() {
             if (activeVideo?.status === 'READY' && isTranscriptMissing) {
               setViewerTranscript(null)
               setViewerSegments([])
-              setViewerDraftText('')
-              initializeViewerHistory('')
+              if (viewerDraftSourceRef.current?.videoId !== viewerVideoId || viewerDraftSourceRef.current?.token !== token) {
+                setViewerDraftText('')
+                initializeViewerHistory('')
+                viewerDraftSourceRef.current = null
+              }
               setNotice('Transcript is still finalizing. Retrying automatically...')
               setTimeout(() => {
                 refreshData(token).catch(() => null)
@@ -1860,8 +1891,11 @@ export default function App() {
             }
           setViewerTranscript(null)
           setViewerSegments([])
-          setViewerDraftText('')
-          initializeViewerHistory('')
+          if (viewerDraftSourceRef.current?.videoId !== viewerVideoId || viewerDraftSourceRef.current?.token !== token) {
+            setViewerDraftText('')
+            initializeViewerHistory('')
+            viewerDraftSourceRef.current = null
+          }
           setViewerMediaUrl('')
           setError(err.message)
         }
@@ -1877,7 +1911,7 @@ export default function App() {
     return () => {
       cancelled = true
     }
-  }, [token, viewerVideoId, activeVideo?.status])
+  }, [token, mode, viewerVideoId, activeVideo?.status, activeVideo?.updated_at])
 
   useEffect(() => {
     const previousMode = previousModeRef.current
@@ -3752,7 +3786,10 @@ export default function App() {
 
   if (!token && !IS_PUBLIC_APP) {
     return (
-      <main className="login-screen">
+      <main
+        className={`login-screen ${isPrivateAuthoringSurface ? 'authoring-surface' : ''}`.trim()}
+        data-studio-theme={isPrivateAuthoringSurface ? palette : undefined}
+      >
         <div className="orb one" />
         <div className="orb two" />
         <form className="login-card" onSubmit={handleLogin}>
@@ -3760,6 +3797,12 @@ export default function App() {
             <BrandLockup variant="stacked" />
             <p className="brand-tagline">Evidence, located.</p>
           </div>
+          {isPrivateAuthoringSurface ? (
+            <div className="authoring-login-context">
+              <span className="authoring-context-label">Private authoring</span>
+              <StudioThemeToggle palette={palette} onToggle={toggleStudioTheme} />
+            </div>
+          ) : null}
           <p className="kicker">{isPreviewRouteLocked ? 'Loci Preview' : 'Loci Console'}</p>
           <h1>Sign in</h1>
           <p className="muted">
@@ -3856,7 +3899,10 @@ export default function App() {
   )
 
   return (
-    <main className={`app-shell ${isPreviewRouteLocked ? 'preview-route' : ''}`.trim()}>
+    <main
+      className={`app-shell ${isPreviewRouteLocked ? 'preview-route' : ''} ${isPrivateAuthoringSurface ? 'authoring-surface' : ''}`.trim()}
+      data-studio-theme={isPrivateAuthoringSurface ? palette : undefined}
+    >
       {mediaUploading ? (
         <div className="overlay-backdrop" role="status" aria-live="polite">
           <div className="overlay-card">
@@ -3908,6 +3954,7 @@ export default function App() {
             <BrandLockup variant="horizontal" />
           )}
           <div className="topbar-copy">
+            {isPrivateAuthoringSurface ? <span className="authoring-context-label">Private authoring</span> : null}
             <p className="kicker">{isPreviewRouteLocked ? 'Loci Preview' : 'Loci Console'}</p>
             <h1>{consoleShellTitle}</h1>
             {isPreviewRouteLocked ? <p className="muted preview-route-topbar-note">Authenticated published-object preview only.</p> : null}
@@ -3915,6 +3962,7 @@ export default function App() {
         </div>
         {!IS_PUBLIC_APP ? (
           <div className="topbar-actions">
+            {!isPreviewRouteLocked ? <StudioThemeToggle palette={palette} onToggle={toggleStudioTheme} /> : null}
             {!isPreviewRouteLocked ? (
               <>
                 <button className={mode === 'tuning' ? '' : 'ghost'} onClick={() => setMode('tuning')}>
@@ -5497,8 +5545,8 @@ export default function App() {
                       ) : null}
                     </div>
 
-                    <ModelCanvas
-                      modelUrl={modelFileUrl}
+                      <ModelCanvas
+                        modelUrl={modelFileUrl}
                       modelTransform={currentModelTransform}
                       defaultCameraView={currentModelCameraView}
                       annotations={modelAnnotations}
@@ -5515,9 +5563,10 @@ export default function App() {
                           ? 'Keeping the current stage visible while the next model revision and annotations load.'
                           : 'Loading the object model, saved view, and annotation set for review.'
                       }
-                      emptyTitle="No 3D model"
-                      emptyMessage="Upload a .glb model for this object to begin spatial review and annotation placement."
-                      onSurfacePick={handleModelSurfacePick}
+                        emptyTitle="No 3D model"
+                        emptyMessage="Upload a .glb model for this object to begin spatial review and annotation placement."
+                        backgroundColor={isPrivateAuthoringSurface ? '#f3f5f9' : undefined}
+                        onSurfacePick={handleModelSurfacePick}
                       onTransformChange={handleModelTransformChange}
                       onCameraViewChange={handleModelCameraViewChange}
                       onSelectAnnotation={openModelAnnotationOverlay}
@@ -5588,202 +5637,6 @@ export default function App() {
                   </section>
 
                   <section className="model-sidebar">
-                    <div className="card model-side-card">
-                      <div className="card-header">
-                        <h2>Publication</h2>
-                        <p>Promote the current object package from private authoring into the public-facing preview.</p>
-                      </div>
-                      <div className="card-body model-side-body">
-                        <button
-                          type="button"
-                          className="publication-sync-button"
-                          disabled={liveDatabaseSyncBusy || !activeModelObject}
-                          onClick={() => setConfirmAction({
-                            title: 'Sync Live Database?',
-                            message: 'Promote the current published projection to the live database. This is a one-way operation. Published content will be visible on the configured public instance.',
-                            confirmLabel: 'Sync Live Database',
-                            onConfirm: () => { handleStartLiveDatabaseSync() }
-                          })}
-                        >
-                          {liveDatabaseSyncBusy ? 'Syncing Live Database...' : 'Sync Live Database'}
-                        </button>
-                        <p className="muted">
-                          Pushes every currently published package to the live public site using the one-way semantic_public promotion flow.
-                        </p>
-
-                        <div className="result-box publication-summary-box">
-                          <p>
-                            Object: <strong>{activeModelObject ? (activeModelObject.is_published ? 'Published' : 'Private') : 'No object selected'}</strong>
-                          </p>
-                          <p>
-                            3D model: <strong>{modelDetail ? (modelDetail.is_published ? 'Published' : 'Private') : 'No model uploaded'}</strong>
-                          </p>
-                          <p>
-                            Video: <strong>{currentModelPublicationVideo ? (currentModelPublicationVideo.is_published ? 'Published' : 'Private') : 'No video selected'}</strong>
-                          </p>
-                          <p>
-                            Transcript: <strong>{currentModelPublicationTranscript ? (currentModelPublicationTranscript.is_published ? 'Published with video' : 'Private with video') : 'No transcript yet'}</strong>
-                          </p>
-                          <p>
-                            Package: <strong>{packageStatusLabel}</strong>
-                          </p>
-                          <p>
-                            Published annotations: <strong>{publishedModelAnnotationCount}</strong> / {modelAnnotations.length}
-                          </p>
-                          {!packageOpenNow && publicationBlockers.length > 0 ? (
-                            <ul className="publication-blocker-list">
-                              {publicationBlockers.map((blocker) => (
-                                <li key={blocker.key}>{blocker.label}</li>
-                              ))}
-                            </ul>
-                          ) : null}
-                        </div>
-
-                        <div className="field">
-                          <label className="ingest-label" htmlFor="publication-video-select">Video</label>
-                          <select
-                            id="publication-video-select"
-                            value={modelPublicationVideoId}
-                            onChange={(event) => setModelPublicationVideoId(event.target.value)}
-                          >
-                            <option value="">Select linked video</option>
-                            {publicationVideosForModelTab.map((video) => (
-                              <option value={video.id} key={video.id}>
-                                {video.title}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div className="publication-toggle-grid">
-                          <button type="button" className={activeModelObject?.is_published ? '' : 'ghost'} disabled={publicationBusy || !activeModelObject} onClick={() => setObjectPublished(true)}>
-                            Publish object
-                          </button>
-                          <button type="button" className="ghost" disabled={publicationBusy || !activeModelObject?.is_published} onClick={() => setObjectPublished(false)}>
-                            Hide object
-                          </button>
-                          <button type="button" className={modelDetail?.is_published ? '' : 'ghost'} disabled={publicationBusy || !modelDetail} onClick={() => setModelPublished(true)}>
-                            Publish 3D model
-                          </button>
-                          <button type="button" className="ghost" disabled={publicationBusy || !modelDetail?.is_published} onClick={() => setModelPublished(false)}>
-                            Hide 3D model
-                          </button>
-                          <button type="button" className={currentModelPublicationVideo?.is_published ? '' : 'ghost'} disabled={publicationBusy || !currentModelPublicationVideo} onClick={() => setPublicationVideoPublished(true)}>
-                            Publish video
-                          </button>
-                          <button type="button" className="ghost" disabled={publicationBusy || !currentModelPublicationVideo?.is_published} onClick={() => setPublicationVideoPublished(false)}>
-                            Hide video
-                          </button>
-                          <button
-                            type="button"
-                            className={publicationPackagePublished ? '' : 'ghost'}
-                            disabled={publicationBusy || !activeModelObject}
-                            onClick={() => setConfirmAction({
-                              title: 'Publish package?',
-                              message: `Publish this object, its 3D model, video, transcript, and ${modelAnnotations.length} annotation${modelAnnotations.length === 1 ? '' : 's'} to the published projection. They will appear in Public Preview and can then be synced to the live database.`,
-                              confirmLabel: 'Publish package',
-                              onConfirm: () => { setCurrentObjectPackagePublished(true) }
-                            })}
-                          >
-                            Publish package
-                          </button>
-                          <button
-                            type="button"
-                            className="ghost"
-                            disabled={publicationBusy || !publicationPackageHasPublishedContent}
-                            onClick={() => setConfirmAction({
-                              title: 'Hide package?',
-                              message: `Hide this object, its 3D model, video, transcript, and ${modelAnnotations.length} annotation${modelAnnotations.length === 1 ? '' : 's'} from the published projection. They will no longer appear in Public Preview.`,
-                              confirmLabel: 'Hide package',
-                              onConfirm: () => { setCurrentObjectPackagePublished(false) }
-                            })}
-                          >
-                            Hide package
-                          </button>
-                        </div>
-
-                        {/*
-                         * Slice E: Notify followers toggle.
-                         *
-                         * Per-package opt-in. Default OFF (founder direction
-                         * 2026-04-27). When ON, the next publish + sync of
-                         * this package fires a digest email via the public
-                         * notify-me subscriber list (apps/api/app/services/
-                         * notify_digest_worker.py — Slice E-4). When OFF,
-                         * publish + sync proceed as before with no digest.
-                         *
-                         * The trigger is intentionally NOT auto-fired on
-                         * is_published transition — the digest must wait
-                         * until the public projection actually contains the
-                         * synced content (otherwise subscribers click into
-                         * a 404). Slice E-4's admin endpoint is the
-                         * post-sync trigger.
-                         */}
-                        <label className="notify-followers-toggle">
-                          <input
-                            type="checkbox"
-                            checked={Boolean(modelDetail?.notify_followers_on_publish)}
-                            disabled={publicationBusy || !modelDetail}
-                            onChange={(event) => setNotifyFollowersOnPublish(event.target.checked)}
-                          />
-                          <span className="notify-followers-toggle__copy">
-                            <strong>Notify followers when this package publishes</strong>
-                            <span className="muted">
-                              When checked, the next publish + sync of this package fires a digest
-                              email to every subscriber on the public landing page&apos;s notify-me
-                              list. Off by default; toggle on per package.
-                            </span>
-                          </span>
-                        </label>
-
-                        <div className="result-box publication-summary-box publication-sync-status" role="status" aria-live="polite">
-                          <div className="publication-sync-status-header">
-                            <strong>{liveDatabaseSyncStatus.stage_label || 'Live Database sync status'}</strong>
-                            <span>{liveDatabaseSyncStateLabel(liveDatabaseSyncStatus.state)} · {liveDatabaseSyncProgress}%</span>
-                          </div>
-                          <div className="publication-sync-status-bar" aria-hidden="true">
-                            <span style={{ width: `${liveDatabaseSyncProgress}%` }}></span>
-                          </div>
-                          <p>{liveDatabaseSyncStatus.detail || 'Push every currently published package to the live public site.'}</p>
-                          {liveDatabaseSyncCountsAvailable ? (
-                            <div className="publication-sync-metrics">
-                              <span>{liveDatabaseSyncStatus.object_count} objects</span>
-                              <span>{liveDatabaseSyncStatus.video_count} videos</span>
-                              <span>{liveDatabaseSyncStatus.annotation_count} annotations</span>
-                              <span>{liveDatabaseSyncStatus.media_file_count} media files</span>
-                            </div>
-                          ) : null}
-                          {liveDatabaseSyncStatus.finished_at ? (
-                            <p className="muted">Last finished: {formatDateTime(liveDatabaseSyncStatus.finished_at)}</p>
-                          ) : liveDatabaseSyncStatus.started_at ? (
-                            <p className="muted">Started: {formatDateTime(liveDatabaseSyncStatus.started_at)}</p>
-                          ) : null}
-                          {liveDatabaseSyncStatus.error ? <p className="muted">Last error: {liveDatabaseSyncStatus.error}</p> : null}
-                        </div>
-
-                        <div className="topbar-actions publication-actions">
-                          <button
-                            type="button"
-                            className="ghost"
-                            onClick={() => navigateToUrl('/public')}
-                          >
-                            Open Public Browse
-                          </button>
-                          <button
-                            type="button"
-                            className="ghost"
-                            disabled={liveDatabaseSyncBusy || !activeModelObject?.is_published}
-                            onClick={() => openObjectInPublicPreview(activeModelObject.id, {
-                              projectId: activeModelObject.project_id,
-                              videoId: currentModelPublicationVideo?.id || ''
-                            })}
-                          >
-                            Open Public Preview
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className="card model-side-card" ref={modelEditorRef}>
                       <div className="card-header">
                         <h2>Annotation Editor</h2>
@@ -5995,6 +5848,202 @@ export default function App() {
                     </div>
 
                   </section>
+
+                  <div className="card model-side-card model-publication-card">
+                    <div className="card-header">
+                      <h2>Publication</h2>
+                      <p>Promote the current object package from private authoring into the public-facing preview.</p>
+                    </div>
+                    <div className="card-body model-side-body">
+                      <button
+                        type="button"
+                        className="publication-sync-button"
+                        disabled={liveDatabaseSyncBusy || !activeModelObject}
+                        onClick={() => setConfirmAction({
+                          title: 'Sync Live Database?',
+                          message: 'Promote the current published projection to the live database. This is a one-way operation. Published content will be visible on the configured public instance.',
+                          confirmLabel: 'Sync Live Database',
+                          onConfirm: () => { handleStartLiveDatabaseSync() }
+                        })}
+                      >
+                        {liveDatabaseSyncBusy ? 'Syncing Live Database...' : 'Sync Live Database'}
+                      </button>
+                      <p className="muted">
+                        Pushes every currently published package to the live public site using the one-way semantic_public promotion flow.
+                      </p>
+
+                      <div className="result-box publication-summary-box">
+                        <p>
+                          Object: <strong>{activeModelObject ? (activeModelObject.is_published ? 'Published' : 'Private') : 'No object selected'}</strong>
+                        </p>
+                        <p>
+                          3D model: <strong>{modelDetail ? (modelDetail.is_published ? 'Published' : 'Private') : 'No model uploaded'}</strong>
+                        </p>
+                        <p>
+                          Video: <strong>{currentModelPublicationVideo ? (currentModelPublicationVideo.is_published ? 'Published' : 'Private') : 'No video selected'}</strong>
+                        </p>
+                        <p>
+                          Transcript: <strong>{currentModelPublicationTranscript ? (currentModelPublicationTranscript.is_published ? 'Published with video' : 'Private with video') : 'No transcript yet'}</strong>
+                        </p>
+                        <p>
+                          Package: <strong>{packageStatusLabel}</strong>
+                        </p>
+                        <p>
+                          Published annotations: <strong>{publishedModelAnnotationCount}</strong> / {modelAnnotations.length}
+                        </p>
+                        {!packageOpenNow && publicationBlockers.length > 0 ? (
+                          <ul className="publication-blocker-list">
+                            {publicationBlockers.map((blocker) => (
+                              <li key={blocker.key}>{blocker.label}</li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
+
+                      <div className="field">
+                        <label className="ingest-label" htmlFor="publication-video-select">Video</label>
+                        <select
+                          id="publication-video-select"
+                          value={modelPublicationVideoId}
+                          onChange={(event) => setModelPublicationVideoId(event.target.value)}
+                        >
+                          <option value="">Select linked video</option>
+                          {publicationVideosForModelTab.map((video) => (
+                            <option value={video.id} key={video.id}>
+                              {video.title}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="publication-toggle-grid">
+                        <button type="button" className={activeModelObject?.is_published ? '' : 'ghost'} disabled={publicationBusy || !activeModelObject} onClick={() => setObjectPublished(true)}>
+                          Publish object
+                        </button>
+                        <button type="button" className="ghost" disabled={publicationBusy || !activeModelObject?.is_published} onClick={() => setObjectPublished(false)}>
+                          Hide object
+                        </button>
+                        <button type="button" className={modelDetail?.is_published ? '' : 'ghost'} disabled={publicationBusy || !modelDetail} onClick={() => setModelPublished(true)}>
+                          Publish 3D model
+                        </button>
+                        <button type="button" className="ghost" disabled={publicationBusy || !modelDetail?.is_published} onClick={() => setModelPublished(false)}>
+                          Hide 3D model
+                        </button>
+                        <button type="button" className={currentModelPublicationVideo?.is_published ? '' : 'ghost'} disabled={publicationBusy || !currentModelPublicationVideo} onClick={() => setPublicationVideoPublished(true)}>
+                          Publish video
+                        </button>
+                        <button type="button" className="ghost" disabled={publicationBusy || !currentModelPublicationVideo?.is_published} onClick={() => setPublicationVideoPublished(false)}>
+                          Hide video
+                        </button>
+                        <button
+                          type="button"
+                          className={publicationPackagePublished ? '' : 'ghost'}
+                          disabled={publicationBusy || !activeModelObject}
+                          onClick={() => setConfirmAction({
+                            title: 'Publish package?',
+                            message: `Publish this object, its 3D model, video, transcript, and ${modelAnnotations.length} annotation${modelAnnotations.length === 1 ? '' : 's'} to the published projection. They will appear in Public Preview and can then be synced to the live database.`,
+                            confirmLabel: 'Publish package',
+                            onConfirm: () => { setCurrentObjectPackagePublished(true) }
+                          })}
+                        >
+                          Publish package
+                        </button>
+                        <button
+                          type="button"
+                          className="ghost"
+                          disabled={publicationBusy || !publicationPackageHasPublishedContent}
+                          onClick={() => setConfirmAction({
+                            title: 'Hide package?',
+                            message: `Hide this object, its 3D model, video, transcript, and ${modelAnnotations.length} annotation${modelAnnotations.length === 1 ? '' : 's'} from the published projection. They will no longer appear in Public Preview.`,
+                            confirmLabel: 'Hide package',
+                            onConfirm: () => { setCurrentObjectPackagePublished(false) }
+                          })}
+                        >
+                          Hide package
+                        </button>
+                      </div>
+
+                      {/*
+                       * Slice E: Notify followers toggle.
+                       *
+                       * Per-package opt-in. Default OFF (founder direction
+                       * 2026-04-27). When ON, the next publish + sync of
+                       * this package fires a digest email via the public
+                       * notify-me subscriber list (apps/api/app/services/
+                       * notify_digest_worker.py — Slice E-4). When OFF,
+                       * publish + sync proceed as before with no digest.
+                       *
+                       * The trigger is intentionally NOT auto-fired on
+                       * is_published transition — the digest must wait
+                       * until the public projection actually contains the
+                       * synced content (otherwise subscribers click into
+                       * a 404). Slice E-4's admin endpoint is the
+                       * post-sync trigger.
+                       */}
+                      <label className="notify-followers-toggle">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(modelDetail?.notify_followers_on_publish)}
+                          disabled={publicationBusy || !modelDetail}
+                          onChange={(event) => setNotifyFollowersOnPublish(event.target.checked)}
+                        />
+                        <span className="notify-followers-toggle__copy">
+                          <strong>Notify followers when this package publishes</strong>
+                          <span className="muted">
+                            When checked, the next publish + sync of this package fires a digest
+                            email to every subscriber on the public landing page&apos;s notify-me
+                            list. Off by default; toggle on per package.
+                          </span>
+                        </span>
+                      </label>
+
+                      <div className="result-box publication-summary-box publication-sync-status" role="status" aria-live="polite">
+                        <div className="publication-sync-status-header">
+                          <strong>{liveDatabaseSyncStatus.stage_label || 'Live Database sync status'}</strong>
+                          <span>{liveDatabaseSyncStateLabel(liveDatabaseSyncStatus.state)} · {liveDatabaseSyncProgress}%</span>
+                        </div>
+                        <div className="publication-sync-status-bar" aria-hidden="true">
+                          <span style={{ width: `${liveDatabaseSyncProgress}%` }}></span>
+                        </div>
+                        <p>{liveDatabaseSyncStatus.detail || 'Push every currently published package to the live public site.'}</p>
+                        {liveDatabaseSyncCountsAvailable ? (
+                          <div className="publication-sync-metrics">
+                            <span>{liveDatabaseSyncStatus.object_count} objects</span>
+                            <span>{liveDatabaseSyncStatus.video_count} videos</span>
+                            <span>{liveDatabaseSyncStatus.annotation_count} annotations</span>
+                            <span>{liveDatabaseSyncStatus.media_file_count} media files</span>
+                          </div>
+                        ) : null}
+                        {liveDatabaseSyncStatus.finished_at ? (
+                          <p className="muted">Last finished: {formatDateTime(liveDatabaseSyncStatus.finished_at)}</p>
+                        ) : liveDatabaseSyncStatus.started_at ? (
+                          <p className="muted">Started: {formatDateTime(liveDatabaseSyncStatus.started_at)}</p>
+                        ) : null}
+                        {liveDatabaseSyncStatus.error ? <p className="muted">Last error: {liveDatabaseSyncStatus.error}</p> : null}
+                      </div>
+
+                      <div className="topbar-actions publication-actions">
+                        <button
+                          type="button"
+                          className="ghost"
+                          onClick={() => navigateToUrl('/public')}
+                        >
+                          Open Public Browse
+                        </button>
+                        <button
+                          type="button"
+                          className="ghost"
+                          disabled={liveDatabaseSyncBusy || !activeModelObject?.is_published}
+                          onClick={() => openObjectInPublicPreview(activeModelObject.id, {
+                            projectId: activeModelObject.project_id,
+                            videoId: currentModelPublicationVideo?.id || ''
+                          })}
+                        >
+                          Open Public Preview
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -6140,6 +6189,7 @@ export default function App() {
                       loadingMessage="Loading the object stage and linked annotation positions for this evidence moment."
                       emptyTitle="No 3D model"
                       emptyMessage="This object does not have a linked .glb model available for the evidence view yet."
+                      backgroundColor={isPrivateAuthoringSurface ? '#f3f5f9' : undefined}
                       onSurfacePick={null}
                       onTransformChange={null}
                       onCameraViewChange={handleModelCameraViewChange}

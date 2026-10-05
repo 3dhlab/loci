@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { apiRequest } from './api.js'
+import { apiRequest, getVideoPlaybackUrl } from './api.js'
 
 function response(status, payload = {}, headers = {}) {
   return {
@@ -75,4 +75,18 @@ test('write methods never retry a transient response', async () => {
     assert.equal(calls.length, 1)
     assert.equal(calls[0].options.method, 'POST')
   })
+})
+
+
+test('authenticated playback changes URL when persisted media revision changes', () => {
+  const revision = '2026-10-05T01:22:00+00:00'
+  const first = getVideoPlaybackUrl('test token', 'video-id', revision)
+  assert.equal(first, getVideoPlaybackUrl('test token', 'video-id', revision))
+  assert.notEqual(first, getVideoPlaybackUrl('test token', 'video-id', '2026-10-05T01:23:00+00:00'))
+  const url = new URL(first, 'http://local.test')
+  assert.equal(url.pathname, '/api/v1/videos/video-id/stream')
+  assert.equal(url.searchParams.get('access_token'), 'test token')
+  assert.equal(url.searchParams.get('v'), revision)
+  assert.equal(new URL(getVideoPlaybackUrl('token', 'video-id'), 'http://local.test').searchParams.has('v'), false)
+  assert.throws(() => getVideoPlaybackUrl('', 'video-id', revision), /Authentication token/)
 })

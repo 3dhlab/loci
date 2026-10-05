@@ -94,7 +94,7 @@ export function resolveStudioPaletteSync() {
 
 // Shares the object page's persistence key so the theme choice carries across
 // every Studio surface. System preference remains the internal default.
-export function useStudioSurfaceTheme() {
+export function useStudioSurfaceTheme({ applyToDocument = true } = {}) {
   const [mode, setMode] = useState(readStoredMode)
   const [prefersDark, setPrefersDark] = useState(systemPrefersDark)
 
@@ -130,11 +130,14 @@ export function useStudioSurfaceTheme() {
   // Keep mobile browser chrome + safe-area fill in sync with the Studio palette
   // on the public surfaces (P4.8-C #4).
   useEffect(() => {
+    if (!applyToDocument) {
+      return undefined
+    }
     if (typeof document !== 'undefined' && isStudioSurfaceEnabled(undefined, { defaultEnabled: true })) {
       document.documentElement.dataset.studioBootstrap = palette
     }
     applyDocumentThemeChrome(palette)
-  }, [palette])
+  }, [applyToDocument, palette])
 
   const toggle = useCallback(() => {
     selectMode(palette === 'darkroom' ? 'light' : 'dark')
