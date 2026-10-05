@@ -2,7 +2,7 @@
 
 Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
 
-The public [v0.1.0 release](https://github.com/3dhlab/loci/releases/tag/v0.1.0) includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
+The public [v0.1.1 release](https://github.com/3dhlab/loci/releases/tag/v0.1.1) includes a local demonstration with one authoring account. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
 
 ## Hosted research instance
 
@@ -30,10 +30,27 @@ The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from yo
 
 `docker compose down` stops services and preserves data. `docker compose down --volumes` deletes the demo database and media for that Compose project. Keep `.env` for the lifetime of its database volume.
 
+## Local demo walkthrough
+
+[![Watch the Loci local demo and visual authoring walkthrough](docs/media/demo-authoring/poster.jpg)](docs/media/demo-authoring/loci-demo-authoring.mp4)
+
+[Watch or download the video](docs/media/demo-authoring/loci-demo-authoring.mp4) · [Timed text description](docs/media/demo-authoring/transcript.md) · [Follow the authoring guide](docs/demo-authoring.md)
+
+This silent 41-second walkthrough shows the generated cube in the public reader,
+then selects a video range, places and refines a pin, previews it privately,
+publishes that annotation, and verifies the result in the reader. The demo code
+improvements and this video are a **3D Humanities Lab** contribution. The
+[video provenance and license](docs/media/demo-authoring/README.md) describe its
+generated content.
+
+Build this source checkout to follow the optional visual authoring walkthrough.
+The v0.1.1 release predates the authoring override and updated chapter media.
+
 ## Documentation
 
 - [Synthetic demo and content workflow](examples/README.md)
 - [Optional visual authoring console and single-range walkthrough](docs/demo-authoring.md)
+- [Spatial selection, camera continuity and playback verification](docs/viewer-camera-continuity.md)
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Model, annotation, transcript and media contracts](docs/data-contract.md)
 - [Development and contribution checks](CONTRIBUTING.md)

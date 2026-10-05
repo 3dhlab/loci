@@ -1,6 +1,11 @@
 # Visual authoring in the local demo
 
-The download includes a signed-in visual console for selecting a video range,
+[Watch the 3D Humanities Lab walkthrough](media/demo-authoring/loci-demo-authoring.mp4)
+or read its [timed text description](media/demo-authoring/transcript.md).
+Use this source checkout for the workflow below; the packaged v0.1.1 release
+predates the optional console override and new chapter media.
+
+This source includes a signed-in visual console for selecting a video range,
 placing an annotation on a model, reviewing it, and making it visible to local
 readers. The default quickstart serves the public reader. Enable the console
 with the optional Compose override after completing the quickstart:
@@ -66,9 +71,13 @@ docker compose up -d --no-deps --wait web
 ## Scope and remaining work
 
 Single-range mapping and placement exist in the current console. This guide
-exposes them through an opt-in local build. The browser demonstration and
-verification should cover actual creation, private preview, publication and
-reader playback in that build.
+exposes them through an opt-in local build. The real-API browser check
+`npm run test:demo:authoring` covers range selection, captured placement,
+private creation and preview, individual publication, reader playback and cleanup.
+Run it only against a disposable seeded demo with the console build enabled.
+It reads the generated demo password from the local `.env`; it never writes that
+password or the login token to its diagnostics. The required clean-demo CI job
+runs this check after its public-reader checks.
 
 The following areas need additional development for a broader authoring product:
 
@@ -82,13 +91,6 @@ The following areas need additional development for a broader authoring product:
   a stable `website_object_id` and `is_embed_ready` state. The seeded cube
   supplies those values. A general object-to-reader workflow needs supported
   identity and readiness provisioning.
-- **Placement validation:** the form's current numeric conversion treats blank
-  coordinate strings as zero. A stronger save guard should require a captured
-  point, while accepting valid surface coordinates containing zero.
-- **Authoring regression coverage:** add an actual local console test from
-  range selection through private creation, preview, individual publication and
-  public reader verification. The existing public browser tests cover reader
-  playback and sharing.
 
 The API forms at [localhost:8000/docs](http://localhost:8000/docs) remain available
 for explicit record authoring and review.
