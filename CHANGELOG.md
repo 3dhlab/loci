@@ -5,6 +5,7 @@
 - Repaired the public search response wrapper and made loading, error, empty, and results states exclusive. Added brief collection and 3D viewer guidance.
 - Added configurable public sitemap generation for the homepage and object browser, with a matching sitemap entry in `robots.txt`.
 - Added runtime filesystem capacity reporting and a privacy-limited public reader probe. See the [operations guide](docs/operations.md).
+- Pinned the transitive `source-map-js` build dependency to patched version 1.2.2.
 
 ## v0.2.0
 
