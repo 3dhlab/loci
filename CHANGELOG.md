@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Repaired the public search response wrapper and made loading, error, empty, and results states exclusive. Added brief collection and 3D viewer guidance.
+- Added configurable public sitemap generation for the homepage and object browser, with a matching sitemap entry in `robots.txt`.
+- Added runtime filesystem capacity reporting and a privacy-limited public reader probe. See the [operations guide](docs/operations.md).
+
 ## v0.2.0
 
 - Added an optional visual authoring console for mapping one video range to a captured model point, previewing privately and publishing the annotation individually.

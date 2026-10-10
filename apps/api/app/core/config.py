@@ -1,6 +1,7 @@
 import ipaddress
 from urllib.parse import urlsplit
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -154,6 +155,10 @@ class Settings(BaseSettings):
     object_model_output_subdir: str = "object-models"
     transcode_concurrency: int = 1
     disk_alert_threshold_percent: int = 80
+    # Monitor the filesystem backing the running API process. In containers,
+    # this may be a Docker-managed filesystem rather than the host root disk.
+    runtime_root_disk_alert_threshold_percent: int = Field(default=85, ge=1, le=100)
+    runtime_root_disk_min_free_bytes: int = Field(default=5 * 1024 * 1024 * 1024, ge=0)
     semantic_public_sync_env_file: str = ""
     public_object_priority_ids: str = ""
 
