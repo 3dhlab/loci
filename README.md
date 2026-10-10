@@ -66,6 +66,7 @@ that override and the updated chapter media.
 - [Spatial selection, camera continuity and playback verification](docs/viewer-camera-continuity.md)
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Model, annotation, transcript and media contracts](docs/data-contract.md)
+- [Public operations probes and filesystem health](docs/operations.md)
 - [Development and contribution checks](CONTRIBUTING.md)
 - [Security reporting](SECURITY.md) and [support scope](SUPPORT.md)
 - [Release notes](CHANGELOG.md), [licensing details](LICENSE_STATUS.md), and [third-party notices](THIRD_PARTY_NOTICES.md)

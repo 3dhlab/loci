@@ -115,20 +115,94 @@ def _probe_media_root() -> tuple[dict[str, Any], dict[str, Any]]:
     )
 
 
+def _probe_runtime_root_filesystem() -> tuple[dict[str, Any], dict[str, Any]]:
+    """Report capacity of the filesystem backing the API process root.
+
+    In a container, ``/`` can map to a Docker-managed filesystem or volume and
+    therefore does not guarantee visibility into the host's root filesystem.
+    """
+    percent_threshold = settings.runtime_root_disk_alert_threshold_percent
+    min_free_bytes = settings.runtime_root_disk_min_free_bytes
+
+    try:
+        total_bytes, used_bytes, free_bytes = shutil.disk_usage("/")
+        usage_percent = int(round((used_bytes / total_bytes) * 100)) if total_bytes else 0
+    except Exception:
+        return (
+            _service_status(
+                "runtime_root_filesystem",
+                False,
+                "Runtime root filesystem capacity probe failed.",
+                scope="API runtime root filesystem; host root visibility depends on container storage mapping.",
+                disk_alert_threshold_percent=percent_threshold,
+                min_free_bytes=min_free_bytes,
+                disk_alert_triggered=True,
+                probe_failed=True,
+            ),
+            {
+                "runtime_root_disk_usage_percent": None,
+                "runtime_root_disk_alert_threshold_percent": percent_threshold,
+                "runtime_root_disk_free_bytes": None,
+                "runtime_root_disk_min_free_bytes": min_free_bytes,
+                "runtime_root_disk_alert_triggered": True,
+                "runtime_root_disk_probe_failed": True,
+            },
+        )
+
+    threshold_exceeded = usage_percent >= percent_threshold or free_bytes <= min_free_bytes
+    if threshold_exceeded:
+        detail = (
+            f"Runtime root filesystem capacity is low: {usage_percent}% used, "
+            f"{int(free_bytes)} bytes free; alert thresholds are "
+            f"{percent_threshold}% used or {min_free_bytes} bytes free."
+        )
+    else:
+        detail = (
+            f"Runtime root filesystem is available: {usage_percent}% used, "
+            f"{int(free_bytes)} bytes free."
+        )
+
+    return (
+        _service_status(
+            "runtime_root_filesystem",
+            not threshold_exceeded,
+            detail,
+            scope="API runtime root filesystem; host root visibility depends on container storage mapping.",
+            disk_usage_percent=usage_percent,
+            disk_alert_threshold_percent=percent_threshold,
+            free_bytes=int(free_bytes),
+            min_free_bytes=min_free_bytes,
+            disk_alert_triggered=threshold_exceeded,
+            probe_failed=False,
+        ),
+        {
+            "runtime_root_disk_usage_percent": usage_percent,
+            "runtime_root_disk_alert_threshold_percent": percent_threshold,
+            "runtime_root_disk_free_bytes": int(free_bytes),
+            "runtime_root_disk_min_free_bytes": min_free_bytes,
+            "runtime_root_disk_alert_triggered": threshold_exceeded,
+            "runtime_root_disk_probe_failed": False,
+        },
+    )
+
+
 def build_runtime_health_snapshot() -> dict[str, Any]:
     database_status = _probe_database()
     redis_status, queue_metrics = _probe_redis_and_queues()
     media_root_status, disk_metrics = _probe_media_root()
+    runtime_root_status, runtime_root_metrics = _probe_runtime_root_filesystem()
 
     services = {
         "database": database_status,
         "redis": redis_status,
         "media_root": media_root_status,
+        "runtime_root_filesystem": runtime_root_status,
     }
     overall_ok = all(service["status"] == "ok" for service in services.values())
     metrics = {
         **queue_metrics,
         **disk_metrics,
+        **runtime_root_metrics,
     }
 
     return {
