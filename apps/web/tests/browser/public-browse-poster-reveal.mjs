@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { createReadStream, existsSync } from 'node:fs'
+import { createReadStream, existsSync, readFileSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -8,6 +8,12 @@ import { chromium } from 'playwright'
 const webRoot = resolve(fileURLToPath(new URL('../..', import.meta.url)))
 const distRoot = resolve(webRoot, 'dist-ci')
 assert.ok(existsSync(resolve(distRoot, 'index.html')), 'run the CI production build before the browse browser regression')
+const sitemap = readFileSync(resolve(distRoot, 'sitemap.xml'), 'utf8')
+assert.match(sitemap, /<loc>http:\/\/localhost:8080\/public<\/loc>/, 'the local-demo build publishes the public object browser in its sitemap')
+assert.doesNotMatch(sitemap, /\/evidence\/objects\/|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i,
+  'the generic sitemap contains no object paths or research record identifiers')
+assert.match(readFileSync(resolve(distRoot, 'robots.txt'), 'utf8'), /Sitemap: http:\/\/localhost:8080\/sitemap\.xml/,
+  'robots.txt advertises the sitemap emitted beside it')
 const contentTypes = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml' }
 const server = createServer((req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname
@@ -119,6 +125,34 @@ try {
     await context.close()
   }
 
+  // Search failures and successful empty results each show one clear outcome.
+  for (const response of [
+    { status: 503, json: { detail: 'Search is temporarily unavailable right now.' }, expected: 'error' },
+    { status: 200, json: { results: [], total_results: 0, page: 1, page_size: 5, total_pages: 0 }, expected: 'empty' },
+  ]) {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
+    const page = await context.newPage()
+    await page.route('**/api/v1/public/projects', (route) => route.fulfill({ json: [] }))
+    await page.route('**/api/v1/public/stats', (route) => route.fulfill({ json: { open_now_count: 0, in_preparation_count: 0 } }))
+    await page.route('**/api/v1/public/objects/page*', (route) => route.fulfill({
+      json: { items: [], page: 1, page_size: 3, total: 0, total_pages: 0 },
+    }))
+    await page.route('**/api/v1/public/search/segments', (route) => route.fulfill({ status: response.status, json: response.json }))
+    await page.goto(`${origin}/public?q=synthetic`, { waitUntil: 'domcontentloaded' })
+    if (response.expected === 'error') {
+      await page.getByRole('heading', { name: 'Search unavailable' }).waitFor({ state: 'visible' })
+      assert.equal(await page.getByRole('heading', { name: 'No matching moments' }).count(), 0,
+        'a failed search does not also announce an empty result')
+      assert.equal(await page.getByText('Try again in a moment or clear your query.', { exact: true }).count(), 1,
+        'the search error gives one next step')
+    } else {
+      await page.locator('.public-library-search-panel .empty-state strong', { hasText: 'No matching moments' }).waitFor({ state: 'visible' })
+      assert.equal(await page.locator('.public-library-search-error').count(), 0,
+        'a successful empty search does not show an error')
+    }
+    await context.close()
+  }
+
   // A delayed page-two API response keeps page-one cards and progress near the
   // pager, then replaces both the cards and current-page announcement.
   {
@@ -173,7 +207,7 @@ try {
     assert.deepEqual(pageErrors, [])
     await context.close()
   }
-  console.log('PASS public browse posters, mobile 1–3 card sizing, and delayed page-two progress and completion')
+  console.log('PASS sitemap publication, public search outcomes, posters, mobile card sizing, and delayed page progress')
 } finally {
   if (browser) await browser.close()
   if (server.listening) await new Promise((resolveClose) => server.close(resolveClose))

@@ -110,6 +110,8 @@ jobs:
           python -m pip install -r apps/api/requirements.txt -c apps/api/constraints.txt
       - name: Verify disposable service target guard
         run: python -m unittest discover -s scripts/ci -p 'test_disposable_targets.py' -v
+      - name: Verify public reader monitoring checks
+        run: python -m unittest discover -s scripts/ops -p 'test_*.py' -v
       - name: Create isolated migration database
         run: createdb --host=127.0.0.1 --username=postgres semantic_ci_migration
         env:
