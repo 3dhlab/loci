@@ -1,11 +1,15 @@
 # Changelog
 
-## Unreleased
+## v0.2.1
 
 - Repaired the public search response wrapper and made loading, error, empty, and results states exclusive. Added brief collection and 3D viewer guidance.
 - Added configurable public sitemap generation for the homepage and object browser, with a matching sitemap entry in `robots.txt`.
 - Added runtime filesystem capacity reporting and a privacy-limited public reader probe. See the [operations guide](docs/operations.md).
 - Pinned the transitive `source-map-js` build dependency to patched version 1.2.2.
+- Updated Vite to 6.4.4 with matching lockfile and dependency notices; corrected public search regression assertions and health-route authentication guidance.
+- Refreshed Unlock Digital's hosted walkthrough to the approved 50.1-second cut, with clearer captions, pacing, citation steps and closing invitation. Its presentation permission and no-reuse terms remain unchanged.
+
+Unlock Digital contributed the sustained-search and reader reliability changes, operations probe and refreshed hosted walkthrough. 3D Humanities Lab independently reviewed the contributions and supplied the tested dependency, assertion, documentation and notice corrections. Upgrade by rebuilding API and web images while preserving `.env`, database and media volumes; these changes introduce no schema migration.
 
 ## v0.2.0
 
