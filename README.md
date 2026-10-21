@@ -10,9 +10,9 @@ The source includes a local demonstration with one authoring account; [published
 
 Watch the 50.1-second hosted walkthrough with audio.
 
-[![Watch the hosted Loci walkthrough](docs/media/hosted-walkthrough.jpg)](docs/media/hosted-walkthrough.mp4)
+https://github.com/user-attachments/assets/9334c52c-25dc-4af4-ae11-c206da51f4df
 
-[Read the walkthrough guide](docs/media/hosted-walkthrough.md)
+[Read the walkthrough guide](docs/media/hosted-walkthrough.md) · [Download the MP4](https://github.com/3dhlab/loci/raw/refs/heads/main/docs/media/hosted-walkthrough.mp4)
 
 Hosted walkthrough recording and editing: **Unlock Digital**. Permission to
 show participants in this edited video grants no reuse license for the
