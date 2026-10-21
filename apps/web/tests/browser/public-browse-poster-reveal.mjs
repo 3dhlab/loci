@@ -141,7 +141,7 @@ try {
     await page.goto(`${origin}/public?q=synthetic`, { waitUntil: 'domcontentloaded' })
     if (response.expected === 'error') {
       await page.getByRole('heading', { name: 'Search unavailable' }).waitFor({ state: 'visible' })
-      assert.equal(await page.getByRole('heading', { name: 'No matching moments' }).count(), 0,
+      assert.equal(await page.locator('.public-library-search-panel .empty-state strong', { hasText: 'No matching moments' }).count(), 0,
         'a failed search does not also announce an empty result')
       assert.equal(await page.getByText('Try again in a moment or clear your query.', { exact: true }).count(), 1,
         'the search error gives one next step')
