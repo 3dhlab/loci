@@ -12,7 +12,7 @@ croniter==6.2.4
 cryptography==50.0.1
 dnspython==2.8.0
 email_validator==2.2.0
-fastapi==0.141.1
+fastapi==0.142.1
 fastembed==0.8.0
 filelock==4.0.4
 flatbuffers==25.12.19
@@ -34,6 +34,7 @@ mmh3==5.3.0
 networkx==3.7
 numpy==2.5.3
 onnxruntime==1.30.0
+opentelemetry-api==1.45.1
 packaging==26.3
 passlib==1.7.4
 pgvector==0.4.1
@@ -59,7 +60,7 @@ regex==2026.9.10
 requests==2.34.2
 rq==2.6.0
 segtok==1.5.11
-sentry-sdk==2.58.0
+sentry-sdk==2.63.0
 six==1.17.0
 SQLAlchemy==2.0.43
 starlette==1.6.0

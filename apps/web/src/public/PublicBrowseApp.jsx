@@ -383,7 +383,7 @@ function buildBrowseLoadErrorState(error) {
 function buildBrowseSearchErrorState(error) {
   return buildErrorState(error, {
     fallbackKind: 'network',
-    networkDetail: 'Search is temporarily unavailable right now.',
+    networkDetail: 'Try again in a moment or clear your query.',
     notFoundDetail: 'This published search is no longer available.',
     unauthorizedDetail: 'This published search requires authorization.'
   })
@@ -827,7 +827,7 @@ export default function PublicBrowseApp() {
             </a>
             <h1>Explore objects through evidence, interpretation, and linked moments.</h1>
             <p className="public-library-hero-text">
-              Browse the public collection and open evidence pages with synchronized video, transcript, and 3D context.
+              Choose a collection to narrow the objects, then open an evidence page to explore its synchronized video, transcript, and 3D context.
             </p>
           </div>
 
@@ -897,12 +897,12 @@ export default function PublicBrowseApp() {
           {searchError ? (
             <ErrorState
               kind={searchError.kind}
-              detail={searchError.detail}
+              detail={searchError.kind === 'network' ? '' : searchError.detail}
               kicker="Search"
               headingAs="h3"
               className="error-state-inline public-library-search-error"
               title={searchError.kind === 'unauthorized' ? 'Search is protected' : searchError.kind === 'not_found' ? 'Search endpoint not found' : 'Search unavailable'}
-              message={searchError.kind === 'unauthorized' ? 'Access to this published search requires authorization.' : searchError.kind === 'not_found' ? 'This published search could not be found.' : 'Search is unavailable right now.'}
+              message={searchError.kind === 'unauthorized' ? 'Access to this published search requires authorization.' : searchError.kind === 'not_found' ? 'This published search could not be found.' : searchError.detail || 'Try again in a moment or clear your query.'}
               primaryActionLabel={searchError.kind === 'unauthorized' ? 'Reload protected page' : 'Try again'}
               onPrimaryAction={searchError.kind === 'unauthorized' ? reloadProtectedPage : () => executeSearch(searchMeta.page || 1)}
               secondaryActionLabel="Clear search"
@@ -910,9 +910,9 @@ export default function PublicBrowseApp() {
             />
           ) : null}
 
-          {searchLoading && !searchResults.length && !searchError ? (
+          {searchLoading ? (
             <SearchLoadingState query={searchForm.query} />
-          ) : searchResults.length ? (
+          ) : searchError ? null : searchResults.length ? (
             <>
               <div className="search-results-toolbar public-library-search-toolbar">
                 <div className="search-results-summary">
@@ -1009,7 +1009,7 @@ export default function PublicBrowseApp() {
 
               {renderSearchPagination('bottom')}
             </>
-          ) : hasSearched && !searchLoading ? (
+          ) : hasSearched ? (
             <ActionEmptyState
               title="No matching moments"
               text="Try a different search term or collection to find related moments."

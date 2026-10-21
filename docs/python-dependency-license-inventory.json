@@ -122,11 +122,11 @@
     },
     {
       "name": "fastapi",
-      "version": "0.141.1",
+      "version": "0.142.1",
       "licenseExpression": "MIT",
       "licenseMetadata": null,
       "licenseFiles": [
-        "fastapi-0.141.1.dist-info/licenses/LICENSE"
+        "fastapi-0.142.1.dist-info/licenses/LICENSE"
       ]
     },
     {
@@ -331,6 +331,15 @@
       "licenseExpression": null,
       "licenseMetadata": "MIT License",
       "licenseFiles": []
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.1",
+      "licenseExpression": "Apache-2.0",
+      "licenseMetadata": null,
+      "licenseFiles": [
+        "opentelemetry_api-1.45.1.dist-info/licenses/LICENSE"
+      ]
     },
     {
       "name": "packaging",
@@ -564,11 +573,11 @@
     },
     {
       "name": "sentry-sdk",
-      "version": "2.58.0",
+      "version": "2.63.0",
       "licenseExpression": "MIT",
       "licenseMetadata": null,
       "licenseFiles": [
-        "sentry_sdk-2.58.0.dist-info/licenses/LICENSE"
+        "sentry_sdk-2.63.0.dist-info/licenses/LICENSE"
       ]
     },
     {

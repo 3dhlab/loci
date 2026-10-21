@@ -3058,6 +3058,7 @@ export default function EvidenceObjectApp() {
       <SectionHeading
         eyebrow="3D context"
         title={selectedAnnotation ? selectedAnnotation.title : 'Published object view'}
+        description="Drag to rotate the object. Open the ? control for zoom, pan, and keyboard guidance."
       />
 
       {modelStageElement}
