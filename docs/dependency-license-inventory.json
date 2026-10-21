@@ -1322,7 +1322,7 @@
     },
     {
       "name": "source-map-js",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "license": "BSD-3-Clause",
       "licenseFiles": [
         "LICENSE",
@@ -1460,7 +1460,7 @@
     },
     {
       "name": "vite",
-      "version": "6.4.3",
+      "version": "6.4.4",
       "license": "MIT",
       "licenseFiles": [
         "LICENSE.md",

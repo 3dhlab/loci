@@ -32,8 +32,11 @@ of queries, result content, and object identifiers. This repository provides
 the checker; deployment-specific scheduling and notification routing remain
 part of the operator's monitoring configuration.
 
-The authenticated API runtime health snapshot also reports `media_root` and
-`runtime_root_filesystem` capacity. Runtime root alerts use
+The API's `/health` and `/metrics` routes report `media_root` and
+`runtime_root_filesystem` capacity without application-level authentication.
+Any access restriction at a deployment proxy or network boundary is configured
+separately; do not assume these routes are protected by the application's login.
+Runtime root alerts use
 `RUNTIME_ROOT_DISK_ALERT_THRESHOLD_PERCENT` (default `85`) and
 `RUNTIME_ROOT_DISK_MIN_FREE_BYTES` (default 5 GiB). The latter measures the
 filesystem visible as `/` to the API process. In a container, that filesystem

@@ -27,7 +27,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "playwright": "^1.58.2",
-    "vite": "^6.4.3"
+    "vite": "^6.4.4"
   },
   "overrides": {
     "@babel/core": "7.29.7",
