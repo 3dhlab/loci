@@ -4,7 +4,11 @@
 The generated local-demo code improvements and authoring video are a separate
 **3D Humanities Lab** contribution.
 
-`hosted-walkthrough.mp4` is a 64.5-second, 1920×1080, 30 fps screen recording of the published Loci research collection linked in the [hosted research instance section](../../README.md#hosted-research-instance). The recording was captured on 2026-10-04 in America/Chicago. The application stays visible throughout as the viewer browses the collection, opens Field Museum Spoon, rotates the model, selects the Woman’s Face Design annotation, plays its linked video, seeks the transcript, copies a share link, and reopens the shared moment. A fixed Times New Roman banner animates the short instructions. The video uses two short excerpts of original recording audio synchronized to the browser playback clock and retains the source video's captions. The sound follows the two demonstrated playback excerpts.
+`hosted-walkthrough.mp4` is a 50.1-second, 1920×1080, 30 fps edited walkthrough of the published Loci research collection linked in the [hosted research instance section](../../README.md#hosted-research-instance). The original screen capture was recorded on October 4, 2026 in America/Chicago. The maintainer approved this revised cut on October 10, 2026.
+
+The viewer browses the collection, opens Field Museum Spoon, rotates the model, selects the Woman’s Face Design annotation, plays its linked video, seeks through the transcript, copies a share link, and copies a citation. Shorter pauses and a continuous editorial pointer improve pacing. A refreshed recording of the same player passage is synchronized and composited into the transcript section so its translated captions remain visible while the pointer clears the controls. The original interface and model view remain continuous around that panel.
+
+The video uses two short excerpts of original recording audio synchronized to the browser playback clock and retains the source video’s captions and credits. A Times New Roman banner introduces the actions. The closing holds the paused interface beneath a soft blur and light panel, with the invitation and the homepage’s converge mark animation. The mark reuses the application’s geometry, colors, keyframes, and easing.
 
 Collection media and contributor material retain their own permissions and attribution requirements. Loci software and generated local-demo content retain the terms described in the repository's [license](../../LICENSE) and [license status](../../LICENSE_STATUS.md).
 
@@ -28,9 +32,8 @@ outside this repository.
 ## Files
 
 - `hosted-walkthrough.mp4`: complete walkthrough with audio.
-- `hosted-walkthrough-preview.gif`: optional animated preview. The README uses
-  the still poster so readers choose when motion and audio start.
+- `hosted-walkthrough-preview.gif`: optional silent animated preview.
 - `hosted-walkthrough.jpg`: poster image for contexts that display a still preview.
 - `hosted-walkthrough.md`: concise guide to the features shown.
 
-The README links the still poster, full video, and feature guide beside the hosted-instance link.
+The README presents the walkthrough and links its feature guide beside the hosted-instance link. The repository stores the approved video, still poster, and animated preview together.

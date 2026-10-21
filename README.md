@@ -8,9 +8,9 @@ The source includes a local demonstration with one authoring account; [published
 
 [Explore the Loci research collection](https://loci.threedeezy.com/public). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
 
-Watch the 64.5-second hosted walkthrough with audio.
+Watch the 50.1-second hosted walkthrough with audio.
 
-https://github.com/user-attachments/assets/8ed45214-8053-4f76-a1cf-8d37fdcebe1a
+[![Watch the hosted Loci walkthrough](docs/media/hosted-walkthrough.jpg)](docs/media/hosted-walkthrough.mp4)
 
 [Read the walkthrough guide](docs/media/hosted-walkthrough.md)
 
