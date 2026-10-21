@@ -36,4 +36,6 @@ outside this repository.
 - `hosted-walkthrough.jpg`: poster image for contexts that display a still preview.
 - `hosted-walkthrough.md`: concise guide to the features shown.
 
-The README presents the walkthrough and links its feature guide beside the hosted-instance link. The repository stores the approved video, still poster, and animated preview together.
+The README embeds a GitHub-hosted playback copy of the approved video and links its feature guide and MP4 download beside the hosted-instance link. The repository retains the approved MP4, still poster and animated preview. GitHub’s repository-file preview does not provide an inline player for this MP4.
+
+The [embedded playback copy](https://github.com/user-attachments/assets/9334c52c-25dc-4af4-ae11-c206da51f4df) is byte-identical to `hosted-walkthrough.mp4` (SHA-256 `b733eaff2bdc858bbc6b5604706cd248ad54966a773e4b3a2a4f0bee00d3786b`). The display permission and no-reuse terms above apply to both copies. When replacing the approved video, update the README attachment and verify playback as well as the tracked file.
