@@ -11794,7 +11794,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## vite 6.4.4 | LICENSE.md
+## vite 6.4.5 | LICENSE.md
 
 ```text
 # Vite core license
@@ -14205,7 +14205,7 @@ Repository: git+https://github.com/websockets/ws.git
 > CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## vite 6.4.4 | license.md
+## vite 6.4.5 | license.md
 
 ```text
 # Vite core license
