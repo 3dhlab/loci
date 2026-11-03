@@ -144,9 +144,15 @@ function backoffForAttempt(attempt) {
   return GET_RETRY_BACKOFF_MS[attempt] ?? GET_RETRY_BACKOFF_MS[GET_RETRY_BACKOFF_MS.length - 1]
 }
 
-export async function apiRequest(path, { method = 'GET', token, body } = {}) {
+export async function apiRequest(path, { method = 'GET', token, body, idempotencyKey } = {}) {
   const normalizedMethod = String(method || 'GET').trim().toUpperCase()
   const headers = {}
+  if (idempotencyKey !== undefined) {
+    if (typeof idempotencyKey !== 'string' || !/^[\x21-\x7e]{1,256}$/.test(idempotencyKey)) {
+      throw new Error('A valid Idempotency-Key is required.')
+    }
+    headers['Idempotency-Key'] = idempotencyKey
+  }
   if (body !== undefined) {
     headers['Content-Type'] = 'application/json'
   }
@@ -206,6 +212,10 @@ export async function login(email, password) {
     method: 'POST',
     body: { email, password }
   })
+}
+
+export async function getCurrentUser(token) {
+  return apiRequest('/api/v1/auth/me', { token })
 }
 
 export async function getProjects(token) {
@@ -485,16 +495,36 @@ export async function searchPublicSegments(body) {
   return apiRequest('/api/v1/public/search/segments', { method: 'POST', body })
 }
 
-export async function syncLiveDatabase(token) {
-  return apiRequest('/api/v1/ops/live-database/sync', { method: 'POST', token })
+// Compatibility endpoint now admits the same durable job and returns202.
+// Callers must retain this identity until authoritative status is known.
+export async function syncLiveDatabase(token, { idempotencyKey } = {}) {
+  if (typeof idempotencyKey !== 'string' || !/^[\x21-\x7e]{1,256}$/.test(idempotencyKey)) {
+    throw new Error('A valid publication request identity is required before syncing.')
+  }
+  return apiRequest('/api/v1/ops/live-database/sync', { method: 'POST', token, idempotencyKey })
 }
 
-export async function startLiveDatabaseSync(token) {
-  return apiRequest('/api/v1/ops/live-database/sync/start', { method: 'POST', token })
+export async function startLiveDatabaseSync(token, { idempotencyKey } = {}) {
+  return apiRequest('/api/v1/ops/live-database/sync/start', { method: 'POST', token, idempotencyKey })
 }
 
-export async function getLiveDatabaseSyncStatus(token) {
-  return apiRequest('/api/v1/ops/live-database/sync/status', { token })
+export async function cancelLiveDatabaseSync(token, operationId) {
+  return apiRequest(`/api/v1/ops/live-database/sync/${encodeURIComponent(operationId)}/cancel`, { method: 'POST', token })
+}
+
+export async function reconcileLiveDatabaseSync(token, operationId) {
+  return apiRequest(`/api/v1/ops/live-database/sync/${encodeURIComponent(operationId)}/reconcile`, { method: 'POST', token })
+}
+
+export async function getLiveDatabaseSyncCapabilities(token) {
+  return apiRequest('/api/v1/ops/live-database/sync/capabilities', { token })
+}
+
+export async function getLiveDatabaseSyncStatus(token, { operationId, idempotencyKey } = {}) {
+  const path = operationId
+    ? `/api/v1/ops/live-database/sync/operations/${encodeURIComponent(operationId)}`
+    : '/api/v1/ops/live-database/sync/status'
+  return apiRequest(path, { token, idempotencyKey })
 }
 
 export async function submitSearchResultFeedback(token, body) {

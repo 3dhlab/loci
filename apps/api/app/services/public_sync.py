@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import secrets
 import shlex
 import subprocess
 import tarfile
@@ -12,15 +13,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 from threading import Lock, Thread
 from typing import Callable
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from dotenv import dotenv_values
 
 from app.core.config import settings
 from app.db.session import SessionLocal
+from app.models.entities import User
 from app.scripts.export_public_projection import build_projection
 from app.services.audit_events import append_audit_event
 from app.services.publication_manifest_store import mark_publication_manifests_projected, persist_publication_manifests
+from app.services.publication_media_inventory import build_media_inventory, create_verified_media_bundle
+from app.services.publication_readback import bounded_readback_command, canonical, expected_receipt, require_receipt
+
+
+class PublicSyncUncertainError(RuntimeError):
+    """Remote effects may exist but their current readback is not verified."""
 
 
 @dataclass(slots=True)
@@ -89,10 +97,11 @@ def _default_sync_actor(actor: dict | None, *, trigger: str, operation_id: str |
 
 
 def _command_error(command: list[str], result: subprocess.CompletedProcess[str]) -> RuntimeError:
-    stderr = (result.stderr or "").strip()
-    stdout = (result.stdout or "").strip()
-    detail = stderr or stdout or f"Command exited with status {result.returncode}"
-    return RuntimeError(f"Public sync command failed: {' '.join(command)}\n{detail}")
+    # Commands include deployment paths/key names, and stderr can contain record
+    # or credential material. API status and audit payloads expose only a code.
+    tool = Path(command[0]).name if command else "transport"
+    return RuntimeError(f"Public sync {tool} command failed (exit {result.returncode}). "
+                        "Inspect private destination diagnostics before retrying.")
 
 
 def _run(command: list[str], *, timeout: int = 900) -> subprocess.CompletedProcess[str]:
@@ -159,19 +168,16 @@ def _stable_projection_digest(manifest: dict) -> str:
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
-def _build_media_inventory(media_paths: list[str]) -> dict[str, dict[str, int]]:
-    media_root = Path(settings.media_root)
-    inventory: dict[str, dict[str, int]] = {}
-    for relpath in media_paths:
-        source_path = media_root / relpath
-        if not source_path.exists() or not source_path.is_file():
-            raise RuntimeError(f"Published media file is missing locally: {source_path}")
-        stat = source_path.stat()
-        inventory[relpath] = {
-            "size_bytes": int(stat.st_size),
-            "mtime_ns": int(stat.st_mtime_ns),
-        }
-    return inventory
+def _build_media_inventory(media_paths: list[str], progress_callback: ProgressCallback | None = None) -> dict[str, dict[str, int | str]]:
+    if progress_callback:
+        progress_callback(stage_key="verify_media", stage_label="Verifying source media",
+                          detail=f"Checking content of {len(media_paths)} approved media files.", progress_percent=8)
+    def report(index, total, basename):
+        if progress_callback:
+            progress_callback(stage_key="verify_media", stage_label="Verifying source media",
+                              detail=f"Verifying media {index} of {total}: {basename}",
+                              progress_percent=8 + int((index / max(total, 1)) * 7))
+    return build_media_inventory(settings.media_root, media_paths, report)
 
 
 def _run_live_database_sync(operation_id: str, actor: dict | None) -> None:
@@ -216,14 +222,15 @@ def _run_live_database_sync(operation_id: str, actor: dict | None) -> None:
         )
     except Exception as exc:  # pragma: no cover - surfaced through API/tests
         current = _snapshot_sync_status()
+        uncertain = isinstance(exc, PublicSyncUncertainError)
         _update_sync_status(
             operation_id,
-            state="FAILED",
-            stage_key="failed",
-            stage_label="Sync failed",
+            state="NEEDS_RECONCILIATION" if uncertain else "FAILED",
+            stage_key="reconciliation" if uncertain else "failed",
+            stage_label="Destination verification needed" if uncertain else "Sync failed",
             detail=str(exc),
             progress_percent=current.progress_percent,
-            finished_at=_utc_now_iso(),
+            finished_at=None if uncertain else _utc_now_iso(),
             error=str(exc),
         )
 
@@ -232,7 +239,7 @@ def begin_live_database_sync(actor: dict | None = None) -> PublicSyncStatus:
     global _SYNC_STATUS, _SYNC_THREAD
 
     with _SYNC_STATUS_LOCK:
-        if _SYNC_STATUS.state == "RUNNING":
+        if _SYNC_STATUS.state in {"RUNNING", "NEEDS_RECONCILIATION"}:
             return replace(_SYNC_STATUS)
 
         operation_id = uuid4().hex
@@ -326,6 +333,79 @@ def _scp(config: PublicSyncConfig, local_path: Path, remote_dir: str, *, timeout
     )
 
 
+
+def _destination_readback_command(config: PublicSyncConfig) -> list[str]:
+    remote_command = (
+        f"cd {shlex.quote(config.remote_app_dir)} "
+        "&& docker compose --env-file .env.public -f docker-compose.public.yml "
+        "exec -T api env PYTHONPATH=/app python -m app.scripts.verify_public_projection"
+    )
+    return ["ssh", "-i", str(config.ssh_key), "-o", "BatchMode=yes", "-o",
+            "StrictHostKeyChecking=yes", config.remote, remote_command]
+
+
+def _check_destination_readback_protocol(config: PublicSyncConfig) -> None:
+    command = _destination_readback_command(config)
+    command[-1] += " --protocol-version"
+    try:
+        result = bounded_readback_command(command, b"", timeout=30)
+        if result != canonical({"protocol": "loci-publication-readback", "version": 1}) + b"\n":
+            raise ValueError("Unsupported protocol.")
+    except Exception as exc:
+        raise RuntimeError("Destination does not support publication readback version 1. "
+                           "Upgrade the destination before promotion; no promotion was attempted.") from exc
+
+
+def _require_current_publication_authority(actor: dict) -> None:
+    """Preserve existing active-user policy, with a fresh pre-effect observation.
+
+    Internal system calls remain supported. This is not a transactionally fenced
+    authority lease; that requires the unfinished durable worker contract.
+    """
+    if actor.get("type") != "user":
+        return
+    try:
+        actor_id = UUID(actor["user_id"])
+    except (KeyError, ValueError, TypeError, AttributeError):
+        raise RuntimeError("Publication actor is invalid.") from None
+    with SessionLocal() as db:
+        user = db.get(User, actor_id)
+        if user is None or not user.is_active:
+            raise RuntimeError("Publication actor is no longer authorized.")
+
+
+def _prepare_destination_readback(manifest: dict, inventory: dict, challenge: str) -> tuple[bytes, dict]:
+    expected = expected_receipt(manifest, inventory)
+    request = canonical({"manifest": manifest, "media_inventory": inventory, "challenge": challenge})
+    if len(request) > 32 * 1024 * 1024:
+        raise ValueError("Readback request is too large.")
+    return request, expected
+
+
+def _verify_destination(config: PublicSyncConfig, manifest: dict, inventory: dict) -> dict:
+    """Require fresh DB/file evidence rather than trusting sync-state or SSH exit.
+
+    Both source and destination must contain the matching readback protocol.
+    This is a point-in-time SSH observation, not HTTP or durable-worker proof.
+    The expected package is sent on stdin; it cannot be substituted by a shared
+    remote manifest file. The returned challenge prevents accepting an old reply.
+    """
+    try:
+        challenge = secrets.token_hex(32)
+        request, expected = _prepare_destination_readback(manifest, inventory, challenge)
+        result = bounded_readback_command(
+            _destination_readback_command(config),
+            request, timeout=1200,
+        )
+        return require_receipt(json.loads(result), expected, challenge)
+    except Exception as exc:
+        # Never expose raw subprocess output or uploaded/private record data.
+        raise PublicSyncUncertainError(
+            "Destination records or media could not be verified. Publication may have changed; "
+            "do not retry promotion until the destination has been reconciled."
+        ) from exc
+
+
 def _remote_sync_state_path(config: PublicSyncConfig) -> str:
     return f"{config.remote_import_root.rstrip('/')}/{config.sync_state_basename}"
 
@@ -346,22 +426,15 @@ def _load_remote_sync_state(config: PublicSyncConfig) -> dict:
     return loaded if isinstance(loaded, dict) else {}
 
 
-def _create_media_bundle(bundle_path: Path, media_paths: list[str], progress_callback: ProgressCallback | None = None) -> None:
-    media_root = Path(settings.media_root)
-    total_media = len(media_paths)
-    with tarfile.open(bundle_path, "w:gz") as archive:
-        for index, relpath in enumerate(media_paths, start=1):
-            source_path = media_root / relpath
-            if not source_path.exists() or not source_path.is_file():
-                raise RuntimeError(f"Published media file is missing locally: {source_path}")
-            archive.add(source_path, arcname=relpath)
-            if progress_callback:
-                progress_callback(
-                    stage_key="bundle_media",
-                    stage_label="Bundling published media",
-                    detail=f"Bundling media {index} of {total_media}: {Path(relpath).name}",
-                    progress_percent=22 + int((index / max(total_media, 1)) * 12),
-                )
+def _create_media_bundle(bundle_path: Path, media_paths: list[str], progress_callback: ProgressCallback | None = None,
+                         *, expected_inventory: dict | None = None) -> None:
+    inventory = expected_inventory if expected_inventory is not None else _build_media_inventory(media_paths)
+    def report(index, total, basename):
+        if progress_callback:
+            progress_callback(stage_key="bundle_media", stage_label="Bundling published media",
+                              detail=f"Bundling media {index} of {total}: {basename}",
+                              progress_percent=22 + int((index / max(total, 1)) * 12))
+    create_verified_media_bundle(bundle_path, settings.media_root, media_paths, inventory, report)
 
 
 def _record_public_sync_event(*, event_type: str, actor_json: dict, payload_json: dict) -> None:
@@ -395,7 +468,7 @@ def sync_public_projection(
     sorted_media_paths = sorted(set(media_paths))
     counts = _counts_from_manifest(manifest)
     local_projection_digest = _stable_projection_digest(manifest)
-    local_media_inventory = _build_media_inventory(sorted_media_paths)
+    local_media_inventory = _build_media_inventory(sorted_media_paths, progress_callback=progress_callback)
 
     if progress_callback:
         progress_callback(
@@ -429,7 +502,12 @@ def sync_public_projection(
 
     manifest_changed = True
     changed_media_paths: list[str] = []
+    destination_receipt = None
+    remote_effect_attempted = False
     try:
+        _prepare_destination_readback(manifest, local_media_inventory, "0" * 64)
+        _require_current_publication_authority(sync_actor)
+        _check_destination_readback_protocol(config)
         with tempfile.TemporaryDirectory(prefix="semantic-public-sync-") as tmpdir:
             tmpdir_path = Path(tmpdir)
             manifest_path = tmpdir_path / config.manifest_basename
@@ -485,6 +563,8 @@ def sync_public_projection(
             manifest_changed = local_projection_digest != remote_projection_digest
 
             if not manifest_changed and not changed_media_paths and not removed_media_paths:
+                _require_current_publication_authority(sync_actor)
+                destination_receipt = _verify_destination(config, manifest, local_media_inventory)
                 with SessionLocal() as db:
                     mark_publication_manifests_projected(
                         db,
@@ -508,6 +588,7 @@ def sync_public_projection(
                             "changed_media_file_count": 0,
                             "manifest_changed": False,
                             "manifest_ids": persisted_manifest_result.current_manifest_ids,
+                            "destination_receipt": destination_receipt,
                         },
                     )
                     db.commit()
@@ -578,7 +659,7 @@ def sync_public_projection(
 
             remote_bundle_path = f"{config.remote_import_root.rstrip('/')}/{config.media_bundle_basename}"
             if changed_media_paths:
-                _create_media_bundle(media_bundle_path, changed_media_paths, progress_callback=progress_callback)
+                _create_media_bundle(media_bundle_path, changed_media_paths, progress_callback=progress_callback, expected_inventory=local_media_inventory)
                 if progress_callback:
                     progress_callback(
                         stage_key="upload_media_bundle",
@@ -598,6 +679,8 @@ def sync_public_projection(
                         media_file_count=len(sorted_media_paths),
                         **counts,
                     )
+                _require_current_publication_authority(sync_actor)
+                remote_effect_attempted = True
                 _ssh(
                     config,
                     f"tar -xzf {shlex.quote(remote_bundle_path)} -C {shlex.quote(config.remote_media_root)} "
@@ -624,6 +707,8 @@ def sync_public_projection(
                     **counts,
                 )
             if manifest_changed:
+                _require_current_publication_authority(sync_actor)
+                remote_effect_attempted = True
                 _ssh(
                     config,
                     f"cd {shlex.quote(config.remote_app_dir)} "
@@ -665,6 +750,8 @@ def sync_public_projection(
                     **counts,
                 )
             if removed_media_paths:
+                _require_current_publication_authority(sync_actor)
+                remote_effect_attempted = True
                 _ssh(
                     config,
                     "python3 -c "
@@ -672,6 +759,20 @@ def sync_public_projection(
                     f"{shlex.quote(config.remote_media_root)} "
                     f"{shlex.quote(remote_media_list_path)}",
                 )
+
+            if progress_callback:
+                progress_callback(
+                    stage_key="verify_destination",
+                    stage_label="Verifying destination records and media",
+                    detail="Reading committed destination records, annotation/citation fields and media hashes.",
+                    progress_percent=98,
+                    media_file_count=len(sorted_media_paths),
+                    **counts,
+                )
+            _require_current_publication_authority(sync_actor)
+            destination_receipt = _verify_destination(config, manifest, local_media_inventory)
+            sync_state_payload["destination_receipt"] = destination_receipt
+            sync_state_path.write_text(json.dumps(sync_state_payload, indent=2), encoding="utf-8")
 
             if progress_callback:
                 progress_callback(
@@ -683,52 +784,69 @@ def sync_public_projection(
                     **counts,
                 )
             _scp(config, sync_state_path, config.remote_import_root)
-    except Exception as exc:
-        _record_public_sync_event(
-            event_type="public_sync.failed",
-            actor_json=sync_actor,
-            payload_json={
-                "generated_at": manifest.get("generated_at"),
-                "project_count": counts["project_count"],
-                "object_count": counts["object_count"],
-                "video_count": counts["video_count"],
-                "transcript_count": counts["transcript_count"],
-                "annotation_count": counts["annotation_count"],
-                "media_file_count": len(sorted_media_paths),
-                "changed_media_file_count": len(changed_media_paths),
-                "manifest_changed": manifest_changed,
-                "manifest_ids": persisted_manifest_result.current_manifest_ids,
-                "error": str(exc),
-            },
-        )
-        raise
+        with SessionLocal() as db:
+            mark_publication_manifests_projected(
+                db,
+                persisted_manifest_result.current_manifest_ids,
+                projected_at=_utc_now_iso(),
+                actor_json=sync_actor,
+            )
+            append_audit_event(
+                db,
+                event_type="public_sync.completed",
+                subject_type="public_sync",
+                actor_json=sync_actor,
+                payload_json={
+                    "generated_at": manifest.get("generated_at"),
+                    "project_count": counts["project_count"],
+                    "object_count": counts["object_count"],
+                    "video_count": counts["video_count"],
+                    "transcript_count": counts["transcript_count"],
+                    "annotation_count": counts["annotation_count"],
+                    "media_file_count": len(sorted_media_paths),
+                    "changed_media_file_count": len(changed_media_paths),
+                    "manifest_changed": manifest_changed,
+                    "manifest_ids": persisted_manifest_result.current_manifest_ids,
+                    "destination_receipt": destination_receipt,
+                },
+            )
+            db.commit()
 
-    with SessionLocal() as db:
-        mark_publication_manifests_projected(
-            db,
-            persisted_manifest_result.current_manifest_ids,
-            projected_at=_utc_now_iso(),
-            actor_json=sync_actor,
-        )
-        append_audit_event(
-            db,
-            event_type="public_sync.completed",
-            subject_type="public_sync",
-            actor_json=sync_actor,
-            payload_json={
-                "generated_at": manifest.get("generated_at"),
-                "project_count": counts["project_count"],
-                "object_count": counts["object_count"],
-                "video_count": counts["video_count"],
-                "transcript_count": counts["transcript_count"],
-                "annotation_count": counts["annotation_count"],
-                "media_file_count": len(sorted_media_paths),
-                "changed_media_file_count": len(changed_media_paths),
-                "manifest_changed": manifest_changed,
-                "manifest_ids": persisted_manifest_result.current_manifest_ids,
-            },
-        )
-        db.commit()
+    except Exception as exc:
+        uncertain = isinstance(exc, PublicSyncUncertainError) or remote_effect_attempted or destination_receipt is not None
+        if uncertain:
+            _update_sync_status(
+                None, state="NEEDS_RECONCILIATION", stage_key="reconciliation",
+                stage_label="Destination verification needed", finished_at=None,
+                detail="Destination publication may have changed. Verify its records and media before another promotion.",
+                error="Destination outcome is unverified.",
+            )
+        try:
+            _record_public_sync_event(
+                event_type="public_sync.failed",
+                actor_json=sync_actor,
+                payload_json={
+                    "generated_at": manifest.get("generated_at"),
+                    "project_count": counts["project_count"],
+                    "object_count": counts["object_count"],
+                    "video_count": counts["video_count"],
+                    "transcript_count": counts["transcript_count"],
+                    "annotation_count": counts["annotation_count"],
+                    "media_file_count": len(sorted_media_paths),
+                    "changed_media_file_count": len(changed_media_paths),
+                    "manifest_changed": manifest_changed,
+                    "manifest_ids": persisted_manifest_result.current_manifest_ids,
+                    "destination_receipt": destination_receipt,
+                    "error": "Destination outcome is unverified." if uncertain else "Publication failed before verified completion.",
+                },
+            )
+        except Exception as audit_error:
+            if uncertain:
+                raise PublicSyncUncertainError("Destination outcome is unverified; local audit persistence also failed.") from audit_error
+            raise
+        if uncertain and not isinstance(exc, PublicSyncUncertainError):
+            raise PublicSyncUncertainError("Destination publication may have changed; reconciliation is required.") from exc
+        raise
 
     return PublicSyncResult(
         generated_at=manifest.get("generated_at"),

@@ -694,6 +694,26 @@ def versioned_transcode_output_path(
 def video_playback_path(video) -> Path | None:
     """Resolve a persisted rendition key inside the configured media root."""
 
+    generation_id = getattr(video, "publication_generation_id", None)
+    if generation_id is not None:
+        from uuid import UUID
+        try:
+            generation = str(UUID(str(generation_id)))
+            if generation != str(generation_id):
+                return None
+            root = Path(settings.media_root).resolve() / ".loci-publication-generations" / generation / "files"
+            candidate = Path(video.source_path)
+            checksum = getattr(video, "playback_sha256_checksum", None)
+            size = getattr(video, "playback_file_size_bytes", None)
+            if (not candidate.is_absolute() or ".." in candidate.parts
+                    or not isinstance(checksum, str) or re.fullmatch("[0-9a-f]{64}", checksum) is None
+                    or type(size) is not int or size < 0):
+                return None
+            resolved = candidate.resolve()
+            return resolved if resolved == candidate and root in resolved.parents else None
+        except (ValueError, TypeError, OSError):
+            return None
+
     storage_key = getattr(video, "playback_storage_key", None)
     if storage_key is None:
         return transcode_output_path(str(video.id))

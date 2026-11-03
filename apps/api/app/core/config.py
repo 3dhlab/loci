@@ -160,6 +160,12 @@ class Settings(BaseSettings):
     runtime_root_disk_alert_threshold_percent: int = Field(default=85, ge=1, le=100)
     runtime_root_disk_min_free_bytes: int = Field(default=5 * 1024 * 1024 * 1024, ge=0)
     semantic_public_sync_env_file: str = ""
+    # Frozen generation copies live inside the existing persistent media volume.
+    # Admission fails before publication if the selected byte allowance is exceeded.
+    publication_selection_max_bytes: int = Field(default=50 * 1024 ** 3, ge=1)
+    # An operator explicitly designates a dedicated public-projection database.
+    # Destination commands refuse to mutate a normal authoring installation.
+    publication_destination_enabled: bool = False
     public_object_priority_ids: str = ""
 
     def validate_shared_secrets(self) -> None:

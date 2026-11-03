@@ -38,7 +38,9 @@ from app.services.corpus_phrase_builder import (
     normalize_phrase,
 )
 from app.services.media_clips import clip_poster_path_for_video
-from app.services.media_transcode import transcode_output_path
+from app.services.media_transcode import transcode_output_path, video_playback_path
+from app.services.publication_attribution import validate_public_attribution_bands
+from app.services.public_evidence import _citation_attribution_bands
 
 
 def _iso(value: datetime | None) -> str | None:
@@ -239,6 +241,7 @@ def build_projection() -> tuple[dict, list[str]]:
     media_paths: set[str] = set()
 
     with SessionLocal() as db:
+        db.connection(execution_options={"isolation_level": "REPEATABLE READ", "postgresql_readonly": True})
         published_objects = db.execute(
             select(Object).where(Object.is_published.is_(True)).order_by(Object.created_at.asc())
         ).scalars().all()
@@ -260,13 +263,16 @@ def build_projection() -> tuple[dict, list[str]]:
 
         projected_videos: list[Video] = []
         projected_video_ids: set[UUID] = set()
+        projected_playback_paths: dict[UUID, str] = {}
         for video in candidate_videos:
             if video.status != VideoStatus.READY:
                 continue
-            playback_path = transcode_output_path(str(video.id))
-            if not playback_path.exists() or not playback_path.is_file():
+            playback_path = video_playback_path(video)
+            if playback_path is None or not playback_path.exists() or not playback_path.is_file():
                 continue
-            media_paths.add(_relative_media_path(playback_path))
+            relative_playback = _relative_media_path(playback_path)
+            media_paths.add(relative_playback)
+            projected_playback_paths[video.id] = relative_playback
             projected_videos.append(video)
             projected_video_ids.add(video.id)
 
@@ -445,6 +451,11 @@ def build_projection() -> tuple[dict, list[str]]:
 
         manifest = {
             "generated_at": _iso(datetime.now(timezone.utc)),
+            "playback_identities": {
+                str(video.id): {"sha256": video.playback_sha256_checksum,
+                                "size_bytes": video.playback_file_size_bytes}
+                for video in projected_videos if video.playback_sha256_checksum is not None
+            },
             "embedding_contract": {
                 "provider": settings.embedding_provider,
                 "local_embedding_model": settings.local_embedding_model,
@@ -485,8 +496,9 @@ def build_projection() -> tuple[dict, list[str]]:
                     "stable_video_id": video.stable_video_id,
                     "title": video.title,
                     "original_filename": video.original_filename,
-                    "public_media_relpath": f"transcoded/{video.id}.mp4",
+                    "public_media_relpath": projected_playback_paths[video.id],
                     "sha256_checksum": video.sha256_checksum,
+                    "publication_attribution_json": validate_public_attribution_bands(_citation_attribution_bands(db, video)),
                     "duration_ms": video.duration_ms,
                     "status": VideoStatus.READY.value,
                     "is_published": True,

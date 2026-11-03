@@ -18,7 +18,7 @@ configure_sentry("api")
 
 logger = logging.getLogger(__name__)
 CORS_ALLOWED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-CORS_ALLOWED_HEADERS = ["Accept", "Authorization", "Content-Type", "Range", "X-Requested-With"]
+CORS_ALLOWED_HEADERS = ["Accept", "Authorization", "Content-Type", "Range", "X-Requested-With", "Idempotency-Key"]
 CORS_EXPOSE_HEADERS = [
     "ETag",
     "Last-Modified",

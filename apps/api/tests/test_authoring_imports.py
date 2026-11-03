@@ -57,7 +57,7 @@ os.environ["AUTHORING_IMPORT_PRODUCTION_ENABLED"] = "1"
 
 SUBSET_TABLES = (
     "users", "projects", "objects", "audit_events", "project_role",
-    "model_providers", "model_runs", "videos", "title_card_observations",
+    "model_providers", "model_runs", "publication_generations", "videos", "title_card_observations",
     "ocr_batch", "ocr_batch_frame", "observation_review", "title_card_segment",
     "approval_decision", "segment_spelling_flag", "evidence_override",
     "readiness_snapshot", "import_run", "import_run_check",

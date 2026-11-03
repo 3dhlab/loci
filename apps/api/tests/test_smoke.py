@@ -94,6 +94,7 @@ import app.services.public_sync as public_sync_module  # noqa: E402
 from app.scripts.export_public_projection import build_projection  # noqa: E402
 from app.schemas.embed import PublicObjectManifestV1  # noqa: E402
 from app.schemas.public import PublicEvidencePageResponse  # noqa: E402
+from app.services.publication_readback import expected_receipt
 from app.services.ai import AIProviderError  # noqa: E402
 from app.services.ai.openai_provider import OpenAIProvider  # noqa: E402
 from app.services.media_clips import clip_output_path, clip_poster_path, clip_transcript_path  # noqa: E402
@@ -590,6 +591,20 @@ class SmokeTests(unittest.TestCase):
             )
             return [annotation.website_annotation_id for annotation in annotations if annotation.website_annotation_id]
 
+    def _durable_sync_status(self, state="QUEUED") -> dict:
+        return {"operation_id":"00000000-0000-0000-0000-000000000007","state":state,
+            "stage_key":"queued" if state=="QUEUED" else "publishing","stage_label":"Publication queued",
+            "detail":"Selected generation is queued.","progress_percent":0,
+            "generated_at":"2026-01-01T00:00:00Z","project_count":2,"object_count":3,
+            "video_count":3,"transcript_count":3,"annotation_count":9,"media_file_count":6,
+            "destination":"configured-public","selection_digest":"a"*64,
+            "generation_id":"00000000-0000-0000-0000-000000000007",
+            "publication_capabilities":{"durable_requests":True,"request_lookup":True,"reconciliation":True}}
+
+    def _public_sync_actor_id(self) -> str:
+        with SessionLocal() as db:
+            return str(db.query(User).filter_by(email=self.user_email).one().id)
+
     def _public_sync_config(self) -> public_sync_module.PublicSyncConfig:
         fake_key = Path(TEST_MEDIA_ROOT) / "fake-public-sync-key"
         fake_key.write_text("fake-public-sync-key", encoding="utf-8")
@@ -777,7 +792,7 @@ class SmokeTests(unittest.TestCase):
             headers={
                 "Origin": "http://localhost:5173",
                 "Access-Control-Request-Method": "POST",
-                "Access-Control-Request-Headers": "authorization,content-type,range",
+                "Access-Control-Request-Headers": "authorization,content-type,range,idempotency-key",
             },
         )
 
@@ -793,6 +808,17 @@ class SmokeTests(unittest.TestCase):
         self.assertIn("authorization", allow_headers)
         self.assertIn("content-type", allow_headers)
         self.assertIn("range", allow_headers)
+        self.assertIn("idempotency-key", allow_headers)
+
+        denied = self.client.options(
+            "/api/v1/ops/live-database/sync/start",
+            headers={
+                "Origin": "http://localhost:5173",
+                "Access-Control-Request-Method": "POST",
+                "Access-Control-Request-Headers": "authorization,x-unapproved-publication-header",
+            },
+        )
+        self.assertEqual(denied.status_code, 400, denied.text)
 
     def test_auth_and_core_crud_smoke(self):
         me_response = self.client.get("/api/v1/auth/me", headers=self.headers)
@@ -1675,54 +1701,36 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(public_search.json()["total_results"], 0)
 
     def test_live_database_sync_endpoint_smoke(self):
-        with patch(
-            "app.api.v1.endpoints.ops.sync_public_projection",
-            return_value=SimpleNamespace(
-                generated_at="2026-03-29T07:00:00Z",
-                project_count=2,
-                object_count=3,
-                video_count=3,
-                transcript_count=3,
-                annotation_count=9,
-                media_file_count=6,
-            ),
-        ):
-            response = self.client.post("/api/v1/ops/live-database/sync", headers=self.headers)
-
-        self.assertEqual(response.status_code, 200, response.text)
-        payload = response.json()
-        self.assertEqual(payload["object_count"], 3)
-        self.assertEqual(payload["video_count"], 3)
-        self.assertEqual(payload["annotation_count"], 9)
-        self.assertEqual(payload["media_file_count"], 6)
-        self.assertIn("Live Database sync complete.", payload["detail"])
+        # The compatibility URL now returns durable acceptance, never a direct
+        # synchronous transport result that could bypass the publication ledger.
+        with patch("app.api.v1.endpoints.ops.publication_jobs.admit_request",return_value=self._durable_sync_status()) as admit:
+            response=self.client.post("/api/v1/ops/live-database/sync",
+                headers={**self.headers,"Idempotency-Key":"generated-legacy-compatible-request"})
+        self.assertEqual(response.status_code,202,response.text)
+        self.assertEqual(response.json()["state"],"QUEUED")
+        self.assertEqual(response.json()["object_count"],3)
+        self.assertTrue(response.json()["publication_capabilities"]["durable_requests"])
+        self.assertEqual(admit.call_count,1)
 
     def test_live_database_sync_endpoint_passes_actor_context(self):
-        captured: dict[str, dict] = {}
+        with patch("app.api.v1.endpoints.ops.publication_jobs.admit_request",return_value=self._durable_sync_status()) as admit:
+            response=self.client.post("/api/v1/ops/live-database/sync",
+                headers={**self.headers,"Idempotency-Key":"generated-actor-request"})
+        self.assertEqual(response.status_code,202,response.text)
+        values=admit.call_args.kwargs
+        self.assertEqual(str(values["actor_id"]),self._public_sync_actor_id())
+        self.assertEqual(values["request_key"],"generated-actor-request")
+        self.assertEqual(values["actor"]["type"],"user")
+        self.assertEqual(values["actor"]["email"],self.user_email)
+        self.assertEqual(values["actor"]["trigger"],"ops.live_database.sync")
 
-        def _fake_sync_public_projection(*, actor=None, source_release_tag=None, progress_callback=None):
-            captured["actor"] = actor
-            captured["source_release_tag"] = source_release_tag
-            captured["progress_callback"] = progress_callback
-            return SimpleNamespace(
-                generated_at="2026-03-29T07:00:00Z",
-                project_count=1,
-                object_count=1,
-                video_count=1,
-                transcript_count=1,
-                annotation_count=1,
-                media_file_count=3,
-                changed_media_file_count=3,
-                manifest_changed=True,
-            )
-
-        with patch("app.api.v1.endpoints.ops.sync_public_projection", side_effect=_fake_sync_public_projection):
-            response = self.client.post("/api/v1/ops/live-database/sync", headers=self.headers)
-
-        self.assertEqual(response.status_code, 200, response.text)
-        self.assertEqual(captured["actor"]["type"], "user")
-        self.assertEqual(captured["actor"]["email"], self.user_email)
-        self.assertEqual(captured["actor"]["trigger"], "ops.live_database.sync")
+    def test_live_database_sync_endpoint_refuses_unreconciled_outcome(self):
+        from app.services.publication_job_contract import PublicationLaneBusy
+        with patch("app.api.v1.endpoints.ops.publication_jobs.admit_request",
+                   side_effect=PublicationLaneBusy("Another publication requires reconciliation.")):
+            response=self.client.post("/api/v1/ops/live-database/sync",
+                headers={**self.headers,"Idempotency-Key":"generated-new-request"})
+        self.assertEqual(response.status_code,409,response.text)
 
     def test_object_update_writes_publish_and_metadata_audit_events(self):
         project = self._create_project("Audit Object Project")
@@ -1785,56 +1793,17 @@ class SmokeTests(unittest.TestCase):
             self.assertEqual(event.payload_json["source"], "MANUAL")
 
     def test_live_database_sync_status_endpoints_smoke(self):
-        running_status = SimpleNamespace(
-            operation_id="sync-op-123",
-            state="RUNNING",
-            stage_key="upload_media_bundle",
-            stage_label="Uploading media bundle",
-            detail="Uploading 6 published media files to the VPS.",
-            progress_percent=72,
-            started_at="2026-03-30T10:00:00Z",
-            finished_at=None,
-            generated_at="2026-03-30T10:00:00Z",
-            project_count=2,
-            object_count=3,
-            video_count=3,
-            transcript_count=3,
-            annotation_count=9,
-            media_file_count=6,
-            error=None,
-        )
-        with patch("app.api.v1.endpoints.ops.begin_live_database_sync", return_value=running_status):
-            start_response = self.client.post("/api/v1/ops/live-database/sync/start", headers=self.headers)
-
-        self.assertEqual(start_response.status_code, 202, start_response.text)
-        self.assertEqual(start_response.json()["state"], "RUNNING")
-        self.assertEqual(start_response.json()["progress_percent"], 72)
-
-        completed_status = SimpleNamespace(
-            operation_id="sync-op-123",
-            state="SUCCEEDED",
-            stage_key="complete",
-            stage_label="Sync complete",
-            detail="Live Database sync complete. 3 objects, 3 videos, 9 annotations, and 6 media files promoted.",
-            progress_percent=100,
-            started_at="2026-03-30T10:00:00Z",
-            finished_at="2026-03-30T10:01:12Z",
-            generated_at="2026-03-30T10:00:00Z",
-            project_count=2,
-            object_count=3,
-            video_count=3,
-            transcript_count=3,
-            annotation_count=9,
-            media_file_count=6,
-            error=None,
-        )
-        with patch("app.api.v1.endpoints.ops.get_live_database_sync_status", return_value=completed_status):
-            status_response = self.client.get("/api/v1/ops/live-database/sync/status", headers=self.headers)
-
-        self.assertEqual(status_response.status_code, 200, status_response.text)
-        self.assertEqual(status_response.json()["state"], "SUCCEEDED")
-        self.assertEqual(status_response.json()["progress_percent"], 100)
-        self.assertEqual(status_response.json()["media_file_count"], 6)
+        running=self._durable_sync_status(state="RUNNING")
+        with patch("app.api.v1.endpoints.ops.publication_jobs.admit_request",return_value=running):
+            response=self.client.post("/api/v1/ops/live-database/sync/start",
+                headers={**self.headers,"Idempotency-Key":"generated-start-request"})
+        self.assertEqual(response.status_code,202,response.text)
+        self.assertEqual(response.json()["state"],"RUNNING")
+        with patch("app.api.v1.endpoints.ops.publication_jobs.get_status",return_value=running) as lookup:
+            response=self.client.get("/api/v1/ops/live-database/sync/status",headers=self.headers)
+        self.assertEqual(response.status_code,200,response.text)
+        self.assertEqual(response.json()["operation_id"],running["operation_id"])
+        self.assertEqual(str(lookup.call_args.kwargs["actor_id"]),self._public_sync_actor_id())
 
     def test_object_model_and_annotation_crud_smoke(self):
         project = self._create_project("3D Smoke Project")
@@ -3403,11 +3372,13 @@ class SmokeTests(unittest.TestCase):
 
         actor = {
             "type": "user",
-            "user_id": "operator-123",
+            "user_id": self._public_sync_actor_id(),
             "email": self.user_email,
             "trigger": "test.public_sync.persist",
         }
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        with patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value={},
@@ -3459,8 +3430,10 @@ class SmokeTests(unittest.TestCase):
         def _fake_ssh(config, remote_command, *, timeout=900):
             return SimpleNamespace(returncode=0, stdout="", stderr="")
 
-        actor = {"type": "user", "user_id": "operator-123", "email": self.user_email, "trigger": "test.public_sync.reuse"}
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        actor = {"type": "user", "user_id": self._public_sync_actor_id(), "email": self.user_email, "trigger": "test.public_sync.reuse"}
+        with patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value={},
@@ -3472,7 +3445,9 @@ class SmokeTests(unittest.TestCase):
             first_result = public_sync_module.sync_public_projection(actor=actor)
 
         self.assertIn("projection_digest", remote_state)
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        with patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value=remote_state,
@@ -3510,8 +3485,10 @@ class SmokeTests(unittest.TestCase):
         def _fake_ssh(config, remote_command, *, timeout=900):
             return SimpleNamespace(returncode=0, stdout="", stderr="")
 
-        actor = {"type": "user", "user_id": "operator-123", "email": self.user_email, "trigger": "test.public_sync.supersede"}
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        actor = {"type": "user", "user_id": self._public_sync_actor_id(), "email": self.user_email, "trigger": "test.public_sync.supersede"}
+        with patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value={},
@@ -3531,7 +3508,9 @@ class SmokeTests(unittest.TestCase):
         )
         self.assertEqual(object_patch.status_code, 200, object_patch.text)
 
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        with patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value=first_remote_state,
@@ -3574,8 +3553,10 @@ class SmokeTests(unittest.TestCase):
                 raise RuntimeError("synthetic remote import failure")
             return SimpleNamespace(returncode=0, stdout="", stderr="")
 
-        actor = {"type": "user", "user_id": "operator-123", "email": self.user_email, "trigger": "test.public_sync.failure"}
-        with patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
+        actor = {"type": "user", "user_id": self._public_sync_actor_id(), "email": self.user_email, "trigger": "test.public_sync.failure"}
+        with patch.object(public_sync_module, "_SYNC_STATUS", public_sync_module.PublicSyncStatus()), patch.object(public_sync_module, "_check_destination_readback_protocol", return_value=None), patch.object(
+            public_sync_module, "_verify_destination", side_effect=lambda config, manifest, inventory: expected_receipt(manifest, inventory)
+        ), patch.object(public_sync_module, "_load_sync_config", return_value=self._public_sync_config()), patch.object(
             public_sync_module,
             "_load_remote_sync_state",
             return_value={},
