@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import stat
 import tarfile
 import tempfile
 import unittest
@@ -20,7 +21,7 @@ from app.services.publication_generation_files import (
     generation_manifest, install_generation, selected_metadata,
 )
 from app.services.publication_selection_store import (
-    PRIVATE_SELECTIONS, SelectionError, file_digest, load_selection, seal_selection,
+    PRIVATE_SELECTIONS, SelectionError, _open_directory, file_digest, load_selection, seal_selection,
 )
 from app.services.publication_readback import digest
 
@@ -61,6 +62,82 @@ class GenerationFilesTests(unittest.TestCase):
         self.assertEqual(selected["bundle"].stat().st_mode & 0o777, 0o400)
         self.assertEqual(selected["bundle"].parent.stat().st_mode & 0o777, 0o500)
         self.assertEqual(self.load()["seal"], self.seal)
+
+    def test_new_private_directory_syncs_child_then_parent_after_validation(self):
+        parent = os.open(self.root, os.O_RDONLY | os.O_DIRECTORY)
+        self.addCleanup(os.close, parent)
+        calls = []
+        real_sync = os.fsync
+        def sync(fd):
+            info = os.fstat(fd)
+            calls.append((info.st_dev, info.st_ino))
+            real_sync(fd)
+        with patch("app.services.publication_selection_store.os.fsync", side_effect=sync):
+            child = _open_directory(parent, "fresh-private-directory", create=True)
+        self.addCleanup(os.close, child)
+        self.assertEqual(calls, [(os.fstat(child).st_dev, os.fstat(child).st_ino),
+                                 (os.fstat(parent).st_dev, os.fstat(parent).st_ino)])
+        calls.clear()
+        with patch("app.services.publication_selection_store.os.fsync", side_effect=sync):
+            existing = _open_directory(parent, "fresh-private-directory", create=True)
+        os.close(existing)
+        self.assertEqual(calls, [(os.fstat(child).st_dev, os.fstat(child).st_ino),
+                                 (os.fstat(parent).st_dev, os.fstat(parent).st_ino)])
+
+    def test_failed_first_parent_sync_must_be_reestablished_by_existing_path_retry(self):
+        parent = os.open(self.root, os.O_RDONLY | os.O_DIRECTORY)
+        self.addCleanup(os.close, parent)
+        real_sync = os.fsync
+        parent_attempts = []
+        def fail_first_parent(fd):
+            if fd == parent:
+                parent_attempts.append(fd)
+                if len(parent_attempts) == 1:
+                    raise OSError("Generated parent-sync failure")
+            real_sync(fd)
+        with patch("app.services.publication_selection_store.os.fsync", side_effect=fail_first_parent):
+            with self.assertRaisesRegex(OSError, "parent-sync failure"):
+                _open_directory(parent, "retained-after-failed-sync", create=True)
+            self.assertTrue((self.root / "retained-after-failed-sync").is_dir())
+            retry = _open_directory(parent, "retained-after-failed-sync", create=True)
+        os.close(retry)
+        self.assertEqual(len(parent_attempts), 2)
+
+    def test_shared_existing_directory_rejected_before_any_sync(self):
+        directory = self.root / "shared"
+        directory.mkdir(mode=0o755)
+        os.chmod(directory, 0o755)
+        parent = os.open(self.root, os.O_RDONLY | os.O_DIRECTORY)
+        self.addCleanup(os.close, parent)
+        with patch("app.services.publication_selection_store.os.fsync") as sync:
+            with self.assertRaises(SelectionError): _open_directory(parent, "shared", create=True)
+            sync.assert_not_called()
+
+    def test_nested_generation_links_and_final_sealed_mode_have_explicit_syncs(self):
+        relative = "models/level-one/level-two/generated.glb"
+        fresh_source = self.root / "fresh-source"
+        fresh_source.mkdir()
+        source_file = fresh_source / relative
+        source_file.parent.mkdir(parents=True)
+        source_file.write_bytes(b"generated nested model")
+        ident = str(uuid4())
+        events = []
+        real_sync = os.fsync
+        def sync(fd):
+            info = os.fstat(fd)
+            events.append((info.st_dev, info.st_ino, stat.S_IMODE(info.st_mode)))
+            real_sync(fd)
+        with patch("app.services.publication_selection_store.os.fsync", side_effect=sync):
+            seal = seal_selection(fresh_source, ident, {"media_paths": [relative]}, [relative], "a" * 64, max_bytes=4096)
+            selected = load_selection(fresh_source, ident, ident, seal["selection_digest"], seal["metadata"])
+            installed = install_generation(self.target, ident, seal["selection_digest"], seal["metadata"], selected["bundle"])
+        for directory in (fresh_source, self.target, installed, installed / "models",
+                          installed / "models/level-one", installed / "models/level-one/level-two"):
+            info = directory.stat()
+            self.assertIn((info.st_dev, info.st_ino), [(device, inode) for device, inode, _ in events])
+        sealed = selected["bundle"].parent.stat()
+        self.assertIn((sealed.st_dev, sealed.st_ino, 0o500), events)
+        # This verifies actual syscall ordering/coverage, not a power-loss test.
 
     def test_target_archive_consumes_verified_descriptor_not_a_reopened_path(self):
         bundle = self.load()["bundle"]

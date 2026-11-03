@@ -46,6 +46,16 @@ def _open_directory(parent, name, *, create=False):
     if info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) & 0o077:
         os.close(fd)
         raise SelectionError("Publication storage must be private and owned.")
+    if create:
+        # A previous writer may have created this directory and then failed its
+        # sync. A successful retry must establish durability itself, including
+        # the existing-path case; read-only opens do not sync anything.
+        try:
+            os.fsync(fd)
+            os.fsync(parent)
+        except BaseException:
+            os.close(fd)
+            raise
     return fd
 
 
@@ -173,8 +183,8 @@ def seal_selection(media_root, operation_id, manifest, media_paths,
             actual = os.fstat(fresh)
             if (actual.st_dev, actual.st_ino) != (identity.st_dev, identity.st_ino):
                 raise SelectionError("Publication directory changed during capture.")
-        os.fsync(selected)
         os.fchmod(selected, 0o500)
+        os.fsync(selected)
         os.fsync(base)
         return seal
 
