@@ -12,6 +12,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from app.core.config import settings
+# Standalone entity consumers must register the target of Video's generation
+# FK too. This module depends only on Base, so both model import orders work.
+from app.models.publication_job import PublicationGeneration  # noqa: F401
 
 
 def _default_annotation_relations() -> dict[str, list[str]]:
