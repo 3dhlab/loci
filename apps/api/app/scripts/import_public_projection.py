@@ -8,7 +8,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
-from sqlalchemy import delete
+from sqlalchemy import delete, select, update
 
 from app.core.config import settings
 from app.core.security import get_password_hash
@@ -132,14 +132,54 @@ def _delete_missing(db, model, ids: set[uuid.UUID]) -> None:
         db.execute(delete(model))
 
 
+def _prepare_ordinal_replacement(db, model, attribute: str, rows: list[dict], ids: set[uuid.UUID]) -> None:
+    """Free obsolete/swap keys without deleting retained row identities.
+
+    These immediate PostgreSQL uniques cannot accept a newly ingested UUID at
+    an old ordinal, or a swap of two retained ordinals. Prune only obsolete
+    children, then park retained values at unused signed-integer keys before
+    assigning final values. All writes stay in the caller's transaction. The
+    temporary keys avoid BOTH existing and selected keys, including negative
+    values, and synchronize any ORM instances already loaded by the caller.
+    """
+    if not rows:
+        return
+    _delete_missing(db, model, ids)
+    column = getattr(model, attribute)
+    current = db.execute(select(model.id, column)).all()
+    reserved = {int(value) for _, value in current} | {int(row[attribute]) for row in rows}
+    temporary = -1
+    assignments = []
+    for row_id, _ in current:
+        while temporary in reserved and temporary >= -(2**31):
+            temporary -= 1
+        if temporary < -(2**31):
+            raise ValueError("No safe temporary transcript ordinal is available.")
+        assignments.append((row_id, temporary))
+        reserved.add(temporary)
+        temporary -= 1
+    for row_id, value in assignments:
+        db.execute(update(model).where(model.id == row_id).values({attribute: value})
+                   .execution_options(synchronize_session="fetch"))
+
+
+def _reject_retained_reparenting(db, model, parent_attribute: str, rows: list[dict]) -> None:
+    """Refuse moving a retained child before pruning could cascade through it."""
+    if not rows:
+        return
+    selected = {uuid.UUID(row["id"]): uuid.UUID(row[parent_attribute]) for row in rows}
+    current = db.execute(select(model.id, getattr(model, parent_attribute))
+                         .where(model.id.in_(selected))).all()
+    if any(selected[row_id] != parent_id for row_id, parent_id in current):
+        raise ValueError("A retained transcript child cannot change its parent in this projection.")
+
+
 def import_projection(payload: dict, db, *, generation_id=None, playback_inventory=None) -> dict:
     """Apply projection rows in the caller's transaction; never commit here."""
     frozen_attribution = {}
     for row in payload["videos"]:
         if generation_id or "publication_attribution_json" in row:
             frozen_attribution[row["id"]] = validate_public_attribution_bands(row.get("publication_attribution_json"))
-    _ensure_public_owner(db)
-
     project_ids = {uuid.UUID(row["id"]) for row in payload["projects"]}
     object_ids = {uuid.UUID(row["id"]) for row in payload["objects"]}
     video_ids = {uuid.UUID(row["id"]) for row in payload["videos"]}
@@ -151,6 +191,26 @@ def import_projection(payload: dict, db, *, generation_id=None, playback_invento
     model_ids = {uuid.UUID(row["id"]) for row in payload["object_models"]}
     clip_ids = {uuid.UUID(row["id"]) for row in payload.get("clips", [])}
     annotation_ids = {uuid.UUID(row["id"]) for row in payload["object_model_annotations"]}
+
+    if payload["segments"]:
+        _reject_retained_reparenting(db, Segment, "transcript_id", payload["segments"])
+    if payload["transcript_windows"]:
+        _reject_retained_reparenting(db, TranscriptWindow, "transcript_id", payload["transcript_windows"])
+    if payload.get("visual_window_descriptions"):
+        _reject_retained_reparenting(db, VisualWindowDescription, "transcript_window_id",
+                                    payload["visual_window_descriptions"])
+    _ensure_public_owner(db)
+
+    # Re-ingest keeps the Transcript identity but can replace/reorder its child
+    # UUIDs. Release old immediate-unique keys before any new-row flush; retained
+    # annotation/clip identities remain in place and are rebound below. Window
+    # deletion may cascade only its obsolete visual children in this same tx.
+    if payload["transcript_windows"]:
+        _delete_missing(db, VisualWindowDescription, visual_window_ids)
+    if payload["segments"]:
+        _prepare_ordinal_replacement(db, Segment, "position", payload["segments"], segment_ids)
+    if payload["transcript_windows"]:
+        _prepare_ordinal_replacement(db, TranscriptWindow, "window_index", payload["transcript_windows"], window_ids)
 
     for row in payload["projects"]:
         row_id = uuid.UUID(row["id"])
