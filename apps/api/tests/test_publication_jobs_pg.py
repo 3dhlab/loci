@@ -416,6 +416,71 @@ class DurablePublicationPostgresTests(unittest.TestCase):
             with Operations.context(MigrationContext.configure(connection)):
                 with self.assertRaisesRegex(RuntimeError,"Publication history exists"):self.migration.downgrade()
 
+    def test_outbox_sql_excludes_aged_dispatch_with_renewed_live_reconciliation_lease(self):
+        from app.models.publication_job import PublicationJob
+        operation=UUID(self.admit()["operation_id"])
+        attempt=self.jobs._claim(operation)
+        self.jobs.admit_effect(operation,UUID(attempt["attempt_token"]))
+        self.jobs._fail_attempt(operation,UUID(attempt["attempt_token"]))
+        with self.Session() as db:base=self.jobs._now(db)
+        with patch.object(self.jobs,"_now",return_value=base) as clock:
+            _selected,reconciliation,_status=self.jobs._claim_reconciliation(operation,self.user_id)
+            clock.return_value=base+timedelta(seconds=70)
+            self.jobs._heartbeat_reconciliation(operation,reconciliation)
+            deliveries=[]
+            with patch.object(self.jobs,"dispatch_one",side_effect=deliveries.append):
+                self.jobs.recover_and_dispatch()
+            self.assertEqual(deliveries,[])
+            with self.Session() as db:
+                row=db.get(PublicationJob,operation)
+                self.assertEqual(row.last_dispatched_at,base)
+                self.assertGreater(row.lease_expires_at,clock.return_value)
+                self.assertEqual(row.reconciliation_token,reconciliation)
+
+    def test_outbox_sql_release_backoff_starts_after_probe_and_expired_crash_lease_recovers(self):
+        from app.models.publication_job import PublicationJob
+        operation=UUID(self.admit()["operation_id"])
+        attempt=self.jobs._claim(operation)
+        original_token=UUID(attempt["attempt_token"])
+        self.jobs.admit_effect(operation,original_token)
+        self.jobs._fail_attempt(operation,original_token)
+        with self.Session() as db:base=self.jobs._now(db)
+        with patch.object(self.jobs,"_now",return_value=base) as clock:
+            _selected,reconciliation,_status=self.jobs._claim_reconciliation(operation,self.user_id)
+            released_at=base+timedelta(seconds=90)
+            clock.return_value=released_at
+            self.jobs._release_reconciliation(operation,reconciliation)
+            with self.Session() as db:
+                row=db.get(PublicationJob,operation)
+                self.assertEqual(row.last_dispatched_at,released_at)
+                self.assertIsNone(row.lease_expires_at)
+                self.assertIsNone(row.reconciliation_token)
+                selected_digest=row.selection_digest
+                effect_started=row.effect_started_at
+            deliveries=[]
+            with patch.object(self.jobs,"dispatch_one",side_effect=deliveries.append):
+                self.jobs.recover_and_dispatch()
+                clock.return_value=released_at+timedelta(seconds=59)
+                self.jobs.recover_and_dispatch()
+                self.assertEqual(deliveries,[])
+                clock.return_value=released_at+timedelta(seconds=61)
+                self.jobs.recover_and_dispatch()
+                self.assertEqual(deliveries,[operation])
+                # A new read-only claim is still permitted immediately; if its
+                # process crashes, expiry restores automatic delivery without
+                # requiring a release callback or a new effect attempt.
+                _selected,new_reconciliation,_status=self.jobs._claim_reconciliation(operation,self.user_id)
+                self.assertIsNotNone(new_reconciliation)
+                clock.return_value+=timedelta(seconds=self.jobs.LEASE_SECONDS+1)
+                self.jobs.recover_and_dispatch()
+                self.assertEqual(deliveries,[operation,operation])
+            with self.Session() as db:
+                row=db.get(PublicationJob,operation)
+                self.assertEqual(row.status,"NEEDS_RECONCILIATION")
+                self.assertEqual(row.attempt_token,original_token)
+                self.assertEqual(row.selection_digest,selected_digest)
+                self.assertEqual(row.effect_started_at,effect_started)
+
     def test_real_api_lost_ack_lookup_is_authorized_and_never_runs_direct_transport(self):
         from fastapi.testclient import TestClient
         from app.core.security import create_access_token

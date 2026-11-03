@@ -191,7 +191,9 @@ def recover_and_dispatch():
                 job.detail="Worker stopped after effect admission; destination confirmation is required."
             job.lease_expires_at=None;job.updated_at=now;job.last_dispatched_at=None
         db.flush()
-        due=list(db.scalars(select(Job.id).where(Job.status.in_(("QUEUED","NEEDS_RECONCILIATION")),
+        due=list(db.scalars(select(Job.id).where(
+            (Job.status=="QUEUED") | ((Job.status=="NEEDS_RECONCILIATION") &
+                ((Job.lease_expires_at.is_(None)) | (Job.lease_expires_at<=now))),
             (Job.last_dispatched_at.is_(None)) | (Job.last_dispatched_at<=now-timedelta(seconds=DISPATCH_SECONDS)))
             .order_by(Job.created_at.asc()).limit(5)))
         db.commit()
@@ -320,7 +322,10 @@ def _release_reconciliation(operation_id,token):
         job=db.scalar(select(Job).where(Job.id==operation_id).options(load_only(Job.id,Job.status,
             Job.reconciliation_token,Job.lease_expires_at,Job.updated_at)).with_for_update())
         if job is not None and job.status=="NEEDS_RECONCILIATION" and job.reconciliation_token==token:
-            job.reconciliation_token=None;job.lease_expires_at=None;job.updated_at=_now(db);db.commit()
+            job.reconciliation_token=None;job.lease_expires_at=None;job.updated_at=_now(db)
+            # The automatic retry interval begins after the unconfirmed probe,
+            # including when that probe took longer than the dispatch interval.
+            job.last_dispatched_at=job.updated_at;db.commit()
 
 
 def reconcile_operation(operation_id,*,actor_id=None,transport=None,admin_recovery=False):
