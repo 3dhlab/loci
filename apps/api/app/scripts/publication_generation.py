@@ -64,12 +64,15 @@ def _request(payload):
         raise ValueError("Invalid generation request.")
     operation_uuid(payload["operation_id"])
     selected_metadata(payload["selection_digest"], payload["metadata"])
+    return UUID(payload["operation_id"])
+
+
+def _require_apply_allowance(metadata):
+    """Admission policy for a new effect, never a barrier to resolving history."""
     limit = settings.publication_selection_max_bytes
-    metadata = payload["metadata"]
     if (sum(row["size_bytes"] for row in metadata["media_inventory"].values()) > limit
             or metadata["bundle_bytes"] > limit + limit // 100 + 1024 * 1024):
         raise ValueError("Selected generation exceeds the destination byte allowance.")
-    return UUID(payload["operation_id"])
 
 
 def _observe(db, payload, row):
@@ -110,6 +113,7 @@ def apply_generation(payload, bundle):
             # The tombstone commits under the same lock as all supported imports.
             # A late delivery of this operation can never replace a newer head.
             return _not_applied(db, payload, "destination_changed")
+        _require_apply_allowance(metadata)
         install_generation(settings.media_root, payload["operation_id"],
                            payload["selection_digest"], metadata, bundle)
         playback = {row["id"]: metadata["media_inventory"][row["public_media_relpath"]]
