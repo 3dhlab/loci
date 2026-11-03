@@ -93,6 +93,13 @@ as `SUPERSEDED`. This records prior database/files commitment and a different
 current generation; it claims neither current HTTP verification nor an undo.
 Neither resolution is exposed as a verified success receipt.
 
+The target's configured byte allowance applies to a genuinely new apply, after
+checking existing receipts and the expected destination head. It never blocks
+identity-bound readback or cancellation. An over-limit rejected request can be
+fenced, and lowering the allowance cannot make retained history unrecoverable.
+The shared request parser still validates identity, metadata, digests, challenge
+and the bounded request size in every mode.
+
 The destination records the generation commitment in the same transaction as
 its imported records. Its global head identifies the selected generation and
 advances monotonically. Source completion requires matching operation,
@@ -104,6 +111,26 @@ paths are absent from the public status DTO.
 Published video rows have an explicit generation identity with a deferred
 foreign key, allowing their immutable rendition and receipt to commit together.
 Ordinary authoring renditions retain their existing identity checks.
+
+Same-project cross-object video annotations remain in the verified preview and
+record projection. Stable evidence focus is checked only for annotations whose
+video belongs to that evidence object, matching the existing public route.
+Eligible same-object citations remain mandatory; unsupported cross-object
+evidence URLs are not invented and their annotations are not dropped.
+
+Transcript re-ingest may replace or reorder Segment/TranscriptWindow identities
+under the same Transcript. Import frees obsolete child keys and temporarily
+parks retained ordinals before assigning final values, all within the caller's
+single transaction. Retained child reparenting is rejected before mutation.
+Replacing a parent Transcript UUID at the same natural key is outside this
+narrow compatibility repair and still requires a separately tested policy.
+
+Readback dispatch excludes a live reconciliation lease and starts its existing
+retry cooldown after an unconfirmed probe releases its claim. This prevents
+known redundant dispatch during a long probe; it is not a general RQ fairness
+guarantee. New and retry-opened writer directories sync their inode and parent
+link; the final sealed mode is set before its sync. Syscall-order regression
+tests do not establish power-loss behavior on every storage backend.
 
 Video projections freeze only the existing public citation-attribution bands:
 public speaker label, session date/text, precision/mode and time bounds. Raw OCR,
@@ -182,6 +209,17 @@ resolve uncertain operations before permitting other publication tools to write
 the same destination.
 
 Generated contract and worker-boundary tests exercise validation and orchestration.
+The CI job also runs pure guards for the synthetic fixture and production-worker
+process helpers in `scripts/ci/publication_acceptance_fixture.py` and
+`scripts/ci/publication_worker_cli.py`. Seeding requires explicit GitHub-hosted
+Linux eligibility before application imports or writes. Worker startup requires
+fresh, independently inspected owned PostgreSQL/Redis resources and an empty
+Redis receipt. The helpers do not provision those services or establish a full
+acceptance result. The existing workflow's helper-guard step starts no worker,
+encoder or SSH server. A real SSH/destination/HTTP controller and reviewed
+disposable setup remain required; neither the helpers nor mocked callbacks can
+stand in for that missing acceptance execution.
+
 The PostgreSQL/API module additionally covers admission replay/conflict,
 concurrent sessions/claims, actor isolation, revocation, effect fencing,
 lease recovery, a separate-process crash, receipt rejection, immutable history
