@@ -121,29 +121,33 @@ def verify_http(manifest, inventory, base_url, *, opener=None, deadline_seconds=
         # Incomplete preview objects are intentionally not promised an evidence
         # page. Eligible stable evidence routes must resolve the selected focus.
         slug = obj.get("website_object_id")
+        object_videos = [video for video in videos if video.get("object_id") == obj["id"]]
+        video_ids = {video["id"] for video in object_videos}
         if (slug and obj.get("is_embed_ready") and model
-                and any(r.get("object_id") == obj["id"] for r in videos)):
+                and object_videos):
             path = f"/api/v1/public/evidence/objects/{quote(slug, safe='')}"
             evidence = fetch(path)
             if evidence.get("object", {}).get("id") != slug:
                 raise HTTPReadbackError("Stable citation object identity differs.")
-            verify_attribution(evidence, [v for v in videos if v.get("object_id") == obj["id"]])
+            verify_attribution(evidence, object_videos)
             canonical_path = urlsplit(evidence.get("canonical_url", "")).path
             if canonical_path != f"/evidence/objects/{quote(slug, safe='')}":
                 raise HTTPReadbackError("Stable citation route differs.")
             for row in selected.values():
                 public_id = row.get("website_annotation_id")
-                if not public_id:
+                # Preview supports a same-project video owned by another
+                # object; stable evidence intentionally focuses object-owned
+                # videos. Its annotation remains mandatory in preview/readback.
+                if not public_id or row.get("video_id") not in video_ids:
                     continue
                 focused = fetch(path + "?" + urlencode({"annotation_id": public_id}))
-                verify_attribution(focused, [v for v in videos if v.get("object_id") == obj["id"]])
+                verify_attribution(focused, object_videos)
                 picked = focused.get("selected_annotation") or {}
                 if (picked.get("id") != public_id or picked.get("title") != row.get("title")
                         or picked.get("start_ms") != row.get("start_ms")
                         or picked.get("end_ms") != row.get("end_ms")
                         or not canonical_focus(focused, slug, "annotation", public_id)):
                     raise HTTPReadbackError("Stable annotation citation differs.")
-            video_ids = {r["id"] for r in videos if r.get("object_id") == obj["id"]}
             selected_clips = [r for r in manifest.get("clips", [])
                               if r.get("website_clip_id") and r.get("video_id") in video_ids]
             if selected_clips:

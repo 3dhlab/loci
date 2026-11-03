@@ -202,6 +202,56 @@ class HTTPReadbackTests(unittest.TestCase):
             self.routes[path] = (200, json.dumps(evidence).encode(), {})
         with generated_http(self.routes) as (base, _): verify_http(self.manifest, self.inventory, base)
 
+    def test_cross_object_video_annotation_requires_preview_but_not_unsupported_stable_focus(self):
+        # Both objects belong to one selected project. A valid annotation on B
+        # refers to A's video. Keep it in B's preview; stable evidence focuses
+        # B's own video and same-object annotation only.
+        self.manifest["projects"] = [{"id": "project"}]
+        self.manifest["objects"][0]["project_id"] = "project"
+        self.manifest["objects"].append({"id": "other-object", "project_id": "project", "is_embed_ready": False})
+        self.manifest["videos"].append({"id": "other-video", "object_id": "other-object",
+            "stable_video_id": "other-stable-video", "public_media_relpath": "other.mp4", "publication_attribution_json": []})
+        self.inventory["other.mp4"] = self.inventory["video.mp4"].copy()
+        cross = {**self.manifest["object_model_annotations"][0], "id": "cross", "video_id": "other-video",
+                 "title": "Cross-object observation", "website_annotation_id": "cross-public"}
+        self.manifest["object_model_annotations"].append(cross)
+        preview_path = "/api/v1/public/objects/object/preview"
+        preview = json.loads(self.routes[preview_path][1]); preview["annotations"].append(cross)
+        self.routes[preview_path] = (200, json.dumps(preview).encode(), {})
+        self.routes["/api/v1/public/objects"] = (200, b'[{"id":"object"},{"id":"other-object"}]', {})
+        self.routes["/api/v1/public/objects/other-object/preview"] = (200,
+            b'{"object":{"id":"other-object"},"annotations":[]}', {})
+        self.routes["/api/v1/public/videos/other-video/stream"] = (200, self.video, {})
+        with generated_http(self.routes) as (base, requests): verify_http(self.manifest, self.inventory, base)
+        paths = [path for path, _ in requests]
+        self.assertIn("/api/v1/public/evidence/objects/stable-object?annotation_id=stable-annotation", paths)
+        self.assertNotIn("/api/v1/public/evidence/objects/stable-object?annotation_id=cross-public", paths)
+        # Skipping an unsupported stable URL never permits dropping the valid
+        # cross-object annotation from the verified preview.
+        preview["annotations"].remove(cross)
+        self.routes[preview_path] = (200, json.dumps(preview).encode(), {})
+        with generated_http(self.routes) as (base, _), self.assertRaises(HTTPReadbackError):
+            verify_http(self.manifest, self.inventory, base)
+
+        # The preview-only form also remains supported when B has no own
+        # eligible video at all. Its model and cross-object annotation still
+        # require anonymous content checks; no stable B evidence is promised.
+        self.manifest["videos"] = [video for video in self.manifest["videos"] if video["id"] != "video"]
+        self.manifest["object_model_annotations"] = [cross]
+        self.inventory.pop("video.mp4")
+        preview["annotations"] = [cross]
+        self.routes[preview_path] = (200, json.dumps(preview).encode(), {})
+        with generated_http(self.routes) as (base, requests): verify_http(self.manifest, self.inventory, base)
+        self.assertFalse(any(path.startswith("/api/v1/public/evidence/objects/stable-object") for path, _ in requests))
+
+    def test_unselected_private_annotation_is_rejected_not_silently_ignored(self):
+        path = "/api/v1/public/objects/object/preview"
+        preview = json.loads(self.routes[path][1])
+        preview["annotations"].append({**preview["annotations"][0], "id": "private", "is_published": False})
+        self.routes[path] = (200, json.dumps(preview).encode(), {})
+        with generated_http(self.routes) as (base, _), self.assertRaises(HTTPReadbackError):
+            verify_http(self.manifest, self.inventory, base)
+
     def test_empty_generation_still_verifies_anonymous_withdrawal_over_http(self):
         routes = {"/api/v1/public/objects": (200, b"[]", {})}
         with generated_http(routes) as (base, _):
