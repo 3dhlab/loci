@@ -1,6 +1,6 @@
 # Python dependency notices
 
-Provided notices from the resolved runtime environment. Dependencies retain their respective terms. See docs/python-dependency-license-inventory.json.
+Provided notices from the resolved runtime environment. Dependencies retain their respective terms. See python-dependency-license-inventory.json.
 
 ## alembic 1.16.5 | alembic-1.16.5.dist-info/licenses/LICENSE
 

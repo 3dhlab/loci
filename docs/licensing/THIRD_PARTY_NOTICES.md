@@ -1,6 +1,6 @@
 # Third-party notices
 
-These notices accompany the installed JavaScript dependencies. Dependency metadata records are in `docs/dependency-license-inventory.json`. First-party code and generated sample terms are recorded separately. Python notices are in PYTHON_THIRD_PARTY_NOTICES.md. Container runtime tools, including FFmpeg, retain their upstream licenses; source and licensing information are available at https://ffmpeg.org/legal.html and https://www.debian.org/legal/licenses/.
+These notices accompany the installed JavaScript dependencies. Dependency metadata records are in `dependency-license-inventory.json`. First-party code and generated sample terms are recorded separately. Python notices are in PYTHON_THIRD_PARTY_NOTICES.md. Container runtime tools, including FFmpeg, retain their upstream licenses; source and licensing information are available at https://ffmpeg.org/legal.html and https://www.debian.org/legal/licenses/.
 
 ## @babel/code-frame 7.29.7 | LICENSE
 

@@ -10,7 +10,7 @@ The viewer browses the collection, opens Field Museum Spoon, rotates the model, 
 
 The video uses two short excerpts of original recording audio synchronized to the browser playback clock and retains the source video’s captions and credits. A Times New Roman banner introduces the actions. The closing holds the paused interface beneath a soft blur and light panel, with the invitation and the homepage’s converge mark animation. The mark reuses the application’s geometry, colors, keyframes, and easing.
 
-Collection media and contributor material retain their own permissions and attribution requirements. Loci software and generated local-demo content retain the terms described in the repository's [license](../../LICENSE) and [license status](../../LICENSE_STATUS.md).
+Collection media and contributor material retain their own permissions and attribution requirements. Loci software and generated local-demo content retain the terms described in the repository's [license](../../LICENSE) and [license status](../licensing/scope.md).
 
 ## Permission and reuse
 

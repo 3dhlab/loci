@@ -20,6 +20,6 @@ correction of the sample Top edge pin described in [the refresh guide](../../../
 
 The recording, poster and text description are first-party documentation assets
 under [Apache 2.0](../../../LICENSE), copyright 2026 Craig Stevens. See
-[licensing scope](../../../LICENSE_STATUS.md). The rendered lettering does not
+[licensing scope](../../licensing/scope.md). The rendered lettering does not
 bundle font software. Raw capture frames and private review records are kept
 outside the public repository.

@@ -12,7 +12,7 @@ The dark outline around highlighted features preserves their visibility across
 the palette. Motion is continuous, with chapter changes every four seconds.
 FFmpeg encoder versions can
 change output bytes; the seed calculates identities from the actual generated files.
-See the repository's sample notices for redistribution terms.
+See the [sample notices](../docs/licensing/samples.md) for redistribution terms.
 
 The seeded object has three annotations. “Front face” plays section 1, marked by
 a square (0–4 seconds). “Top edge” plays section 2, marked by a triangle (4–8
@@ -52,6 +52,19 @@ published ports before running concurrent copies.
 `docker compose down --volumes` deletes this project's demo database and media.
 Regenerating `.env` without resetting the database changes configured credentials;
 keep `.env` for the lifetime of the demo volumes.
+
+## Upgrade an existing installation
+
+Read the [release notes](../CHANGELOG.md) and instructions for the version you
+are installing. Back up the database and media, preserve `.env` and existing
+volumes, rebuild the API and web images, and follow the applicable migration
+steps. Durable remote publication requires compatible source, worker and
+destination versions; its [upgrade and rollback guide](../docs/durable-publication.md#upgrade-rollback-and-acceptance)
+describes those additional requirements and retained-history protections.
+
+The [generated-demo refresh](#refresh-the-generated-sample-in-an-existing-installation)
+applies only to eligible synthetic installations. Research collections require
+their own content and upgrade procedures.
 
 ## Authoring through the API
 

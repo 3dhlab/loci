@@ -22,5 +22,5 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 Demo seeding is explicit and requires an empty development database. Schema migrations create the database structure. The separate seed command creates the demonstration account and content. Shared, staging and
 production installations require generated signing, encryption and service secrets. The local demo generates its own credentials in an ignored `.env` file.
 
-Run tests using the commands in [CONTRIBUTING](../../CONTRIBUTING.md). Database
+Run tests using the commands in [CONTRIBUTING](../../.github/CONTRIBUTING.md). Database
 integration tests require a disposable PostgreSQL instance with pgvector.
