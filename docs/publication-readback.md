@@ -38,5 +38,5 @@ The disposable PostgreSQL/API suite separately exercises durable admission,
 authorization, fencing, history retention and schema rollback refusal. Neither
 establishes real two-sided SSH, production-worker lifecycle, public media and
 citation delivery or integrated browser recovery. Those combined acceptance
-checks remain required for the full release. See [contribution checks](../.github/CONTRIBUTING.md)
+checks remain required before supported institutional private-to-public deployment. See [contribution checks](../.github/CONTRIBUTING.md)
 and the [durable guide's compatibility and testing limits](durable-publication.md).

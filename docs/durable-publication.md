@@ -6,6 +6,10 @@ publication worker. Acceptance means **queued**, not published. Redis can be
 unavailable after acceptance: the durable row remains an outbox entry, and the
 worker's recurring dispatcher resumes delivery after restart.
 
+This guide describes implemented protocols and operating requirements. Turnkey
+institutional private-to-public deployment is a next-release goal; the combined
+acceptance checks below remain required.
+
 Both API and worker need the same application version and migration
 `20261103_0037`. The destination needs the corresponding generation/import and
 readback protocol before promotion. The configured public base URL is required
@@ -204,9 +208,13 @@ The schema refuses deletion or rebinding of retained history. Downgrade is
 allowed only while both history tables and the destination head are empty.
 After publication activity,
 code rollback must retain the additive schema and receipts; do not discard them
-to force a downgrade. Keep source, worker and target versions compatible and
-resolve uncertain operations before permitting other publication tools to write
-the same destination.
+to force a downgrade. Empty-database upgrade/downgrade/re-upgrade and
+populated-history downgrade refusal are tested. Application/code rollback with
+retained history remains unvalidated, including older API and worker versions
+reading new jobs, generations and media. Compatibility with external consumers
+of legacy `PublicationManifest` current/projected pointers is also unproved.
+Keep source, worker and target versions compatible and resolve uncertain
+operations before permitting other publication tools to write the same destination.
 
 Generated contract and worker-boundary tests exercise validation and orchestration.
 The CI job also runs pure guards for the synthetic fixture and production-worker
@@ -225,7 +233,7 @@ concurrent sessions/claims, actor isolation, revocation, effect fencing,
 lease recovery, a separate-process crash, receipt rejection, immutable history
 and migration rollback/re-upgrade, cancellation fences, superseded history and
 admin recovery privacy. Its transport is generated: these cases do
-not establish actual SSH/HTTP/media delivery or RQ process recovery. A full
-release also requires the real combined candidate's two-sided transport,
+not establish actual SSH/HTTP/media delivery or RQ process recovery. Supported institutional
+private-to-public deployment requires the combined candidate's two-sided transport,
 worker/Redis restart, private preview, browser reload/retry, media and citation
 readback, privacy, migration/rollback and all required CI checks.

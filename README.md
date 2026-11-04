@@ -53,7 +53,7 @@ The demo account is `demo@example.org`; find its generated `DEMO_PASSWORD` in yo
 - [Development checks](docs/validation.md) and [contributing](.github/CONTRIBUTING.md).
 - [Support](.github/SUPPORT.md), [security reporting](.github/SECURITY.md) and [release notes](CHANGELOG.md).
 
-The quickstart covers a local demo with one authoring account. Remote publication and other integrations need separate setup. The durable-publication changes on this development branch remain under review; see their [upgrade and acceptance requirements](docs/durable-publication.md#upgrade-rollback-and-acceptance).
+The quickstart covers a local demo with one authoring account. Remote publication and other integrations need separate setup. The [durable-publication guide](docs/durable-publication.md#upgrade-rollback-and-acceptance) describes compatible source, worker and destination versions, configuration and validation limits. Turnkey institutional private-to-public deployment is a next-release goal.
 
 ## Project and license
 

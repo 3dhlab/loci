@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.3.0
+
+- Updated Vite to 6.4.5 for the development-server denied-file query bypass, and scoped Sentry's file-matching dependencies to glob 14.0.2 and minimatch 11.0.1. Matching lockfile and license records are included.
+- Added PostgreSQL publication admission and retained operation/generation history, frozen selections, a PostgreSQL outbox with Redis delivery and worker claims. The protocol checks current authority before effects and retains uncertain outcomes for read-only reconciliation or explicit cancellation. Ordinary active-user publication permissions remain in place.
+- Added per-account/API browser request recovery after lost acknowledgements, exact-operation status reads, and stale-response and busy-state protection. Private preview visibility, queued work, uncertainty and verified publication have distinct interface states.
+- Added frozen public citation-attribution and media identities, generation-aware video playback, and required destination/HTTP readback before the protocol reports publication success. Repaired transcript child re-ingest ordering, standalone model registration, target-limit recovery, reconciliation leases and retry cooldowns.
+- Restored inline hosted-walkthrough playback and its attachment provenance. Reorganized installation, validation, community and licensing documentation while preserving both walkthroughs, generated-sample terms, third-party notices and research-media permissions.
+
+Remote sync admission now returns **202 queued** and requires an `Idempotency-Key`, including on the older `/sync` URL. Source API, publication worker and destination need compatible code and migration `20261103_0037`. Back up the database and media, preserve `.env` and volumes, rebuild the applicable images, and follow the [upgrade and rollback guide](docs/durable-publication.md#upgrade-rollback-and-acceptance). Publication history requires retaining the additive schema and receipts during code rollback; a populated history cannot be downgraded away. Legacy `PublicationManifest` current/projected pointers are not updated by the new ledger.
+
+Validation covers the generated local demo and single-range visual authoring, web/browser contract checks, and real PostgreSQL/Redis component cases. Production worker CLI/fork lifecycle, real two-sided SSH and multiple-generation HTTP delivery, combined browser recovery, and larger-collection stress acceptance remain undemonstrated. Empty-database migration cycles and refusal to downgrade populated publication history are tested. Application/code rollback with retained history remains unvalidated, including older API/worker versions reading new jobs, generations and media. Compatibility with external consumers of legacy `PublicationManifest` current/projected pointers is also unproved. Turnkey institutional private-to-public deployment is a next-release goal. This release documents the implemented protocols and their limits; it does not update a hosted installation. See the [validation guide](docs/validation.md) for reproducible checks and their boundaries.
+
 ## v0.2.1
 
 - Repaired the public search response wrapper and made loading, error, empty, and results states exclusive. Added brief collection and 3D viewer guidance.

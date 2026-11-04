@@ -39,7 +39,7 @@ python -m pip install -r apps/api/requirements.txt -c apps/api/constraints.txt
 export CI_DATABASE_URL='postgresql+psycopg://postgres:postgres@127.0.0.1:5432/semantic_ci'
 export CI_MIGRATION_DATABASE_URL='postgresql+psycopg://postgres:postgres@127.0.0.1:5432/semantic_ci_migration'
 export CI_REDIS_URL='redis://127.0.0.1:6379/15'
-export SEMANTIC_ENV=test
+export SEMANTIC_ENV=development
 export JWT_SECRET_KEY='ci-synthetic-jwt-secret-at-least-32-bytes'
 export ENCRYPTION_MASTER_KEY='ci-synthetic-encryption-key-only'
 export OPENAI_API_KEY=''
@@ -55,7 +55,7 @@ python scripts/ci/run-api-suite.py
 
 The migration rehearsal upgrades an empty disposable database, downgrades it to base, and upgrades it again. It is destructive to that test schema. The API runner executes every test module separately, writes JUnit reports and `api-suite-summary.json` under `/tmp/loci-api-ci` (or `CI_ARTIFACT_DIR`), and fails on any skipped case or missing required projection-privacy check.
 
-Some tests substitute selection or transport boundaries. Read their stated scope: PostgreSQL/Redis worker-boundary checks and helper guards do not establish actual production-worker, SSH, destination or public HTTP acceptance. The [durable-publication guide](durable-publication.md#upgrade-rollback-and-acceptance) defines the coordinated upgrade, recovery and acceptance requirements for that development work.
+Some tests substitute selection or transport boundaries. Read their stated scope: PostgreSQL/Redis worker-boundary checks and helper guards do not establish actual production-worker, SSH, destination or public HTTP acceptance. The [durable-publication guide](durable-publication.md#upgrade-rollback-and-acceptance) defines the coordinated upgrade, recovery and acceptance requirements for that optional integration.
 
 ## Running-demo checks
 
@@ -74,4 +74,6 @@ The clean-demo CI job uses the Linux-only [demo override](../docker-compose.demo
 
 ## Interpreting results
 
-Keep the exact candidate SHA with logs, failures, skips and test artifacts. Passing synthetic checks does not establish larger-collection performance, other browsers/devices, optional external integrations, research-content permissions or hosted-deployment readiness. A full durable-publication release also needs its combined worker/restart, authorization/privacy, media/citation readback and rollback acceptance; a build or contract test alone cannot supply that evidence.
+Keep the exact candidate SHA with logs, failures, skips and test artifacts. Passing synthetic checks does not establish larger-collection performance, other browsers/devices, optional external integrations, research-content permissions or hosted-deployment readiness. Supported institutional private-to-public deployment still requires combined worker/restart, authorization/privacy, media/citation readback and rollback acceptance; a build or contract test alone cannot supply that evidence.
+
+The PostgreSQL checks cover empty-database migration upgrade/downgrade/re-upgrade and refusal to downgrade populated publication history. Application/code rollback with retained history remains unvalidated, including older API and worker versions reading new jobs, generations and media. Compatibility with external consumers of legacy `PublicationManifest` current/projected pointers is also unproved.

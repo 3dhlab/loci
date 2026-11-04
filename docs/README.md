@@ -17,7 +17,7 @@ Start with the [quickstart](../README.md#quickstart) for a local demonstration u
 - [Architecture](architecture.md) and [data contracts](data-contract.md).
 - [API](../apps/api/README.md) and [web](../apps/web/README.md) development notes.
 - [Operations](operations.md): public-reader probes and filesystem health.
-- [Durable publication](durable-publication.md) and [readback](publication-readback.md): development-stage protocols, coordinated upgrades, recovery and retained-history rollback. Full transport and recovery acceptance remains required.
+- [Durable publication](durable-publication.md) and [readback](publication-readback.md): optional protocols, coordinated upgrades, recovery and retained-history rollback. Combined production-worker, transport and recovery acceptance remains required before supported institutional deployment.
 
 The frontend and 3D download remain large. On mobile and limited-resource devices, readers choose when to load a model. Automated browser checks use Chromium; other browsers, larger collections and hosted deployments need their own validation. Email, transcription and semantic indexing require additional configuration.
 
