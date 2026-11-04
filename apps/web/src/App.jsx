@@ -14,7 +14,11 @@ import {
   deleteVideo,
   getClipDownloadUrl,
   getClipTranscriptUrl,
+  getCurrentUser,
   getLiveDatabaseSyncStatus,
+  getLiveDatabaseSyncCapabilities,
+  reconcileLiveDatabaseSync,
+  cancelLiveDatabaseSync,
   getTranscripts,
   getObjectModel,
   getObjectModelAnnotations,
@@ -57,6 +61,7 @@ import ConfirmDialog from './components/ConfirmDialog'
 import SearchAutosuggest from './components/SearchAutosuggest'
 import PublicExperienceShell from './components/PublicExperienceShell'
 import { formatLociTitle } from './lib/seo'
+import { createPublicationIntentStorage, createPublicationRequestIntent, publicationAdmissionPolicy, publicationStatusForDisplay, readPublicationStatus, resolvePublicationOperation, sendPublicationRequest, verifiedPublicationReceipt } from './lib/publicationRequestIntent'
 import { StudioThemeToggle, useStudioSurfaceTheme } from './public/studioSurface'
 import { hasAnnotationPoint } from './lib/annotationPoint'
 import { reconcileTranscriptDraft } from './lib/transcriptDraft'
@@ -458,8 +463,22 @@ function emptyLiveDatabaseSyncStatus() {
 
 function liveDatabaseSyncStateLabel(state) {
   switch (state) {
+    case 'RECOVERING':
+      return 'Checking saved request'
+    case 'RECOVERY_UNSUPPORTED':
+      return 'Recovery unavailable'
+    case 'REQUEST_NOT_FOUND':
+      return 'Request not yet accepted'
+    case 'QUEUED':
+      return 'Queued'
     case 'RUNNING':
       return 'Running'
+    case 'NEEDS_RECONCILIATION':
+      return 'Requires reconciliation'
+    case 'CANCELLED':
+      return 'Cancelled'
+    case 'SUPERSEDED':
+      return 'Superseded (previously published)'
     case 'SUCCEEDED':
       return 'Succeeded'
     case 'FAILED':
@@ -833,6 +852,13 @@ export default function App() {
   const [publicationBusy, setPublicationBusy] = useState(false)
   const [liveDatabaseSyncStatus, setLiveDatabaseSyncStatus] = useState(() => emptyLiveDatabaseSyncStatus())
   const [liveDatabaseSyncRequestBusy, setLiveDatabaseSyncRequestBusy] = useState(false)
+  const [publicationIdentityReady, setPublicationIdentityReady] = useState(false)
+  const [publicationAccessAttempt, setPublicationAccessAttempt] = useState(0)
+  const [publicationAccessError, setPublicationAccessError] = useState('')
+  const [publicationLegacyTransport, setPublicationLegacyTransport] = useState(false)
+  const [publicationReconciliationAvailable, setPublicationReconciliationAvailable] = useState(false)
+  const [publicationCancellationAvailable, setPublicationCancellationAvailable] = useState(false)
+  const [liveDatabaseSyncRequestUnconfirmed, setLiveDatabaseSyncRequestUnconfirmed] = useState(false)
   const [tuningSummary, setTuningSummary] = useState(null)
   const [tuningLoading, setTuningLoading] = useState(false)
   const [tuningBusy, setTuningBusy] = useState(false)
@@ -1159,7 +1185,8 @@ export default function App() {
     : publicationPackagePublished
       ? 'Published · incomplete'
       : 'Private'
-  const liveDatabaseSyncBusy = liveDatabaseSyncRequestBusy || liveDatabaseSyncStatus.state === 'RUNNING'
+  const liveDatabaseSyncBusy = !publicationIdentityReady || liveDatabaseSyncRequestBusy || ['RECOVERING', 'RECOVERY_UNSUPPORTED', 'QUEUED', 'RUNNING', 'NEEDS_RECONCILIATION'].includes(liveDatabaseSyncStatus.state)
+  const liveDatabaseVerifiedReceipt = verifiedPublicationReceipt(liveDatabaseSyncStatus)
   const liveDatabaseSyncProgress = Math.max(0, Math.min(100, Number(liveDatabaseSyncStatus.progress_percent || 0)))
   const liveDatabaseSyncCountsAvailable = [
     liveDatabaseSyncStatus.object_count,
@@ -1192,6 +1219,69 @@ export default function App() {
   const viewerDraftSourceRef = useRef(null)
   const viewerDraftTextRef = useRef('')
   const previousLiveDatabaseSyncStateRef = useRef(liveDatabaseSyncStatus.state)
+  const liveDatabaseSyncStatusRef = useRef(liveDatabaseSyncStatus)
+  liveDatabaseSyncStatusRef.current = liveDatabaseSyncStatus
+  const liveDatabaseSyncIntentRef = useRef(createPublicationRequestIntent())
+  const liveDatabaseSyncSession = liveDatabaseSyncIntentRef.current
+
+  useEffect(() => {
+    // Resolve identity through the API, never through JWT claims or a stored
+    // actor value. Replacing the intent also invalidates old-session callbacks.
+    let current = true
+    let unsubscribe = () => {}
+    setPublicationIdentityReady(false)
+    setPublicationAccessError('')
+    setPublicationLegacyTransport(false)
+    setPublicationReconciliationAvailable(false)
+    setPublicationCancellationAvailable(false)
+    liveDatabaseSyncIntentRef.current = createPublicationRequestIntent()
+    setLiveDatabaseSyncRequestBusy(false)
+    setLiveDatabaseSyncRequestUnconfirmed(false)
+    setLiveDatabaseSyncStatus(emptyLiveDatabaseSyncStatus())
+    if (token && !IS_PUBLIC_APP) {
+      Promise.all([getCurrentUser(token), getLiveDatabaseSyncCapabilities(token)
+        .then((capability) => ({ capability, legacyEndpointNotFound: false }))
+        .catch((error) => {
+          if (error.status === 404) return { capability: null, legacyEndpointNotFound: true }
+          throw error
+        })]).then(([actor, capabilities]) => {
+        if (!current) return
+        // A present but unavailable durable protocol must never fall through to
+        // an unsaved legacy POST while its database or schema is recovering.
+        const policy = publicationAdmissionPolicy(capabilities)
+        let storage
+        try { storage = window.localStorage } catch { /* Private browsing can deny storage. */ }
+        const persistence = createPublicationIntentStorage({ storage, actorId: actor.id,
+          apiScope: resolveApiUrl('/api/v1/ops/live-database/sync') })
+        const intent = createPublicationRequestIntent({ persistence,
+          durableRequests: policy.durableRequests, requestLookup: policy.requestLookup })
+        liveDatabaseSyncIntentRef.current = intent
+        setPublicationReconciliationAvailable(policy.reconciliation)
+        setPublicationCancellationAvailable(policy.cancellation)
+        setPublicationLegacyTransport(policy.legacy)
+        function showRecovery() {
+          setLiveDatabaseSyncStatus({ ...emptyLiveDatabaseSyncStatus(),
+            state: intent.recoveryBlocked() ? 'RECOVERY_UNSUPPORTED' : 'RECOVERING',
+            detail: intent.recoveryBlocked()
+              ? 'A saved request is awaiting confirmation, but this server cannot safely look it up. Publication is blocked until request recovery is available.'
+              : 'Checking the saved publication request with the server. No publication is being retried.' })
+        }
+        if (intent.hasRecoveredOperation() || intent.hasPendingRequest()) showRecovery()
+        const onStorage = (event) => {
+          if (current && event.key === persistence.storageKey && intent.restore()) showRecovery()
+        }
+        window.addEventListener('storage', onStorage)
+        unsubscribe = () => window.removeEventListener('storage', onStorage)
+        setPublicationIdentityReady(true)
+      }).catch((error) => {
+        if (current) {
+          setPublicationAccessError(error.message)
+          setError(`Publication access could not be verified: ${error.message}`)
+        }
+      })
+    }
+    return () => { current = false; unsubscribe() }
+  }, [token, publicationAccessAttempt])
 
   function updateViewerDraftText(text) {
     viewerDraftTextRef.current = text
@@ -1602,15 +1692,15 @@ export default function App() {
   }, [mode, modelObjectId, token])
 
   useEffect(() => {
-    if (!token || IS_PUBLIC_APP || mode !== 'model3d') {
+    if (!token || IS_PUBLIC_APP || mode !== 'model3d' || !publicationIdentityReady) {
       return
     }
 
     loadLiveDatabaseSyncStatus(token, { silent: true }).catch(() => null)
-  }, [mode, token])
+  }, [mode, token, publicationIdentityReady])
 
   useEffect(() => {
-    if (!token || IS_PUBLIC_APP || mode !== 'model3d' || liveDatabaseSyncStatus.state !== 'RUNNING') {
+    if (!token || IS_PUBLIC_APP || !publicationIdentityReady || mode !== 'model3d' || !['RECOVERING', 'QUEUED', 'RUNNING'].includes(liveDatabaseSyncStatus.state)) {
       return undefined
     }
 
@@ -1619,14 +1709,14 @@ export default function App() {
     }, 2500)
 
     return () => window.clearInterval(intervalId)
-  }, [liveDatabaseSyncStatus.operation_id, liveDatabaseSyncStatus.state, mode, token])
+  }, [liveDatabaseSyncStatus.operation_id, liveDatabaseSyncStatus.state, mode, token, publicationIdentityReady])
 
   useEffect(() => {
     const previousState = previousLiveDatabaseSyncStateRef.current
-    if (previousState === 'RUNNING' && liveDatabaseSyncStatus.state === 'SUCCEEDED') {
+    if (['QUEUED', 'RUNNING'].includes(previousState) && liveDatabaseSyncStatus.state === 'SUCCEEDED') {
       setNotice(liveDatabaseSyncStatus.detail || 'Live Database sync complete.')
     }
-    if (previousState === 'RUNNING' && liveDatabaseSyncStatus.state === 'FAILED') {
+    if (['QUEUED', 'RUNNING'].includes(previousState) && liveDatabaseSyncStatus.state === 'FAILED') {
       setError(liveDatabaseSyncStatus.error || liveDatabaseSyncStatus.detail || 'Live Database sync failed.')
     }
     previousLiveDatabaseSyncStateRef.current = liveDatabaseSyncStatus.state
@@ -2041,6 +2131,10 @@ export default function App() {
     try {
       const response = await login(email, password)
       localStorage.setItem(TOKEN_KEY, response.access_token)
+      setPublicationIdentityReady(false)
+      liveDatabaseSyncIntentRef.current = createPublicationRequestIntent()
+      setLiveDatabaseSyncRequestUnconfirmed(false)
+      setLiveDatabaseSyncStatus(emptyLiveDatabaseSyncStatus())
       setToken(response.access_token)
       setNotice('Authenticated. Console is ready.')
     } catch (err) {
@@ -2051,6 +2145,13 @@ export default function App() {
   }
 
   function handleLogout() {
+    // Keep opaque pending recovery metadata for this actor; logout invalidates
+    // all callbacks and clears the UI without discarding an uncertain request.
+    setPublicationIdentityReady(false)
+    liveDatabaseSyncIntentRef.current = createPublicationRequestIntent()
+    setLiveDatabaseSyncRequestUnconfirmed(false)
+    setLiveDatabaseSyncRequestBusy(false)
+    setLiveDatabaseSyncStatus(emptyLiveDatabaseSyncStatus())
     localStorage.removeItem(TOKEN_KEY)
     setToken('')
     setProjects([])
@@ -2815,24 +2916,30 @@ export default function App() {
   }
 
   async function loadLiveDatabaseSyncStatus(activeToken = token, { silent = false } = {}) {
+    const intent = liveDatabaseSyncSession
+    if (!publicationIdentityReady || intent !== liveDatabaseSyncIntentRef.current) return null
     if (!activeToken || IS_PUBLIC_APP) {
       const idleStatus = emptyLiveDatabaseSyncStatus()
       setLiveDatabaseSyncStatus(idleStatus)
-      setLiveDatabaseSyncRequestBusy(false)
       return idleStatus
     }
 
     try {
-      const payload = await getLiveDatabaseSyncStatus(activeToken)
-      setLiveDatabaseSyncStatus(payload)
-      return payload
+      return await readPublicationStatus(intent,
+        (options) => getLiveDatabaseSyncStatus(activeToken, options),
+        { isCurrent: () => intent === liveDatabaseSyncIntentRef.current,
+          onStatus: (status) => {
+            setLiveDatabaseSyncStatus(publicationStatusForDisplay(status))
+            if (status.state === 'REQUEST_NOT_FOUND') setLiveDatabaseSyncRequestUnconfirmed(true)
+            else if (status.operation_id) setLiveDatabaseSyncRequestUnconfirmed(false)
+          },
+          onCompleted: () => setLiveDatabaseSyncRequestUnconfirmed(false) })
     } catch (err) {
+      if (intent !== liveDatabaseSyncIntentRef.current) return null
       if (!silent) {
         setError(err.message)
       }
       return null
-    } finally {
-      setLiveDatabaseSyncRequestBusy(false)
     }
   }
 
@@ -2978,22 +3085,60 @@ export default function App() {
   }
 
   async function handleStartLiveDatabaseSync() {
-    if (!token) {
+    const intent = liveDatabaseSyncSession
+    if (!token || !publicationIdentityReady || intent !== liveDatabaseSyncIntentRef.current) {
       return
     }
 
-    setLiveDatabaseSyncRequestBusy(true)
     setError('')
     setNotice('')
     try {
-      const payload = await startLiveDatabaseSync(token)
-      setLiveDatabaseSyncStatus(payload)
-      if (payload?.detail) {
-        setNotice(payload.detail)
+      const payload = await sendPublicationRequest(intent,
+        (options) => startLiveDatabaseSync(token, options),
+        { isCurrent: () => intent === liveDatabaseSyncIntentRef.current,
+          onBusy: setLiveDatabaseSyncRequestBusy })
+      if (!payload) return
+      setLiveDatabaseSyncRequestUnconfirmed(false)
+      const displayed = publicationStatusForDisplay(payload)
+      setLiveDatabaseSyncStatus(displayed)
+      if (displayed?.detail) {
+        setNotice(displayed.detail)
       }
     } catch (err) {
+      if (intent !== liveDatabaseSyncIntentRef.current) return
+      // Keep the same intent when acceptance is unknown. A retry is an explicit
+      // user action; the API client never retries this POST automatically.
+      setLiveDatabaseSyncRequestUnconfirmed(true)
+      if (intent.canLookupPending() && err.kind !== 'publication-not-sent') {
+        setLiveDatabaseSyncStatus({ ...emptyLiveDatabaseSyncStatus(), state: 'RECOVERING',
+          detail: 'The acknowledgement was lost. Checking the saved request without resubmitting publication.' })
+      }
       setError(err.message)
-      setLiveDatabaseSyncRequestBusy(false)
+    }
+  }
+
+  async function handleResolveLiveDatabaseSync(action) {
+    const intent = liveDatabaseSyncSession
+    const operationId = liveDatabaseSyncStatus.operation_id
+    const currentStatus = liveDatabaseSyncStatusRef.current
+    const canResolve = action === 'reconcile'
+      ? publicationReconciliationAvailable && currentStatus.state === 'NEEDS_RECONCILIATION'
+      : action === 'cancel' && publicationCancellationAvailable && ['QUEUED', 'NEEDS_RECONCILIATION'].includes(currentStatus.state)
+    if (!token || !publicationIdentityReady || !canResolve || !operationId
+        || currentStatus.operation_id !== operationId || intent !== liveDatabaseSyncIntentRef.current) return
+    setError('')
+    try {
+      // Reconciliation reads the destination; cancellation fences any late
+      // attempt. Neither endpoint can undo an already committed publication.
+      const resolve = action === 'cancel' ? cancelLiveDatabaseSync : reconcileLiveDatabaseSync
+      const payload = await resolvePublicationOperation(intent, (id) => resolve(token, id), {
+        operationId, isCurrent: () => intent === liveDatabaseSyncIntentRef.current,
+        operationCurrent: () => liveDatabaseSyncStatusRef.current.operation_id === operationId,
+        onBusy: setLiveDatabaseSyncRequestBusy
+      })
+      if (payload) setLiveDatabaseSyncStatus(publicationStatusForDisplay(payload))
+    } catch (error) {
+      if (intent === liveDatabaseSyncIntentRef.current) setError(error.message)
     }
   }
 
@@ -5901,24 +6046,52 @@ export default function App() {
                           onConfirm: () => { handleStartLiveDatabaseSync() }
                         })}
                       >
-                        {liveDatabaseSyncBusy ? 'Syncing Live Database...' : 'Sync Live Database'}
+                        {!publicationIdentityReady ? 'Checking publication access...' : liveDatabaseSyncStatus.state === 'RECOVERING' ? 'Checking saved request...' : liveDatabaseSyncStatus.state === 'RECOVERY_UNSUPPORTED' ? 'Publication recovery unavailable' : liveDatabaseSyncStatus.state === 'NEEDS_RECONCILIATION' ? 'Publication requires reconciliation' : liveDatabaseSyncBusy ? 'Syncing Live Database...' : liveDatabaseSyncRequestUnconfirmed ? 'Retry Live Database request' : 'Sync Live Database'}
                       </button>
                       <p className="muted">
                         Pushes every currently published package to the live public site using the one-way semantic_public promotion flow.
                       </p>
+                      {publicationAccessError ? (
+                        <div role="status">
+                          <p>{publicationAccessError}</p>
+                          <button type="button" className="ghost" onClick={() => setPublicationAccessAttempt((attempt) => attempt + 1)}>Retry publication access verification</button>
+                        </div>
+                      ) : publicationLegacyTransport ? (
+                        <p className="muted">This server uses legacy publication. Pending request recovery across reload is unavailable.</p>
+                      ) : null}
+                      {liveDatabaseSyncStatus.state === 'NEEDS_RECONCILIATION' ? (
+                        <div>
+                          <p role="status">The remote outcome has not been confirmed. New publication is blocked until the previous outcome is reconciled.</p>
+                          {publicationReconciliationAvailable && liveDatabaseSyncStatus.operation_id ? (
+                            <button type="button" className="ghost" disabled={liveDatabaseSyncRequestBusy}
+                              onClick={() => { handleResolveLiveDatabaseSync('reconcile') }}>Recheck remote publication</button>
+                          ) : null}
+                        </div>
+                      ) : null}
+
+                      {publicationCancellationAvailable && ['QUEUED', 'NEEDS_RECONCILIATION'].includes(liveDatabaseSyncStatus.state) && liveDatabaseSyncStatus.operation_id ? (
+                        <button type="button" className="ghost" disabled={liveDatabaseSyncRequestBusy}
+                          onClick={() => setConfirmAction({
+                            title: 'Close publication request?',
+                            message: 'Close this request and prevent a late publication attempt using the destination cancellation fence. This cannot undo an already committed publication. If publication already completed, the verified result will be retained.',
+                            confirmLabel: 'Close request',
+                            onConfirm: () => { handleResolveLiveDatabaseSync('cancel') }
+                          })}>Close publication request</button>
+                      ) : null}
 
                       <div className="result-box publication-summary-box">
+                        <p className="muted">Source preview visibility. The live destination result is shown in the sync status.</p>
                         <p>
-                          Object: <strong>{activeModelObject ? (activeModelObject.is_published ? 'Published' : 'Private') : 'No object selected'}</strong>
+                          Object preview: <strong>{activeModelObject ? (activeModelObject.is_published ? 'Included in preview' : 'Private') : 'No object selected'}</strong>
                         </p>
                         <p>
-                          3D model: <strong>{modelDetail ? (modelDetail.is_published ? 'Published' : 'Private') : 'No model uploaded'}</strong>
+                          3D model preview: <strong>{modelDetail ? (modelDetail.is_published ? 'Included in preview' : 'Private') : 'No model uploaded'}</strong>
                         </p>
                         <p>
-                          Video: <strong>{currentModelPublicationVideo ? (currentModelPublicationVideo.is_published ? 'Published' : 'Private') : 'No video selected'}</strong>
+                          Video preview: <strong>{currentModelPublicationVideo ? (currentModelPublicationVideo.is_published ? 'Included in preview' : 'Private') : 'No video selected'}</strong>
                         </p>
                         <p>
-                          Transcript: <strong>{currentModelPublicationTranscript ? (currentModelPublicationTranscript.is_published ? 'Published with video' : 'Private with video') : 'No transcript yet'}</strong>
+                          Transcript preview: <strong>{currentModelPublicationTranscript ? (currentModelPublicationTranscript.is_published ? 'Included with video' : 'Private with video') : 'No transcript yet'}</strong>
                         </p>
                         <p>
                           Package: <strong>{packageStatusLabel}</strong>
@@ -6041,6 +6214,16 @@ export default function App() {
                           <span style={{ width: `${liveDatabaseSyncProgress}%` }}></span>
                         </div>
                         <p>{liveDatabaseSyncStatus.detail || 'Push every currently published package to the live public site.'}</p>
+                        {liveDatabaseVerifiedReceipt ? (
+                          <div className="publication-verified-receipt">
+                            <strong>Verified live generation</strong>
+                            <p>Generation: <code>{liveDatabaseSyncStatus.generation_id}</code></p>
+                            <p>{liveDatabaseVerifiedReceipt.http_readback.resource_count} public resources verified by destination readback.</p>
+                            <p className="muted">Verified: {formatDateTime(liveDatabaseVerifiedReceipt.http_readback.verified_at)}</p>
+                          </div>
+                        ) : liveDatabaseSyncStatus.state === 'SUCCEEDED' ? (
+                          <p className="muted">A verified live-generation receipt is unavailable for this result.</p>
+                        ) : null}
                         {liveDatabaseSyncCountsAvailable ? (
                           <div className="publication-sync-metrics">
                             <span>{liveDatabaseSyncStatus.object_count} objects</span>

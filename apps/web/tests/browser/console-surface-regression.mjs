@@ -57,7 +57,9 @@ const server = createServer(async (req, res) => {
         payload = { transcript, segments }
       }
       else payload = { detail: 'Synthetic review only' }
-    } else if (path === '/api/v1/projects') payload = [project]
+    } else if (path === '/api/v1/ops/live-database/sync/capabilities') { res.writeHead(404, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ detail: 'Legacy fixture has no capability endpoint' })); return }
+    else if (path === '/api/v1/auth/me') payload = { id: '10000000-0000-4000-8000-000000000099', is_active: true }
+    else if (path === '/api/v1/projects') payload = [project]
     else if (path === '/api/v1/objects') payload = [object]
     else if (path === '/api/v1/videos') payload = [video]
     else if (path === '/api/v1/transcripts') payload = [transcript]

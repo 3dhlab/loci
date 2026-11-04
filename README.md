@@ -1,30 +1,34 @@
 # Loci
 
-Loci connects locations on a 3D model to video evidence, timed transcripts, citations, and shareable moments. Researchers can select a point on an object, watch the related video section, read its transcript and share the evidence with others.
-
-The source includes a local demonstration with one authoring account; [published releases](https://github.com/3dhlab/loci/releases) identify the available packages. The sample model, video, transcript, and annotations are created specifically for the demonstration. Loci's original software, documentation and generated samples are licensed under [Apache 2.0](LICENSE); [licensing details](LICENSE_STATUS.md) explain the scope and third-party terms.
+Loci connects points on 3D models to video evidence, timed transcripts, citations and shareable moments. Explore an object, select an annotation, and watch the interpretation linked to that place.
 
 ## Hosted research instance
 
-[Explore the Loci research collection](https://loci.threedeezy.com/public). This personally hosted instance shows the interface with collection objects and recorded interpretations. Its collection media and contributor material have separate permissions. The generated local demonstration below is the reproducible example included with this repository.
-
-Watch the 50.1-second hosted walkthrough with audio.
+[Explore the Loci research collection](https://loci.threedeezy.com/public), or watch this 50-second walkthrough with audio:
 
 https://github.com/user-attachments/assets/9334c52c-25dc-4af4-ae11-c206da51f4df
 
-[Read the walkthrough guide](docs/media/hosted-walkthrough.md) · [Download the MP4](https://github.com/3dhlab/loci/raw/refs/heads/main/docs/media/hosted-walkthrough.mp4)
+[Walkthrough guide](docs/media/hosted-walkthrough.md) · [Download the MP4](https://github.com/3dhlab/loci/raw/refs/heads/main/docs/media/hosted-walkthrough.mp4)
 
-Hosted walkthrough recording and editing: **Unlock Digital**. Permission to
-show participants in this edited video grants no reuse license for the
-walkthrough, its previews or the depicted research content. See
-[media permissions and attribution](docs/media/README.md),
-[Apache 2.0 scope and media exceptions](LICENSE_STATUS.md) and [NOTICE](NOTICE).
+Recording and editing: **Unlock Digital**. The hosted collection has separate content permissions. Permission to show participants in this walkthrough grants no reuse license for its video, previews or depicted research content. See [media permissions and credits](docs/media/README.md).
+
+## Local demo walkthrough
+
+The included demo uses a generated cube, video and transcript. This silent 41-second walkthrough shows how to place a model pin, preview its video range privately, publish the annotation and check it in the reader.
+
+https://github.com/user-attachments/assets/daaeb92e-b3a2-4adc-af80-01662bce84bd
+
+[Authoring guide](docs/demo-authoring.md) · [Timed text description](docs/media/demo-authoring/transcript.md) · [Download the MP4](docs/media/demo-authoring/loci-demo-authoring.mp4)
+
+Demo improvements and video: **3D Humanities Lab**. These generated assets are Apache 2.0; see [provenance and license](docs/media/demo-authoring/README.md).
 
 ## Quickstart
 
-Requirements: Docker Engine with Compose v2 or later, or Docker Desktop; Python 3; and internet access for dependencies and images. Containers run Linux. Application ports 8000 and 8080 must be free.
+Requires Docker Engine with Compose v2 or Docker Desktop, Python 3, internet access, and free ports 8000 and 8080. Containers run Linux. Clone the source, or extract a [release archive](https://github.com/3dhlab/loci/releases) and enter its root folder:
 
 ```sh
+git clone https://github.com/3dhlab/loci.git
+cd loci
 python3 scripts/demo/init-env.py
 docker compose build
 docker compose up -d postgres redis
@@ -34,51 +38,25 @@ docker compose up -d --wait
 python3 scripts/demo/verify.py
 ```
 
-If your installation provides the standalone `docker-compose` command, substitute it for `docker compose` throughout.
+For an extracted archive, skip the first two commands. If Compose v2 is installed as `docker-compose`, use that command instead.
 
-Open [the object browser](http://localhost:8080/public). Select **Demo cube**, then an annotation to play its linked video section. **Compare two sections** plays two ordered windows. Select a transcript line to seek, and copy a share link to return to the selected annotation or clip. Video-focused links include their playback timestamp. Interactive API documentation and authoring forms are available at [localhost:8000/docs](http://localhost:8000/docs).
+Open [localhost:8080/public](http://localhost:8080/public), select **Demo cube**, then an annotation. Transcript lines seek the video; citations and share links return to the selected evidence. The [authoring guide](docs/demo-authoring.md) enables the optional visual console. API forms are at [localhost:8000/docs](http://localhost:8000/docs).
 
-The demo login is `demo@example.org`. Read its generated `DEMO_PASSWORD` from your local `.env`; keep that file private. The setup script preserves existing credentials. PostgreSQL and Redis communicate within the demo network. The website and API are accessible from your own computer. Email, remote publishing, automatic transcription and semantic indexing are optional integrations with separate setup requirements.
+The demo account is `demo@example.org`; find its generated `DEMO_PASSWORD` in your private `.env`. Keep that file with the database volume. The website and API bind to localhost, and setup preserves existing credentials.
 
-`docker compose down` stops services and preserves data. `docker compose down --volumes` deletes the demo database and media for that Compose project. Keep `.env` for the lifetime of its database volume.
-
-## Local demo walkthrough
-
-https://github.com/user-attachments/assets/daaeb92e-b3a2-4adc-af80-01662bce84bd
-
-[Follow the authoring guide](docs/demo-authoring.md) · [Timed text description](docs/media/demo-authoring/transcript.md)
-
-This silent 41-second walkthrough shows the generated cube in the public reader,
-then selects a video range, places and refines a pin, previews it privately,
-publishes that annotation, and verifies the result in the reader. The demo code
-improvements and this video are a **3D Humanities Lab** contribution. The
-[video provenance and license](docs/media/demo-authoring/README.md) describe its
-generated content.
-
-Build a source checkout or release archive containing `docker-compose.authoring.yml`
-to follow the optional visual authoring walkthrough. The v0.1.1 release predates
-that override and the updated chapter media.
+`docker compose down` stops the demo and preserves data. Adding `--volumes` deletes that Compose project's database and media.
 
 ## Documentation
 
-- [Synthetic demo and content workflow](examples/README.md)
-- [Optional visual authoring console and single-range walkthrough](docs/demo-authoring.md)
-- [Spatial selection, camera continuity and playback verification](docs/viewer-camera-continuity.md)
-- [Architecture and trust boundaries](docs/architecture.md)
-- [Model, annotation, transcript and media contracts](docs/data-contract.md)
-- [Public operations probes and filesystem health](docs/operations.md)
-- [Development and contribution checks](CONTRIBUTING.md)
-- [Security reporting](SECURITY.md) and [support scope](SUPPORT.md)
-- [Release notes](CHANGELOG.md), [licensing details](LICENSE_STATUS.md), and [third-party notices](THIRD_PARTY_NOTICES.md)
+- [Documentation index](docs/README.md): setup, authoring, architecture and operations.
+- [Use your own content or upgrade the demo](examples/README.md).
+- [Development checks](docs/validation.md) and [contributing](.github/CONTRIBUTING.md).
+- [Support](.github/SUPPORT.md), [security reporting](.github/SECURITY.md) and [release notes](CHANGELOG.md).
 
-## What you can do
+The quickstart covers a local demo with one authoring account. Remote publication and other integrations need separate setup. The [durable-publication guide](docs/durable-publication.md#upgrade-rollback-and-acceptance) describes compatible source, worker and destination versions, configuration and validation limits. Turnkey institutional private-to-public deployment is a next-release goal.
 
-You can rotate and zoom the model, select annotations, play linked clips, seek through transcript lines, and copy citations and share links. On mobile devices and devices with limited resources, selecting the model-load button starts the 3D view. This gives the reader control over a potentially large download.
+## Project and license
 
-The demonstration provides one account for creating and reviewing content. Readers see published records through the public viewer. Hosting multiple authors, managing participant consent, automatic transcription, DOI registration and adaptive streaming are areas for further development or integration. The quickstart covers the local demonstration described here.
+Maintained by Craig Stevens. Report ordinary bugs through [GitHub Issues](https://github.com/3dhlab/loci/issues) and cite the software using [CITATION.cff](CITATION.cff). Contributions follow the [code of conduct](.github/CODE_OF_CONDUCT.md).
 
-Some frontend components remain large, and the 3D viewer produces a large JavaScript download. Improving those components and measuring loading performance are ongoing maintenance priorities. Automated browser checks use Chromium; broader browser and device coverage will require further testing.
-
-## About the project
-
-The public source repository is [3dhlab/loci](https://github.com/3dhlab/loci), maintained by Craig Stevens. Use [GitHub Issues](https://github.com/3dhlab/loci/issues) for support and ordinary bug reports. Send private security or conduct reports to [craig.stevens@austin.utexas.edu](mailto:craig.stevens@austin.utexas.edu), or use [GitHub's private vulnerability reporting](https://github.com/3dhlab/loci/security/advisories/new) for security reports. Use [CITATION.cff](CITATION.cff) when citing the software. Research collections and participant records require their own permissions and governance. The included examples are generated for testing and demonstration.
+First-party software, documentation and generated samples are [Apache 2.0](LICENSE). Third-party dependencies and research media have separate terms. See [license scope and media exceptions](docs/licensing/scope.md), [dependency notices](docs/licensing/README.md) and [NOTICE](NOTICE).

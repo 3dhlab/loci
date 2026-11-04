@@ -18,7 +18,7 @@ configure_sentry("api")
 
 logger = logging.getLogger(__name__)
 CORS_ALLOWED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-CORS_ALLOWED_HEADERS = ["Accept", "Authorization", "Content-Type", "Range", "X-Requested-With"]
+CORS_ALLOWED_HEADERS = ["Accept", "Authorization", "Content-Type", "Range", "X-Requested-With", "Idempotency-Key"]
 CORS_EXPOSE_HEADERS = [
     "ETag",
     "Last-Modified",
@@ -47,7 +47,7 @@ async def lifespan(_: FastAPI):
     if warmup_task is not None:
         warmup_task.cancel()
 
-app = FastAPI(title=settings.app_name, version="0.2.1", lifespan=lifespan)
+app = FastAPI(title=settings.app_name, version="0.3.0", lifespan=lifespan)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(
     CORSMiddleware,

@@ -11,7 +11,7 @@ from sqlalchemy import text
 from app.core.config import settings
 from app.db.session import engine
 
-QUEUE_NAMES = ("default", "transcode", "transcription", "index", "clip")
+QUEUE_NAMES = ("publication", "default", "transcode", "transcription", "index", "clip")
 
 
 def _service_status(name: str, ok: bool, detail: str, **extra: Any) -> dict[str, Any]:

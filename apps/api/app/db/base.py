@@ -1,5 +1,6 @@
 # Import models here so Alembic sees all metadata.
 from app.db.session import Base
+from app.models.publication_job import PublicationDestinationHead, PublicationGeneration, PublicationJob  # noqa: F401
 from app.models.entities import (  # noqa: F401
     AuditEvent,
     Clip,

@@ -15,7 +15,7 @@ from app.core.config import settings
 from app.models.entities import Clip, Object, ObjectModel, ObjectModelAnnotation, Project, PublicationManifest, Transcript, TranscriptSource, Video, VideoStatus
 from app.services.audit_events import append_audit_event
 from app.services.media_clips import clip_poster_path_for_video
-from app.services.media_transcode import transcode_output_path
+from app.services.media_transcode import video_playback_path
 from app.services.publication_manifest import PublicationManifestBuildInput, PublicationManifestFocusV1, PublicationManifestV1, build_publication_manifest
 
 
@@ -497,8 +497,8 @@ def _media_manifest_payload(*, object_row: Object, model: ObjectModel | None, vi
             )
 
     for video in sorted(videos, key=lambda item: item.stable_video_id):
-        playback_path = transcode_output_path(str(video.id))
-        if playback_path.exists() and playback_path.is_file():
+        playback_path = video_playback_path(video)
+        if playback_path is not None and playback_path.exists() and playback_path.is_file():
             items.append(
                 _media_item(
                     kind="video_stream",

@@ -197,6 +197,14 @@
       "licenseFiles": []
     },
     {
+      "name": "@isaacs/nonrecursive-glob-match",
+      "version": "1.0.3",
+      "license": "BlueOak-1.0.0",
+      "licenseFiles": [
+        "LICENSE.md"
+      ]
+    },
+    {
       "name": "@jridgewell/gen-mapping",
       "version": "0.3.13",
       "license": "MIT",
@@ -835,7 +843,7 @@
     },
     {
       "name": "glob",
-      "version": "13.0.6",
+      "version": "14.0.2",
       "license": "BlueOak-1.0.0",
       "licenseFiles": [
         "LICENSE.md",
@@ -1005,7 +1013,7 @@
     },
     {
       "name": "minimatch",
-      "version": "10.2.5",
+      "version": "11.0.1",
       "license": "BlueOak-1.0.0",
       "licenseFiles": [
         "LICENSE.md",
@@ -1104,7 +1112,7 @@
     },
     {
       "name": "path-scurry",
-      "version": "2.0.2",
+      "version": "3.0.0",
       "license": "BlueOak-1.0.0",
       "licenseFiles": [
         "LICENSE.md",

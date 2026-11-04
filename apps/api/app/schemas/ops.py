@@ -29,3 +29,10 @@ class LiveDatabaseSyncStatusResponse(BaseModel):
     annotation_count: int = 0
     media_file_count: int = 0
     error: str | None = None
+    destination: str | None = None
+    publication_capabilities: dict[str, bool] | None = None
+    selection_digest: str | None = None
+    generation_id: str | None = None
+    receipt: dict | None = None
+    cancellation_receipt: dict | None = None
+    superseded_receipt: dict | None = None

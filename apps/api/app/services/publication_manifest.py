@@ -8,7 +8,7 @@ from uuid import UUID
 
 from app.models.entities import Clip, ClipStatus, Object, ObjectModel, ObjectModelAnnotation, Video, VideoStatus
 from app.services.media_clips import clip_poster_path_for_video
-from app.services.media_transcode import transcode_output_path
+from app.services.media_transcode import video_playback_path
 
 
 @dataclass(slots=True)
@@ -286,8 +286,8 @@ def _public_model_is_available(object_id: UUID, model: ObjectModel) -> str | Non
 
 
 def _video_stream_url(video: Video) -> str | None:
-    playback_path = transcode_output_path(str(video.id))
-    if not playback_path.exists() or not playback_path.is_file():
+    playback_path = video_playback_path(video)
+    if playback_path is None or not playback_path.exists() or not playback_path.is_file():
         return None
     return f"/api/v1/public/videos/{video.id}/stream"
 

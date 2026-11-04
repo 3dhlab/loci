@@ -12,6 +12,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from app.core.config import settings
+# Standalone entity consumers must register the target of Video's generation
+# FK too. This module depends only on Base, so both model import orders work.
+from app.models.publication_job import PublicationGeneration  # noqa: F401
 
 
 def _default_annotation_relations() -> dict[str, list[str]]:
@@ -109,6 +112,10 @@ class Video(Base):
     __tablename__ = "videos"
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    publication_generation_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("publication_generations.generation_id", ondelete="RESTRICT",
+                                      deferrable=True, initially="DEFERRED"))
+    publication_attribution_json: Mapped[list[dict] | None] = mapped_column(JSONB)
     project_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
     object_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("objects.id", ondelete="SET NULL"))
     stable_video_id: Mapped[str] = mapped_column(String(64), unique=True, index=True, nullable=False)

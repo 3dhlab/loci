@@ -48,6 +48,7 @@ from app.services.public_media_cache import model_cache_token, video_cache_token
 from app.services.public_media_paths import resolve_public_media_file
 from app.services.object_model_variants import lookup_public_delivery_capability
 from app.services.public_object_ids import resolve_website_object_id_alias
+from app.services.publication_attribution import validate_public_attribution_bands
 
 
 class PublicEvidenceNotFoundError(RuntimeError):
@@ -731,6 +732,14 @@ def _citation_attribution_bands(
     db: Session,
     video: Video,
 ) -> list[dict[str, object]]:
+    snapshot = getattr(video, "publication_attribution_json", None)
+    if snapshot is not None:
+        try:
+            return validate_public_attribution_bands(snapshot)
+        except (TypeError, ValueError):
+            raise PublicEvidenceConflictError("Published attribution data is unavailable.") from None
+    if getattr(video, "publication_generation_id", None) is not None:
+        raise PublicEvidenceConflictError("Published attribution data is unavailable.")
     observations = _public_title_card_observations_for_video(db, video.id)
     if not observations:
         return []

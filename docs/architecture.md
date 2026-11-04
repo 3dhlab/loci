@@ -21,7 +21,7 @@ The browser sends API requests through Nginx to FastAPI. FastAPI reads the datab
 
 Authors sign in to create and edit records. Public endpoints return the fields approved for readers. A new annotation becomes visible after review and explicit publication. Database tests check that private authoring information stays within the authenticated tools.
 
-Remote publishing is an optional integration. Its existing status tracking is held within a running process. Supporting reliable publication across multiple processes will require persistent operation records, background jobs and recovery procedures.
+Remote publishing is an optional integration. Its protocol records requests and recovery state in PostgreSQL, uses a worker to deliver a frozen selection, and verifies the destination generation and public media before reporting success. It requires matching source, worker and destination code. Combined production-worker, transport and recovery acceptance remains required before supported institutional deployment; see the [durable publication guide](durable-publication.md) for setup, compatibility, rollback and validation limits.
 
 Monitoring, transcription and semantic search are optional integrations with separate configuration. The local demonstration uses lexical transcript search. Installation downloads dependencies from package registries.
 
