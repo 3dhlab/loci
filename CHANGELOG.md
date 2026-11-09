@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.1
+
+- Updated Pillow to 13.0.0 and FastEmbed to 0.9.1 for the [TIFF/EXIF](https://github.com/python-pillow/Pillow/security/advisories/GHSA-wqgw-9xfh-qf2g) and [bundled OpenJPEG](https://github.com/python-pillow/Pillow/security/advisories/GHSA-78g4-xqwv-q3g8) advisories. Updated the dependency notices and added generated image compatibility tests. Unlock Digital contributed the patch in [PR #18](https://github.com/3dhlab/loci/pull/18).
+- Pinned the browser CI jobs to Ubuntu 24.04 for the Playwright version used in this release.
+- Added the [development roadmap](docs/roadmap.md) to the documentation index.
+
+To upgrade from v0.3.0, back up the database and media, retain `.env` and existing volumes, and rebuild and recreate the API container from v0.3.1. The release adds no schema migration. The supported Docker build uses Python 3.12 and installs the published Pillow wheel containing the OpenJPEG fix. An install without a compatible wheel fails. For a custom source build, verify the linked OpenJPEG fix separately. See the [upgrade guide](examples/README.md#upgrade-an-existing-installation).
+
 ## v0.3.0
 
 - Updated Vite to 6.4.5 for the development-server denied-file query bypass, and scoped Sentry's file-matching dependencies to glob 14.0.2 and minimatch 11.0.1. Matching lockfile and license records are included.
