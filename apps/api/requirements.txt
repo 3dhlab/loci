@@ -1,3 +1,7 @@
+# Pillow's published wheels carry the OpenJPEG security patch. Source builds
+# require separate native-library patch verification.
+--only-binary=pillow
+
 fastapi==0.142.1
 starlette==1.6.0
 uvicorn[standard]==0.35.0
@@ -15,7 +19,8 @@ pgvector==0.4.1
 python-dotenv==1.2.2
 httpx==0.28.1
 bcrypt==4.0.1
-fastembed==0.8.0
+fastembed==0.9.1
+pillow==13.0.0
 yake==0.4.8
 sentry-sdk[fastapi,rq]==2.63.0
 pytest==9.0.3

@@ -131,12 +131,12 @@
     },
     {
       "name": "fastembed",
-      "version": "0.8.0",
-      "licenseExpression": null,
-      "licenseMetadata": "Apache License",
+      "version": "0.9.1",
+      "licenseExpression": "Apache-2.0",
+      "licenseMetadata": null,
       "licenseFiles": [
-        "fastembed-0.8.0.dist-info/licenses/LICENSE",
-        "fastembed-0.8.0.dist-info/licenses/NOTICE"
+        "fastembed-0.9.1.dist-info/licenses/LICENSE",
+        "fastembed-0.9.1.dist-info/licenses/NOTICE"
       ]
     },
     {
@@ -372,11 +372,11 @@
     },
     {
       "name": "pillow",
-      "version": "12.3.0",
+      "version": "13.0.0",
       "licenseExpression": "MIT-CMU",
       "licenseMetadata": null,
       "licenseFiles": [
-        "pillow-12.3.0.dist-info/licenses/LICENSE"
+        "pillow-13.0.0.dist-info/licenses/LICENSE"
       ]
     },
     {
