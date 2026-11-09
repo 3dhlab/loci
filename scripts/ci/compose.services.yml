@@ -32,8 +32,8 @@ services:
       OPENAI_API_KEY: ''
       EMBEDDING_WARMUP_ENABLED: 'false'
     volumes:
-      - .:/workspace:ro
-      - ./.ci-artifacts:/tmp/loci-api-ci
+      - ../..:/workspace:ro
+      - ../../.ci-artifacts:/tmp/loci-api-ci
     depends_on:
       postgres:
         condition: service_healthy

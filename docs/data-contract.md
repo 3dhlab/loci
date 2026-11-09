@@ -20,4 +20,4 @@ Public model/video routes support complete responses and byte ranges. The demo c
 
 Use the viewer's share action to copy a link. An annotation link opens the annotation at its start. A selected clip link restores that clip's start and its annotation context. A video-moment link includes the playback timestamp. Opening the link restores the corresponding selection and timing. Embed routes use the same public object identity and configurable frame/origin policy. A shared URL exposes published content only.
 
-See [the demo guide](../examples/README.md) for authentication, asset replacement and annotation creation. Preserve milliseconds, model-space placement and explicit publication when generating your own data.
+See [the demo guide](demo.md) for authentication, asset replacement and annotation creation. Preserve milliseconds, model-space placement and explicit publication when generating your own data.

@@ -34,6 +34,8 @@ The browser regression scripts use the built application with generated media an
 
 The [CI API job](../.github/workflows/ci.yml) provisions disposable PostgreSQL and Redis services. To reproduce it locally, first provide the fresh services/databases described above and activate a Python 3.12 environment. The sample URLs below use the CI fixture credentials only.
 
+For a standalone disposable Compose setup, see [the API test service configuration](../scripts/ci/compose.services.yml).
+
 ```sh
 python -m pip install -r apps/api/requirements.txt -c apps/api/constraints.txt
 export CI_DATABASE_URL='postgresql+psycopg://postgres:postgres@127.0.0.1:5432/semantic_ci'
@@ -70,7 +72,7 @@ cd ../..
 
 These checks use the actual seeded API, database and public reader for model/media delivery, ranged video, annotation/clip playback, share links and citations. For the visual creation → private preview → annotation publication journey, enable the optional console using the [authoring guide](demo-authoring.md), then run `npm run test:demo:authoring` from `apps/web`. That check creates and removes a generated annotation; use the disposable demo only.
 
-The clean-demo CI job uses the Linux-only [demo override](../docker-compose.demo-ci.yml) with a 256 MiB in-memory media volume. It generates samples inside the running API container, captures redacted diagnostics, then removes its disposable project volumes. The local quickstart uses persistent storage.
+The clean-demo CI job uses the Linux-only [demo override](../scripts/ci/compose.demo.yml) with a 256 MiB in-memory media volume. It generates samples inside the running API container, captures redacted diagnostics, then removes its disposable project volumes. The local quickstart uses persistent storage.
 
 ## Interpreting results
 
