@@ -170,7 +170,7 @@ jobs:
 
   demo:
     env:
-      COMPOSE_FILE: docker-compose.yml:docker-compose.demo-ci.yml
+      COMPOSE_FILE: docker-compose.yml:scripts/ci/compose.demo.yml
     name: Clean demo install and real API browser journey
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -201,8 +201,8 @@ jobs:
         run: npm run test:demo
       - name: Enable the optional authoring console in the disposable demo
         run: |
-          docker compose -f docker-compose.yml -f docker-compose.demo-ci.yml -f docker-compose.authoring.yml build web
-          docker compose -f docker-compose.yml -f docker-compose.demo-ci.yml -f docker-compose.authoring.yml up -d --no-deps --wait web
+          docker compose -f docker-compose.yml -f scripts/ci/compose.demo.yml -f scripts/demo/compose.authoring.yml build web
+          docker compose -f docker-compose.yml -f scripts/ci/compose.demo.yml -f scripts/demo/compose.authoring.yml up -d --no-deps --wait web
       - name: Create, preview and publish a captured range through the real console
         working-directory: apps/web
         run: npm run test:demo:authoring

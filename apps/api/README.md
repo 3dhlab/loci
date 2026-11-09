@@ -4,7 +4,7 @@ FastAPI provides authenticated authoring, public collection and evidence views,
 media delivery, and optional background processing. PostgreSQL stores metadata;
 media files live under `MEDIA_ROOT`. Redis supports rate limits and optional jobs.
 
-See [the demo guide](../../examples/README.md) for the supported local setup and
+See [the demo guide](../../docs/demo.md) for the supported local setup and
 [architecture](../../docs/architecture.md) for component responsibilities. Once
 running, `/docs` exposes the API schemas and request forms.
 

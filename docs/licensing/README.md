@@ -7,6 +7,6 @@ dependency retains its own copyright and license terms.
 - Python: [notices](PYTHON_THIRD_PARTY_NOTICES.md) and [versioned inventory](python-dependency-license-inventory.json).
 
 The repository's [Apache 2.0 license](../../LICENSE), [licensing scope](scope.md)
-and [NOTICE](../../NOTICE) cover first-party terms and identify the separate
+and [NOTICE](NOTICE) cover first-party terms and identify the separate
 permissions for research and contributed media. See [media permissions and credits](../media/README.md)
 for the hosted walkthrough and other documented media.

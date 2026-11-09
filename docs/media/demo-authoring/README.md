@@ -16,7 +16,7 @@ On-screen instructions and a moving pointer identify the actions. It was
 assembled from the Lab's October 4, 2026 demo captures. The complete viewport
 stays visible; no interface elements were fabricated. The guide gives the
 current setup and cleanup steps. The opening reader overview precedes the
-correction of the sample Top edge pin described in [the refresh guide](../../../examples/README.md#refresh-the-generated-sample-in-an-existing-installation).
+correction of the sample Top edge pin described in [the refresh guide](../../demo.md#refresh-the-generated-sample-in-an-existing-installation).
 
 The recording, poster and text description are first-party documentation assets
 under [Apache 2.0](../../../LICENSE), copyright 2026 Craig Stevens. See

@@ -4,7 +4,7 @@ Start with the [quickstart](../README.md#quickstart) for a local demonstration u
 
 ## Use Loci
 
-- [Generated sample and content workflow](../examples/README.md): installation, upgrades, API authoring, sample refresh and replacing the model or video.
+- [Generated sample and content workflow](demo.md): installation, upgrades, API authoring, sample refresh and replacing the model or video.
 - [Visual authoring](demo-authoring.md): select a video range, place a pin, preview privately and publish an annotation.
 - [Viewer and playback behavior](viewer-camera-continuity.md): camera continuity, annotation selection and bounded playback.
 - [Public theme configuration](public-theme-configuration.md): supported appearance settings.
@@ -25,5 +25,5 @@ The frontend and 3D download remain large. On mobile and limited-resource device
 ## Help, rights and releases
 
 - [Support](../.github/SUPPORT.md), [security reporting](../.github/SECURITY.md) and [community conduct](../.github/CODE_OF_CONDUCT.md).
-- [Release notes](../CHANGELOG.md) and [software citation](../CITATION.cff).
-- [License scope](licensing/scope.md), [sample assets](licensing/samples.md), [dependency notices](licensing/README.md) and [media permissions and attribution](media/README.md).
+- [Release notes](CHANGELOG.md) and [software citation](../CITATION.cff).
+- [License scope](licensing/scope.md), [sample assets](licensing/samples.md), [attribution and dependency notices](licensing/README.md) and [media permissions and attribution](media/README.md).

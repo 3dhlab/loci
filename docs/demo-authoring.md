@@ -2,18 +2,15 @@
 
 [Watch the 3D Humanities Lab walkthrough](media/demo-authoring/loci-demo-authoring.mp4)
 or read its [timed text description](media/demo-authoring/transcript.md).
-Use a source checkout or release archive containing `docker-compose.authoring.yml`
-for the workflow below. The packaged v0.1.1 release predates the optional console
-override and new chapter media.
 
 This source includes a signed-in visual console for selecting a video range,
 placing an annotation on a model, reviewing it, and making it visible to local
 readers. The default quickstart serves the public reader. Enable the console
-with the optional Compose override after completing the quickstart:
+from the repository root after completing the [quickstart](../README.md#quickstart). The [Compose override](../scripts/demo/compose.authoring.yml) enables the console.
 
 ```sh
-docker compose -f docker-compose.yml -f docker-compose.authoring.yml build web
-docker compose -f docker-compose.yml -f docker-compose.authoring.yml up -d --no-deps --wait web
+docker compose -f docker-compose.yml -f scripts/demo/compose.authoring.yml build web
+docker compose -f docker-compose.yml -f scripts/demo/compose.authoring.yml up -d --no-deps --wait web
 ```
 
 Use `docker-compose` in place of `docker compose` if your installation supplies
