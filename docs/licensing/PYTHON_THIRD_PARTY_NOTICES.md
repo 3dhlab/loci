@@ -777,7 +777,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## fastembed 0.8.0 | fastembed-0.8.0.dist-info/licenses/LICENSE
+## fastembed 0.9.1 | fastembed-0.9.1.dist-info/licenses/LICENSE
 
 ```text
                                  Apache License
@@ -968,7 +968,7 @@ THE SOFTWARE.
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright 2026 Qdrant Solutions GmbH
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -983,7 +983,7 @@ THE SOFTWARE.
    limitations under the License.
 ```
 
-## fastembed 0.8.0 | fastembed-0.8.0.dist-info/licenses/NOTICE
+## fastembed 0.9.1 | fastembed-0.9.1.dist-info/licenses/NOTICE
 
 ```text
 Copyright 2024 Qdrant
@@ -1000,8 +1000,10 @@ This distribution includes the following Jina AI models, each with its respectiv
 
 These models are developed by Jina (https://jina.ai/) and are subject to Jina AI's licensing terms.
 
-This distribution includes the following Google models, each with its respective license:
-- vidore/colpali-v1.3
+This distribution includes the following Gemma-based models, each with its respective license:
+- Qdrant/colpali-v1.3-fp16
+    - License: gemma
+- google/embeddinggemma-300m
     - License: gemma
 
 Gemma is provided under and subject to the Gemma Terms of Use found at ai.google.dev/gemma/terms
@@ -4396,9 +4398,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## pillow 12.3.0 | pillow-12.3.0.dist-info/licenses/LICENSE
+## pillow 13.0.0 | pillow-13.0.0.dist-info/licenses/LICENSE
 
-```text
+````text
 The Python Imaging Library (PIL) is
 
     Copyright © 1997-2011 by Secret Labs AB
@@ -5973,7 +5975,7 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-```
+````
 
 ## pluggy 1.6.0 | pluggy-1.6.0.dist-info/licenses/LICENSE
 
